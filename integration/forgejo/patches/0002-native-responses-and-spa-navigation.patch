@@ -1,0 +1,66 @@
+--- a/services/context/context_response.go
++++ b/services/context/context_response.go
+@@ -23,6 +23,7 @@
+ 	"forgejo.org/modules/httplib"
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/modules/spaui"
+ 	"forgejo.org/modules/templates"
+ 	"forgejo.org/modules/web/middleware"
+ )
+@@ -75,6 +76,41 @@
+ 
+ // HTML calls Context.HTML and renders the template to HTTP response
+ func (ctx *Context) HTML(status int, name base.TplName) {
++	// An explicit response mode keeps native validation, permission checks and
++	// cookies while returning only selected presentation fields to the SPA.
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		hasError := ctx.HasError()
++		if hasError || ctx.Flash.ErrorMsg != "" {
++			message := ctx.Flash.ErrorMsg
++			if message == "" {
++				message = ctx.GetErrMsg()
++			}
++			ctx.JSON(http.StatusUnprocessableEntity, map[string]string{"errorMessage": message})
++			return
++		}
++		ctx.JSON(status, map[string]any{
++			"page": string(name), "reset_sent": ctx.Data["IsResetSent"] == true,
++			"reset_disabled": ctx.Data["IsResetDisable"] == true,
++			"resend_limited": ctx.Data["ResendLimited"] == true,
++		})
++		return
++	}
++	// Page navigation always enters the replacement interface. JSON requests,
++	// HTMX fragments and native action responses retain their own transports.
++	if setting.InstallLock && string(setting.LandingPageURL) == "/-/ui/" &&
++		(ctx.Req.Method == http.MethodGet || ctx.Req.Method == http.MethodHead || ctx.Req.Method == http.MethodPost) &&
++		!strings.Contains(ctx.Req.Header.Get("Accept"), "application/json") &&
++		ctx.Req.Header.Get("HX-Request") != "true" &&
++		!((name == "swagger/ui" || name == "swagger/forgejo-ui") && ctx.FormBool("spaui_embed")) {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		destination := spaui.RouteURL(ctx.Req.URL.EscapedPath(), ctx.Req.URL.RawQuery)
++		if ctx.Repo != nil {
++			destination = spaui.RouteRepositoryURL(ctx.Req.URL.EscapedPath(), ctx.Req.URL.RawQuery, ctx.Repo.RefName, ctx.Repo.TreePath)
++		}
++		ctx.Redirect(setting.AppSubURL + "/-/ui" + destination)
++		return
++	}
+ 	log.Debug("Template: %s", name)
+ 
+ 	tmplStartTime := time.Now()
+--- a/services/context/base.go
++++ b/services/context/base.go
+@@ -273,6 +273,11 @@
+ 		// So in this case, we should remove the session cookie from the response header
+ 		removeSessionCookieHeader(b.Resp)
+ 	}
++	if b.Req.Header.Get("X-Forgejo-UI") == "1" {
++		b.Resp.Header().Set("Cache-Control", "no-store")
++		b.JSON(http.StatusOK, map[string]string{"redirect": location})
++		return
++	}
+ 	// in case the request is made by htmx, have it redirect the browser instead of trying to follow the redirect inside htmx
+ 	if b.Req.Header.Get("HX-Request") == "true" {
+ 		b.Resp.Header().Set("HX-Redirect", location)

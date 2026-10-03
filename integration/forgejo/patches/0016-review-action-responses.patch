@@ -1,0 +1,26 @@
+--- a/routers/web/repo/pull_review.go
++++ b/routers/web/repo/pull_review.go
+@@ -199,6 +199,10 @@
+ }
+ 
+ func renderConversation(ctx *context.Context, comment *issues_model.Comment, origin string) {
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.JSON(http.StatusOK, map[string]any{"ok": true, "comment_id": comment.ID})
++		return
++	}
+ 	comments, err := issues_model.FetchCodeConversation(ctx, comment, ctx.Doer)
+ 	if err != nil {
+ 		ctx.ServerError("FetchCodeCommentsByLine", err)
+--- a/routers/web/repo/issue.go
++++ b/routers/web/repo/issue.go
+@@ -3388,6 +3388,10 @@
+ 		return
+ 	}
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.JSONOK()
++		return
++	}
+ 	ctx.Status(http.StatusOK)
+ }
+ 

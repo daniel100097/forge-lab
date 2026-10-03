@@ -1,0 +1,20 @@
+--- a/routers/web/repo/projects.go
++++ b/routers/web/repo/projects.go
+@@ -16,6 +16,7 @@
+ 	repo_model "forgejo.org/models/repo"
+ 	"forgejo.org/models/unit"
+ 	"forgejo.org/modules/base"
++	issue_indexer "forgejo.org/modules/indexer/issues"
+ 	"forgejo.org/modules/json"
+ 	"forgejo.org/modules/markup"
+ 	"forgejo.org/modules/markup/markdown"
+@@ -418,6 +419,9 @@
+ 			ctx.ServerError("IssueAssignOrRemoveProject", err)
+ 			return
+ 		}
++		// Project assignment commits after its timeline comment is indexed.
++		// Queue the final association so filtered search sees the saved board.
++		issue_indexer.UpdateIssueIndexer(ctx, issue.ID)
+ 	}
+ 
+ 	ctx.JSONOK()

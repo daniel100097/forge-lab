@@ -1,0 +1,14 @@
+.git
+.forgejo
+node_modules
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+.env
+.env.*
+playwright-results
+
+.playwright-mcp
+docs
+tests
+*.md

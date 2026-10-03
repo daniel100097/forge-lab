@@ -1,0 +1,10 @@
+--- a/routers/web/user/profile.go
++++ b/routers/web/user/profile.go
+@@ -417,3 +417,7 @@
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		if ctx.Flash.ErrorMsg != "" { ctx.JSONError(ctx.Flash.ErrorMsg); return }
++		ctx.JSON(http.StatusOK, map[string]any{"ok": true}); return
++	}
+ 	if ctx.ContextUser.IsIndividual() {
+ 		shared_user.PrepareContextForProfileBigAvatar(ctx)
+ 		ctx.Data["IsHTMX"] = true

@@ -1,0 +1,25 @@
+# Used only by test-docker.mjs with a unique Compose project and disposable volume.
+services:
+  forgejo:
+    ports: !override
+      - "127.0.0.1:${FORGEJO_TEST_PORT:-3100}:3000"
+    environment:
+      FORGEJO__DEFAULT__APP_NAME: Forgejo UI Test
+      FORGEJO__security__INSTALL_LOCK: "true"
+      FORGEJO__database__DB_TYPE: sqlite3
+      FORGEJO__database__PATH: /data/gitea/forgejo-test.db
+      FORGEJO__server__ROOT_URL: http://localhost:${FORGEJO_TEST_PORT:-3100}/
+      FORGEJO__server__DISABLE_SSH: "true"
+      FORGEJO__server__LFS_START_SERVER: "true"
+      FORGEJO__service__DISABLE_REGISTRATION: "true"
+      FORGEJO__service__ENABLE_NOTIFY_MAIL: "true"
+      FORGEJO__service__ADD_MEMBERS_BY_INVITATIONS: "${FORGEJO_TEST_INVITATIONS:-false}"
+      FORGEJO__moderation__ENABLED: "${FORGEJO_TEST_MODERATION:-false}"
+      FORGEJO__repository__DEFAULT_BRANCH: zz-test-main
+      FORGEJO__ui__MAX_DISPLAY_FILE_SIZE: "524288"
+      FORGEJO__migrations__ALLOW_LOCALNETWORKS: "true"
+      FORGEJO__mailer__ENABLED: "true"
+      FORGEJO__mailer__PROTOCOL: dummy
+      FORGEJO__mailer__FROM: zz-test-forgejo@example.test
+      FORGEJO__log__LEVEL: Warn
+    restart: "no"

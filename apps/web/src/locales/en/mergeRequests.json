@@ -1,0 +1,496 @@
+{
+  "mergeOptions": {
+    "closeRequest": "Close merge request",
+    "reopenRequest": "Reopen merge request",
+    "closeWithComment": "Comment and close merge request",
+    "reopenWithComment": "Comment and reopen merge request",
+    "files": {
+      "viewedCounter": "{{viewed}} / {{total}} files viewed",
+      "showOutdated_one": "Show outdated thread ({{count}})",
+      "showOutdated_other": "Show outdated threads ({{count}})",
+      "editHead": "Edit on source branch"
+    },
+    "threadSnippet": "Code around this review thread",
+    "noPermission": "You do not have permission to merge into the target branch.",
+    "signed": "The merge commit will be signed with key {{key}}.",
+    "method": "Merge method",
+    "title": "Merge commit title",
+    "message": "Merge commit message",
+    "commit": "Merge commit SHA",
+    "deleteBranch": "Delete source branch after merge",
+    "force": "Merge anyway (override branch protection)",
+    "reset": "Reset to defaults",
+    "clearCommits": "Remove commit list",
+    "merge": "Merge",
+    "working": "Working…",
+    "scheduled": "Auto-merge is scheduled for this merge request.",
+    "noStyles": "No merge method is currently eligible. Check repository settings and signing requirements.",
+    "instructions": "Merge locally using the command line",
+    "manualWarning": "Automatic detection of manual merges is disabled. Mark this merge request as manually merged after pushing.",
+    "copyCommands": "Copy commands",
+    "copyMessage": "Copy merge message",
+    "incomplete": "The operation did not complete. Refresh and check the merge request state.",
+    "markDraft": "Mark as draft",
+    "dismissMessage": "Dismissal message (optional)",
+    "styles": {
+      "merge": "Merge commit",
+      "rebase": "Rebase",
+      "rebaseMerge": "Rebase with merge commit",
+      "squash": "Squash",
+      "fastForward": "Fast-forward only",
+      "manual": "Mark as manually merged"
+    },
+    "blocked": {
+      "dependencies": "Open dependencies must be closed before merging.",
+      "broken": "The source or target branch is missing or the merge request data is broken.",
+      "checking": "Forgejo is checking whether this merge request can be merged.",
+      "ancestor": "These commits are already included in the target branch.",
+      "empty": "This merge request contains no changes.",
+      "conflict": "This merge request cannot be merged automatically. Merge it locally to resolve conflicts."
+    }
+  },
+  "markdownEditor": {
+    "defaultLabel": "Description",
+    "tabs": "{{label}} editor",
+    "formatting": "{{label}} formatting",
+    "write": "Write",
+    "preview": "Preview",
+    "placeholder": "Write a description…",
+    "nothingToPreview": "Nothing to preview yet.",
+    "supported": "Markdown is supported",
+    "actions": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "heading": "Heading",
+      "quote": "Quote",
+      "code": "Code",
+      "link": "Link",
+      "bulletedList": "Bulleted list",
+      "numberedList": "Numbered list",
+      "taskList": "Task list",
+      "indent": "Indent",
+      "outdent": "Outdent",
+      "table": "Insert table",
+      "mention": "Mention a user",
+      "reference": "Reference an Issue or Merge-Request",
+      "font": "Toggle monospace font",
+      "strikethrough": "Strikethrough",
+      "heading1": "Heading 1",
+      "heading2": "Heading 2",
+      "heading3": "Heading 3",
+      "headingBigger": "Increase heading size",
+      "headingSmaller": "Decrease heading size",
+      "checkedTask": "Insert completed task",
+      "image": "Insert image",
+      "rule": "Insert horizontal rule",
+      "split": "Toggle side-by-side preview",
+      "fullscreen": "Toggle fullscreen editor",
+      "codeBlock": "Insert code block"
+    },
+    "sample": {
+      "text": "text",
+      "heading": "Heading",
+      "quote": "Quote",
+      "code": "code",
+      "link": "link text",
+      "listItem": "List item",
+      "task": "Task"
+    },
+    "loadingPreview": "Loading preview…",
+    "suggestions": "Suggestions",
+    "upload": {
+      "placeholder": "Uploading…",
+      "failed": "{{name}} could not be uploaded. {{message}}",
+      "uploading_one": "Uploading {{count}} file…",
+      "uploading_other": "Uploading {{count}} files…",
+      "hint": "Paste or drop files to attach them"
+    },
+    "tools": {
+      "tableTitle": "Insert a table",
+      "linkTitle": "Insert a link",
+      "hint": "Insert Markdown at the selected text or cursor.",
+      "rows": "Rows",
+      "columns": "Columns",
+      "url": "Link URL",
+      "description": "Link text",
+      "cancel": "Cancel",
+      "insert": "Insert",
+      "header": "Header",
+      "cell": "Content"
+    }
+  },
+  "diff": {
+    "empty": {
+      "title": "No changes to display",
+      "body": "The source and target contain the same changes."
+    },
+    "changedFiles_one": "{{count}} changed file",
+    "changedFiles_other": "{{count}} changed files",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "changedFilesNav": "Changed files",
+    "large_one": "This diff has {{lines}} line. Load it when you are ready to review this file.",
+    "large_other": "This diff has {{lines}} lines. Load it when you are ready to review this file.",
+    "loadFile": "Load diff for {{name}}",
+    "commentPreviousLine": "Comment on {{name}} previous line {{line}}",
+    "commentLine": "Comment on {{name}} line {{line}}",
+    "options": {
+      "layout": "Diff layout",
+      "unified": "Unified",
+      "split": "Split",
+      "whitespace": "Whitespace"
+    },
+    "whitespace": {
+      "showAll": "Show all changes",
+      "ignoreAll": "Ignore all whitespace",
+      "ignoreChange": "Ignore whitespace amount changes",
+      "ignoreEol": "Ignore whitespace at end of line"
+    },
+    "toggleFolder": "Toggle folder {{name}}",
+    "contextFailed": "The unchanged lines could not be loaded.",
+    "expandAllLines_one": "Show {{count}} hidden line",
+    "expandAllLines_other": "Show {{count}} hidden lines",
+    "expandDown": "Show 20 more lines below",
+    "expandUp": "Show 20 more lines above",
+    "viewFile": "View file",
+    "viewFileTitle": "View {{name}} at this revision"
+  },
+  "review": {
+    "blocked": {
+      "title": "Merge blocked",
+      "approvals": "{{granted}} of {{required}} required approvals received.",
+      "rejection": "A reviewer has requested changes.",
+      "reviewRequests": "Required review requests are still outstanding.",
+      "outdated": "The source branch must be updated with the target branch.",
+      "checks": "Required status checks have not passed.",
+      "signing": "A signed merge commit is required, but Forgejo cannot sign this merge.",
+      "conflicts": "Conflicted files:",
+      "protected": "Protected files changed:"
+    },
+    "checks": {
+      "summary": "Status checks: {{state}}",
+      "required": "Required",
+      "details": "Details",
+      "states": {
+        "pending": "Pending",
+        "success": "Passed",
+        "skipped": "Skipped",
+        "warning": "Warning",
+        "failure": "Failed",
+        "error": "Error"
+      }
+    },
+    "commits": {
+      "title": "Commits",
+      "empty": "No commits to display"
+    },
+    "changes": {
+      "viewedError": "The viewed-file state could not be saved.",
+      "downloadDiff": "Download full diff",
+      "downloadPatch": "Download patch",
+      "fromCommit": "From commit",
+      "singleNotice": "Showing changes from commit {{commit}}",
+      "rangeNotice": "Showing changes from commit {{from}} to {{to}}",
+      "showAll": "Show all changes",
+      "toCommit": "To commit",
+      "allChanges": "All changes",
+      "mergeBase": "Merge base",
+      "latestVersion": "Latest version",
+      "whitespace": {
+        "label": "Whitespace changes",
+        "showAll": "Show whitespace changes",
+        "ignoreAll": "Ignore all whitespace",
+        "ignoreChange": "Ignore whitespace amount",
+        "ignoreEol": "Ignore whitespace at line end"
+      },
+      "unified": "Unified",
+      "sideBySide": "Side-by-side",
+      "viewed": "Viewed",
+      "outdatedHint": "Outdated discussions are available on the Overview tab."
+    },
+    "inline": {
+      "replyForm": "Reply to discussion",
+      "newForm": "New inline discussion",
+      "replyLabel": "Reply",
+      "commentLabel": "Inline comment",
+      "reply": "Reply",
+      "addToReview": "Add to review",
+      "addNow": "Add comment now",
+      "cancel": "Cancel"
+    },
+    "submit": {
+      "finish": "Finish review",
+      "finishWithCount": "Finish review ({{pending}})",
+      "title": "Submit review",
+      "close": "Close review form",
+      "summary": "Review summary",
+      "outcome": "Review outcome",
+      "outcomes": {
+        "comment": "Comment",
+        "approve": "Approve",
+        "reject": "Request changes"
+      },
+      "pendingHint_one": "{{count}} pending inline comment will be published with your review.",
+      "pendingHint_other": "{{count}} pending inline comments will be published with your review.",
+      "hint": "Your review will be added to the discussion.",
+      "submit": "Submit review"
+    },
+    "thread": {
+      "pending": "Pending review",
+      "outdated": "Outdated",
+      "resolved": "Resolved",
+      "reopen": "Reopen discussion",
+      "resolve": "Resolve discussion",
+      "reply": "Reply…"
+    },
+    "comment": {
+      "edit": "Edit comment",
+      "deleteTitle": "Delete this comment?",
+      "deleteBody": "The comment will be removed from this discussion.",
+      "editLabel": "Edit inline comment",
+      "save": "Save comment",
+      "cancel": "Cancel"
+    },
+    "overview": {
+      "title": "Reviews",
+      "status": {
+        "approved": "Approved",
+        "changesRequested": "Changes requested",
+        "requested": "Review requested"
+      },
+      "staleStatus": "{{status}} · outdated",
+      "removeRequest": "Remove request",
+      "requestAgain": "Request again",
+      "dismiss": "Dismiss",
+      "dismissTitle": "Dismiss {{reviewer}}'s review?",
+      "dismissBody": "This removes the review from the merge requirements.",
+      "noReviews": "No reviews yet.",
+      "requestFrom": "Request review from",
+      "chooseReviewer": "Choose a reviewer",
+      "request": "Request review"
+    },
+    "settings": {
+      "title": "Merge request settings",
+      "updateSource": "Update source branch",
+      "mergeTarget": "Merge target branch",
+      "rebaseSource": "Rebase source branch",
+      "targetBranch": "Target branch",
+      "changeTarget": "Change target branch",
+      "allowMaintainerEdit": "Allow maintainers to edit the source branch",
+      "cancelAutoMerge": "Cancel auto-merge",
+      "setAutoMerge": "Set to auto-merge",
+      "autoMergeHint": "Merge when the required checks pass.",
+      "reopen": "Reopen merge request",
+      "close": "Close merge request",
+      "deleteSource": "Delete source branch",
+      "deleteSourceTitle": "Delete source branch?",
+      "deleteSourceBody": "The source branch for this closed merge request will be deleted."
+    },
+    "trust": {
+      "approvalRequired": "Pipeline approval required",
+      "trusted": "Pipeline author trusted",
+      "approvalBody": "This merge request contains workflows from a contributor who requires approval. Review the changes before allowing them to run.",
+      "trustedBody": "This contributor has permission to run workflows for this project.",
+      "revoke": {
+        "label": "Revoke workflow trust",
+        "title": "Revoke workflow trust?",
+        "body": "Future workflows from this contributor will require approval when native trust rules apply."
+      },
+      "deny": {
+        "label": "Deny pending pipelines",
+        "title": "Deny pending pipelines?",
+        "body": "Cancel the pipelines awaiting approval for this merge request."
+      },
+      "once": {
+        "label": "Approve once",
+        "title": "Approve pending pipelines?",
+        "body": "Allow the pipelines currently awaiting approval to run."
+      },
+      "always": {
+        "label": "Always trust contributor",
+        "title": "Trust this contributor's workflows?",
+        "body": "Allow this contributor's future workflows in this project to run without approval."
+      }
+    }
+  },
+  "create": {
+    "title": "New merge request",
+    "errors": {
+      "alreadyCreated": "A merge request has already been created for these branches.",
+      "unavailable": "These branches can no longer be used to create a merge request.",
+      "failed": "The merge request could not be created.",
+      "sourceMissing": "The source project does not exist or you do not have access."
+    },
+    "archived": "This project is archived. Restore the project before creating a merge request.",
+    "sourceBranch": "Source branch",
+    "sourceProject": "Source project",
+    "selectSourceBranch": "Select source branch",
+    "searchBranches": "Search branches",
+    "targetBranch": "Target branch",
+    "targetProject": "Target project",
+    "sameBranch": "Source and target branches must be different.",
+    "compare": "Compare branches and continue",
+    "cancel": "Cancel",
+    "fromInto": "From <sourceBranch>{{source}}</sourceBranch> into <targetBranch>{{target}}</targetBranch>",
+    "changeBranches": "Change branches",
+    "existing": "A merge request already exists for these branches",
+    "nothingToMerge": {
+      "title": "There are no changes to merge",
+      "body": "Select a source branch with commits that are not already in the target branch."
+    },
+    "noChangesYet": {
+      "title": "These branches have no changes yet",
+      "body": "You can create this merge request now and push commits to the source branch later."
+    },
+    "titleRequired": "Title (required)",
+    "titleLabel": "Title",
+    "markDraft": "Mark as draft",
+    "draftHint": "Drafts cannot be merged until marked ready.",
+    "description": "Description",
+    "assignees": "Assignees",
+    "unassigned": "Unassigned",
+    "milestone": "Milestone",
+    "noMilestone": "No milestone",
+    "labels": "Labels",
+    "noLabels": "No labels",
+    "board": "Board",
+    "noBoard": "No board",
+    "allowMaintainerEdit": "Allow edits from maintainers",
+    "maintainerEditHint": "Members who can write to the target project can push commits to your source branch.",
+    "creating": "Creating merge request…",
+    "submit": "Create merge request",
+    "noPermission": "You do not have permission to create a merge request in this project.",
+    "comparison": "Branch comparison",
+    "commitsTab": "Commits",
+    "changesTab": "Changes",
+    "truncated": "Showing the first {{shown}} of {{total}} commits.",
+    "noCommits": "No commits to compare yet.",
+    "authored": "{{author}} authored {{date}}",
+    "noFileChanges": "No file changes to display.",
+    "multiSelect": {
+      "search": "Search {{label, lowercase}}",
+      "noMatches": "No matches found",
+      "clear": "Clear selection",
+      "remove": "Remove {{label}}"
+    }
+  },
+  "editor": {
+    "documentTitle": {
+      "create": "New file · {{project}}",
+      "edit": "Edit {{file}} · {{project}}"
+    },
+    "readOnly": {
+      "title": "This file is read-only",
+      "body": "Choose a text file on a branch in a project where you have write access. Archived projects cannot be edited."
+    },
+    "notEditable": {
+      "title": "This file cannot be edited online",
+      "body": "Choose an editable text file on a branch. Binary files, large files, and commit snapshots are available through Git."
+    },
+    "defaultSummary": {
+      "add": "Add {{name}}",
+      "addNew": "Add new file",
+      "update": "Update {{name}}"
+    },
+    "fileContent": "File content",
+    "discard": "Discard your unsaved file changes?",
+    "commitFailed": "The commit was not completed. Check your changes and try again.",
+    "newFile": "New file",
+    "editFile": "Edit file",
+    "fileName": "File name",
+    "fileNamePlaceholder": "File name, including any directories",
+    "section": "Single file editor",
+    "view": "File editor view",
+    "edit": "Edit",
+    "previewChanges": "Preview changes",
+    "wrapLines": "Wrap lines",
+    "untitled": "Untitled file",
+    "unsaved": "Unsaved changes",
+    "noChanges": {
+      "title": "No changes to display",
+      "body": "Edit the file to preview your changes."
+    },
+    "position": "Ln {{line}}, Col {{column}}",
+    "lineCount_one": "{{count}} line",
+    "lineCount_other": "{{count}} lines",
+    "preview": "Preview",
+    "renderFailed": "The preview could not be rendered.",
+    "editorconfigHint": "Indentation from .editorconfig",
+    "indentTabs_one": "Tab width: {{count}}",
+    "indentTabs_other": "Tab width: {{count}}",
+    "indentSpaces_one": "Spaces: {{count}}",
+    "indentSpaces_other": "Spaces: {{count}}"
+  },
+  "commit": {
+    "title": "Commit changes",
+    "message": "Commit message",
+    "extendedDescription": "Extended description",
+    "optional": "(optional)",
+    "descriptionPlaceholder": "Describe why you made these changes…",
+    "targetBranch": "Target branch",
+    "commitTo": "Commit to <branch>{{branch}}</branch>",
+    "protected": "This branch is protected. Commit your changes to a new branch.",
+    "newBranch": "Create a new branch",
+    "newBranchName": "New branch name",
+    "startMergeRequest": "Start a new merge request with these changes",
+    "email": "Commit email",
+    "signoff": "Add a Signed-off-by line",
+    "committing": "Committing…",
+    "submit": "Commit changes",
+    "cancel": "Cancel",
+    "titleSigned": "Commit signed changes",
+    "willSign": "This commit will be signed.",
+    "willNotSign": "This commit will not be signed."
+  },
+  "operations": {
+    "titles": {
+      "upload": "Upload files",
+      "delete": "Delete file",
+      "patch": "Apply patch",
+      "cherryPick": "Cherry-pick commit",
+      "revert": "Revert commit"
+    },
+    "documentTitle": "{{operation}} · {{project}}",
+    "readOnly": {
+      "title": "This project is read-only",
+      "body": "Choose a branch in a project where you have write access."
+    },
+    "deleteSummary": "Delete {{path}}",
+    "discard": "Discard your unsaved changes?",
+    "commitFailed": "The commit was not completed. Review the details and try again.",
+    "upload": {
+      "tooLarge": "{{name}} exceeds the {{size}} MiB upload limit.",
+      "duplicate": "A file named {{name}} is already selected.",
+      "tooMany_one": "Select up to {{count}} file per commit.",
+      "tooMany_other": "Select up to {{count}} files per commit.",
+      "removeFailed": "Unable to remove temporary upload.",
+      "progress": "Uploading {{current}} of {{total}}: {{name}}",
+      "creatingCommit": "Creating commit…",
+      "failed": "The upload was not committed. Review the commit details and try again.",
+      "directory": "Upload to directory",
+      "root": "Repository root",
+      "drop": "Drop files here or <browse>browse</browse>",
+      "choose": "Choose files to upload",
+      "limits_one": "Up to {{count}} file, {{size}} MiB each.",
+      "limits_other": "Up to {{count}} files, {{size}} MiB each.",
+      "replaceHint": "Files with the same name are replaced in this commit. Previous versions remain in the commit history.",
+      "size": "{{size}} KiB",
+      "remove": "Remove {{name}}"
+    },
+    "patch": {
+      "view": "Patch view",
+      "tab": "Patch",
+      "preview": "Preview changes",
+      "content": "Patch content",
+      "placeholder": "Paste a unified Git diff or patch here…"
+    },
+    "delete": {
+      "title": "Delete {{path}}?",
+      "body": "This creates a commit that removes the file from the selected branch. The file remains available in the commit history."
+    },
+    "commitIntro": {
+      "revert": "Create a commit that reverses the changes introduced by <sha>{{sha}}</sha> to <branch>{{branch}}</branch>. Existing history is preserved.",
+      "cherryPick": "Apply the changes introduced by <sha>{{sha}}</sha> to <branch>{{branch}}</branch>. Existing history is preserved."
+    }
+  }
+}

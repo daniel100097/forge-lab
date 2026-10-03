@@ -1,0 +1,28 @@
+name: Check an upstream upgrade candidate
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Forgejo tag to test, for example v16.0.6
+        required: true
+        type: string
+      commit:
+        description: Full upstream commit the tag must resolve to
+        required: true
+        type: string
+jobs:
+  patches:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: https://github.com/actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+      - name: Apply the patch series to the candidate without changing the pin
+        env:
+          FORGEJO_CHECK_TAG: ${{ inputs.tag }}
+          FORGEJO_CHECK_COMMIT: ${{ inputs.commit }}
+        run: node scripts/check-patches.mjs

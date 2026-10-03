@@ -1,0 +1,45 @@
+{
+  "loading": "Loading…",
+  "pagination": {
+    "results_one": "{{count}} result",
+    "results_other": "{{count}} results",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}}"
+  },
+  "copy": {
+    "label": "Copy",
+    "copied": "Copied",
+    "manual": "Select and copy manually"
+  },
+  "select": {
+    "placeholder": "Select…",
+    "searchPlaceholder": "Search…",
+    "searchLabel": "Search {{label, lowercase}}",
+    "noMatches": "No matches found",
+    "noOptions": "No options available"
+  },
+  "theme": {
+    "appearance": "Appearance",
+    "colorMode": "Color mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "systemHint": "System follows your device’s appearance."
+  },
+  "code": {
+    "line": "Line {{number}}"
+  },
+  "api": {
+    "requestFailed": "The request failed ({{status}}). Please try again.",
+    "notFound": "This resource does not exist or you do not have access.",
+    "sessionExpired": "Your session needs attention. Sign in to continue.",
+    "notCompleted": "The request could not be completed.",
+    "pageUnavailable": "This page is unavailable for your current session.",
+    "changesUnavailable": "Unable to load these changes. Check your access and try again.",
+    "changesTooLarge": "These changes exceed the 2 MB preview limit. Download the diff to review it locally."
+  },
+  "markup": {
+    "taskFailed": "The task list could not be updated."
+  }
+}

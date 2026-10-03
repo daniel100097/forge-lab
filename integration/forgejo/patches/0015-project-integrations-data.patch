@@ -1,0 +1,124 @@
+--- a/routers/web/repo/setting/webhook.go
++++ b/routers/web/repo/setting/webhook.go
+@@ -55,6 +55,7 @@
+ 	}
+ 	ctx.Data["Webhooks"] = ws
+ 
++	if WriteWebhooksUI(ctx,"list") {return}
+ 	ctx.HTML(http.StatusOK, tplHooks)
+ }
+ 
+@@ -144,6 +145,7 @@
+ 	ctx.Data["BaseLinkNew"] = orCtx.LinkNew
+ 	ctx.Data["WebhookList"] = webhook_service.List()
+ 
++	if WriteWebhooksUI(ctx,"edit") {return}
+ 	ctx.HTML(http.StatusOK, orCtx.NewTemplate)
+ }
+ 
+@@ -381,6 +383,7 @@
+ 	}
+ 	ctx.Data["Webhook"] = w
+ 
++	if WriteWebhooksUI(ctx,"edit") {return}
+ 	ctx.HTML(http.StatusOK, orCtx.NewTemplate)
+ }
+ 
+@@ -441,6 +444,7 @@
+ 		ctx.Status(http.StatusInternalServerError)
+ 	} else {
+ 		ctx.Flash.Info(ctx.Tr("repo.settings.webhook.delivery.success"))
++		if ctx.Req.Header.Get("X-Forgejo-UI")=="1" {ctx.JSON(http.StatusOK,map[string]bool{"ok":true});return}
+ 		ctx.Status(http.StatusOK)
+ 	}
+ }
+--- a/routers/web/repo/setting/git_hooks.go
++++ b/routers/web/repo/setting/git_hooks.go
+@@ -22,6 +22,7 @@
+ 	}
+ 	ctx.Data["Hooks"] = hooks
+ 
++	if writeRepositoryStorageUI(ctx,"git-hooks") {return}
+ 	ctx.HTML(http.StatusOK, tplGithooks)
+ }
+ 
+@@ -41,6 +42,7 @@
+ 		return
+ 	}
+ 	ctx.Data["Hook"] = hook
++	if writeRepositoryStorageUI(ctx,"git-hook") {return}
+ 	ctx.HTML(http.StatusOK, tplGithookEdit)
+ }
+ 
+--- a/routers/web/repo/setting/lfs.go
++++ b/routers/web/repo/setting/lfs.go
+@@ -62,6 +62,7 @@
+ 	}
+ 	ctx.Data["LFSFiles"] = lfsMetaObjects
+ 	ctx.Data["Page"] = pager
++	if writeRepositoryStorageUI(ctx,"lfs") {return}
+ 	ctx.HTML(http.StatusOK, tplSettingsLFS)
+ }
+ 
+@@ -98,7 +99,8 @@
+ 
+ 	if len(lfsLocks) == 0 {
+ 		ctx.Data["Page"] = pager
+-		ctx.HTML(http.StatusOK, tplSettingsLFSLocks)
++		if writeRepositoryStorageUI(ctx,"lfs-locks") {return}
++	ctx.HTML(http.StatusOK, tplSettingsLFSLocks)
+ 		return
+ 	}
+ 
+@@ -168,6 +170,7 @@
+ 	ctx.Data["Linkable"] = linkable
+ 
+ 	ctx.Data["Page"] = pager
++	if writeRepositoryStorageUI(ctx,"lfs-locks") {return}
+ 	ctx.HTML(http.StatusOK, tplSettingsLFSLocks)
+ }
+ 
+@@ -353,6 +356,7 @@
+ 	case st.IsImage() && (setting.UI.SVG.Enabled || !st.IsSvgImage()):
+ 		ctx.Data["IsImageFile"] = true
+ 	}
++	if writeRepositoryStorageUI(ctx,"lfs-file") {return}
+ 	ctx.HTML(http.StatusOK, tplSettingsLFSFile)
+ }
+ 
+@@ -424,6 +428,7 @@
+ 	}
+ 
+ 	ctx.Data["Results"] = results
++	if writeRepositoryStorageUI(ctx,"lfs-find") {return}
+ 	ctx.HTML(http.StatusOK, tplSettingsLFSFileFind)
+ }
+ 
+@@ -535,6 +540,7 @@
+ 		return
+ 	}
+ 
++	if writeRepositoryStorageUI(ctx,"lfs-pointers") {return}
+ 	ctx.HTML(http.StatusOK, tplSettingsLFSPointers)
+ }
+ 
+--- a/routers/web/repo/flags/manage.go
++++ b/routers/web/repo/flags/manage.go
+@@ -31,6 +31,7 @@
+ 
+ 	ctx.Data["Flags"] = flags
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI")=="1" {ctx.Resp.Header().Set("Cache-Control","no-store");ctx.JSON(http.StatusOK,map[string]any{"flags":flags});return}
+ 	ctx.HTML(http.StatusOK, tplRepoFlags)
+ }
+ 
+--- a/routers/web/shared/actions/runners.go
++++ b/routers/web/shared/actions/runners.go
+@@ -255,6 +255,7 @@
+ 	ctx.Data["Title"] = ctx.Tr("actions.runners.runner_details.page_title", runner.Name)
+ 	ctx.Data["Runner"] = runner
+ 	ctx.Data["Tasks"] = tasks
++	ctx.Data["Total"] = count
+ 	ctx.Data["IsRepo"] = rCtx.IsRepo
+ 	ctx.Data["IsOrg"] = rCtx.IsOrg
+ 	ctx.Data["IsAdmin"] = rCtx.IsAdmin

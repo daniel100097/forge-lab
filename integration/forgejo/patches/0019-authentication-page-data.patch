@@ -1,0 +1,256 @@
+--- a/routers/web/auth/auth.go
++++ b/routers/web/auth/auth.go
+@@ -201,6 +201,8 @@
+ 
+ 	ctx.Data["DisablePassword"] = !setting.Service.EnableInternalSignIn
+ 
++	if writeAuthUI(ctx,string(tplSignIn)) { return }
++
+ 	ctx.HTML(http.StatusOK, tplSignIn)
+ }
+ 
+@@ -228,6 +230,7 @@
+ 	}
+ 
+ 	if ctx.HasError() {
++		if writeAuthUI(ctx,string(tplSignIn)) { return }
+ 		ctx.HTML(http.StatusOK, tplSignIn)
+ 		return
+ 	}
+@@ -470,6 +473,8 @@
+ 		middleware.SetRedirectToCookie(ctx.Resp, redirectTo)
+ 	}
+ 
++	if writeAuthUI(ctx,string(tplSignUp)) { return }
++
+ 	ctx.HTML(http.StatusOK, tplSignUp)
+ }
+ 
+@@ -497,6 +502,7 @@
+ 	ctx.Data["PageIsSignUp"] = true
+ 
+ 	if ctx.HasError() {
++		if writeAuthUI(ctx,string(tplSignUp)) { return }
+ 		ctx.HTML(http.StatusOK, tplSignUp)
+ 		return
+ 	}
+@@ -661,6 +667,7 @@
+ 	if !u.IsActive && u.ID > 1 {
+ 		if setting.Service.RegisterManualConfirm {
+ 			ctx.Data["ManualActivationOnly"] = true
++			if writeAuthUI(ctx,string(TplActivate)) { return false }
+ 			ctx.HTML(http.StatusOK, TplActivate)
+ 			return false
+ 		}
+@@ -677,6 +684,8 @@
+ 		if err := ctx.Cache.Put("MailResendLimit_"+u.LowerName, u.LowerName, 180); err != nil {
+ 			log.Error("Set cache(MailResendLimit) fail: %v", err)
+ 		}
++
++		if writeAuthUI(ctx,string(TplActivate)) { return false }
+ 
+ 		ctx.HTML(http.StatusOK, TplActivate)
+ 		return false
+@@ -722,6 +731,7 @@
+ 		} else {
+ 			ctx.Data["ServiceNotEnabled"] = true
+ 		}
++		if writeAuthUI(ctx,string(TplActivate)) { return }
+ 		ctx.HTML(http.StatusOK, TplActivate)
+ 		return
+ 	}
+@@ -735,6 +745,7 @@
+ 	// if code is wrong
+ 	if user == nil {
+ 		ctx.Data["IsCodeInvalid"] = true
++		if writeAuthUI(ctx,string(TplActivate)) { return }
+ 		ctx.HTML(http.StatusOK, TplActivate)
+ 		return
+ 	}
+@@ -743,6 +754,7 @@
+ 	if user.LoginSource == 0 {
+ 		ctx.Data["Code"] = code
+ 		ctx.Data["NeedsPassword"] = true
++		if writeAuthUI(ctx,string(TplActivate)) { return }
+ 		ctx.HTML(http.StatusOK, TplActivate)
+ 		return
+ 	}
+@@ -809,6 +821,7 @@
+ 	// if code is wrong
+ 	if user == nil {
+ 		ctx.Data["IsCodeInvalid"] = true
++		if writeAuthUI(ctx,string(TplActivate)) { return }
+ 		ctx.HTML(http.StatusOK, TplActivate)
+ 		return
+ 	}
+@@ -819,11 +832,13 @@
+ 		if len(password) == 0 {
+ 			ctx.Data["Code"] = code
+ 			ctx.Data["NeedsPassword"] = true
++			if writeAuthUI(ctx,string(TplActivate)) { return }
+ 			ctx.HTML(http.StatusOK, TplActivate)
+ 			return
+ 		}
+ 		if !user.ValidatePassword(ctx, password) {
+ 			ctx.Data["IsPasswordInvalid"] = true
++			if writeAuthUI(ctx,string(TplActivate)) { return }
+ 			ctx.HTML(http.StatusOK, TplActivate)
+ 			return
+ 		}
+--- a/routers/web/auth/password.go
++++ b/routers/web/auth/password.go
+@@ -38,6 +38,7 @@
+ 	if setting.MailService == nil {
+ 		log.Warn("no mail service configured")
+ 		ctx.Data["IsResetDisable"] = true
++		if writeAuthUI(ctx,string(tplForgotPassword)) { return }
+ 		ctx.HTML(http.StatusOK, tplForgotPassword)
+ 		return
+ 	}
+@@ -45,6 +46,7 @@
+ 	ctx.Data["Email"] = ctx.FormString("email")
+ 
+ 	ctx.Data["IsResetRequest"] = true
++	if writeAuthUI(ctx,string(tplForgotPassword)) { return }
+ 	ctx.HTML(http.StatusOK, tplForgotPassword)
+ }
+ 
+@@ -66,6 +68,7 @@
+ 		if user_model.IsErrUserNotExist(err) {
+ 			ctx.Data["ResetPwdCodeLives"] = timeutil.MinutesToFriendly(setting.Service.ResetPwdCodeLives, ctx.Locale)
+ 			ctx.Data["IsResetSent"] = true
++			if writeAuthUI(ctx,string(tplForgotPassword)) { return }
+ 			ctx.HTML(http.StatusOK, tplForgotPassword)
+ 			return
+ 		}
+@@ -82,6 +85,7 @@
+ 
+ 	if ctx.Cache.IsExist("MailResendLimit_" + u.LowerName) {
+ 		ctx.Data["ResendLimited"] = true
++		if writeAuthUI(ctx,string(tplForgotPassword)) { return }
+ 		ctx.HTML(http.StatusOK, tplForgotPassword)
+ 		return
+ 	}
+@@ -97,6 +101,7 @@
+ 
+ 	ctx.Data["ResetPwdCodeLives"] = timeutil.MinutesToFriendly(setting.Service.ResetPwdCodeLives, ctx.Locale)
+ 	ctx.Data["IsResetSent"] = true
++	if writeAuthUI(ctx,string(tplForgotPassword)) { return }
+ 	ctx.HTML(http.StatusOK, tplForgotPassword)
+ }
+ 
+@@ -170,6 +175,8 @@
+ 		return
+ 	}
+ 
++	if writeAuthUI(ctx,string(tplResetPassword)) { return }
++
+ 	ctx.HTML(http.StatusOK, tplResetPassword)
+ }
+ 
+@@ -182,6 +189,7 @@
+ 
+ 	if u == nil {
+ 		// Flash error has been set
++		if writeAuthUI(ctx,string(tplResetPassword)) { return }
+ 		ctx.HTML(http.StatusOK, tplResetPassword)
+ 		return
+ 	}
+@@ -270,6 +278,7 @@
+ 	ctx.Data["Title"] = ctx.Tr("auth.must_change_password")
+ 	ctx.Data["ChangePasscodeLink"] = setting.AppSubURL + "/user/settings/change_password"
+ 	ctx.Data["HideNavbarLinks"] = true
++	if writeAuthUI(ctx,string(tplMustChangePassword)) { return }
+ 	ctx.HTML(http.StatusOK, tplMustChangePassword)
+ }
+ 
+@@ -280,6 +289,7 @@
+ 	ctx.Data["Title"] = ctx.Tr("auth.must_change_password")
+ 	ctx.Data["ChangePasscodeLink"] = setting.AppSubURL + "/user/settings/change_password"
+ 	if ctx.HasError() {
++		if writeAuthUI(ctx,string(tplMustChangePassword)) { return }
+ 		ctx.HTML(http.StatusOK, tplMustChangePassword)
+ 		return
+ 	}
+--- a/routers/web/auth/openid.go
++++ b/routers/web/auth/openid.go
+@@ -44,6 +44,7 @@
+ 
+ 	ctx.Data["PageIsSignIn"] = true
+ 	ctx.Data["PageIsLoginOpenID"] = true
++	if writeAuthUI(ctx,string(tplSignInOpenID)) { return }
+ 	ctx.HTML(http.StatusOK, tplSignInOpenID)
+ }
+ 
+@@ -79,6 +80,7 @@
+ 	ctx.Data["PageIsLoginOpenID"] = true
+ 
+ 	if ctx.HasError() {
++		if writeAuthUI(ctx,string(tplSignInOpenID)) { return }
+ 		ctx.HTML(http.StatusOK, tplSignInOpenID)
+ 		return
+ 	}
+@@ -249,6 +251,7 @@
+ 	if userName != "" {
+ 		ctx.Data["user_name"] = userName
+ 	}
++	if writeAuthUI(ctx,string(tplConnectOID)) { return }
+ 	ctx.HTML(http.StatusOK, tplConnectOID)
+ }
+ 
+@@ -356,6 +359,7 @@
+ 	if email != "" {
+ 		ctx.Data["email"] = email
+ 	}
++	if writeAuthUI(ctx,string(tplSignUpOID)) { return }
+ 	ctx.HTML(http.StatusOK, tplSignUpOID)
+ }
+ 
+--- a/routers/web/auth/linkaccount.go
++++ b/routers/web/auth/linkaccount.go
+@@ -78,6 +78,8 @@
+ 			ctx.Data["user_exists"] = true
+ 		}
+ 	}
++
++	if writeAuthUI(ctx,string(tplLinkAccount)) { return }
+ 
+ 	ctx.HTML(http.StatusOK, tplLinkAccount)
+ }
+@@ -123,6 +125,7 @@
+ 	}
+ 
+ 	if ctx.HasError() {
++		if writeAuthUI(ctx,string(tplLinkAccount)) { return }
+ 		ctx.HTML(http.StatusOK, tplLinkAccount)
+ 		return
+ 	}
+@@ -209,6 +212,7 @@
+ 	}
+ 
+ 	if ctx.HasError() {
++		if writeAuthUI(ctx,string(tplLinkAccount)) { return }
+ 		ctx.HTML(http.StatusOK, tplLinkAccount)
+ 		return
+ 	}
+--- a/routers/web/auth/webauthn.go
++++ b/routers/web/auth/webauthn.go
+@@ -43,6 +43,8 @@
+ 	}
+ 
+ 	ctx.Data["HasTwoFactor"] = hasTwoFactor
++
++	if writeAuthUI(ctx,string(tplWebAuthn)) { return }
+ 
+ 	ctx.HTML(http.StatusOK, tplWebAuthn)
+ }
+--- a/routers/web/auth/oauth.go
++++ b/routers/web/auth/oauth.go
+@@ -587,6 +587,7 @@
+ 		// we'll tolerate errors here as they *should* get saved elsewhere
+ 		log.Error("Unable to save changes to the session: %v", err)
+ 	}
++	if writeAuthUI(ctx,string(tplGrantAccess)) { return }
+ 	ctx.HTML(http.StatusOK, tplGrantAccess)
+ }
+ 

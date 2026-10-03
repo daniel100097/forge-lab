@@ -1,0 +1,36 @@
+--- a/routers/web/repo/actions/view.go
++++ b/routers/web/repo/actions/view.go
+@@ -177,6 +177,8 @@
+ 	CanCancel            bool            `json:"canCancel"`
+ 	CanApprove           bool            `json:"canApprove"` // the run needs an approval and the doer has permission to approve
+ 	CanRerun             bool            `json:"canRerun"`
++	CanPrioritize        bool            `json:"canPrioritize"`
++	Prioritized          bool            `json:"prioritized"`
+ 	CanDeleteArtifact    bool            `json:"canDeleteArtifact"`
+ 	CanDelete            bool            `json:"canDelete"`
+ 	Done                 bool            `json:"done"`
+@@ -299,6 +301,8 @@
+ 	resp.State.Run.Link = run.Link()
+ 	resp.State.Run.CanApprove = run.NeedApproval && ctx.Repo.CanWrite(unit.TypeActions)
+ 	resp.State.Run.CanRerun = run.CanBeRerun() && ctx.Repo.CanWrite(unit.TypeActions)
++	resp.State.Run.CanPrioritize = !run.Status.IsDone() && ctx.Repo.CanWrite(unit.TypeActions) && !ctx.Repo.Repository.IsArchived
++	resp.State.Run.Prioritized = run.Prioritize
+ 	resp.State.Run.CanDeleteArtifact = run.Status.IsDone() && ctx.Repo.CanWrite(unit.TypeActions)
+ 	resp.State.Run.CanDelete = run.Status.IsDone() && ctx.IsUserRepoAdmin()
+ 	resp.State.Run.Jobs = make([]*ViewJob, 0, len(jobs)) // marshal to '[]' instead of 'null' in json
+@@ -682,6 +686,7 @@
+ }
+ 
+ type ArtifactsViewResponse struct {
++	RunID int64 `json:"run_id"`
+ 	Artifacts []*ArtifactsViewItem `json:"artifacts"`
+ }
+ 
+@@ -716,6 +721,7 @@
+ 		return nil
+ 	}
+ 	artifactsResponse := ArtifactsViewResponse{
++		RunID: run.ID,
+ 		Artifacts: make([]*ArtifactsViewItem, 0, len(artifacts)),
+ 	}
+ 	for _, art := range artifacts {

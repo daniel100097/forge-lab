@@ -1,0 +1,49 @@
+--- a/routers/web/repo/issue_content_history.go
++++ b/routers/web/repo/issue_content_history.go
+@@ -54,6 +54,10 @@
+ 	// value is historyId
+ 	var results []map[string]any
+ 	for _, item := range items {
++        if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++            results = append(results, map[string]any{"id": item.HistoryID, "user": item.UserName, "created": item.IsFirstCreated, "deleted": item.IsDeleted, "edited_at": item.EditedUnix.AsTime()})
++            continue
++        }
+ 		var actionText string
+ 		contentFmt := "%s<strong>%s</strong> %s %s"
+ 		if item.IsFirstCreated {
+@@ -154,6 +158,10 @@
+ 		prevHistoryContentText = prevHistory.ContentText
+ 	}
+ 
++    if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++        ctx.JSON(http.StatusOK, map[string]any{"can_delete": canSoftDeleteContentHistory(ctx, issue, comment, history), "id": historyID, "before": prevHistoryContentText, "content": history.ContentText})
++        return
++    }
+ 	// compare the current history revision with the previous one
+ 	dmp := diffmatchpatch.New()
+ 	// `checklines=false` makes better diff result
+--- a/models/issues/content_history.go
++++ b/models/issues/content_history.go
+@@ -153,7 +153,7 @@
+ 		Table([]string{"issue_content_history", "h"}).
+ 		Join("LEFT", []string{"user", "u"}, "h.poster_id = u.id").
+ 		Where(builder.Eq{"issue_id": issueID, "comment_id": commentID}).
+-		OrderBy("edited_unix DESC").
++		OrderBy("edited_unix DESC, h.id DESC").
+ 		Find(&res)
+ 	if err != nil {
+ 		log.Error("can not fetch issue content history list. err=%v", err)
+@@ -227,8 +227,11 @@
+ 
+ 	prevHistory = &ContentHistory{}
+ 	has, err = db.GetEngine(dbCtx).Where(builder.Eq{"issue_id": history.IssueID, "comment_id": history.CommentID, "is_deleted": false}).
+-		And(builder.Lt{"edited_unix": history.EditedUnix}).
+-		OrderBy("edited_unix DESC").Limit(1).
++		And(builder.Or(
++			builder.Lt{"edited_unix": history.EditedUnix},
++			builder.And(builder.Eq{"edited_unix": history.EditedUnix}, builder.Lt{"id": history.ID}),
++		)).
++		OrderBy("edited_unix DESC, id DESC").Limit(1).
+ 		Get(prevHistory)
+ 
+ 	if err != nil {

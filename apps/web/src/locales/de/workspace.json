@@ -1,0 +1,752 @@
+{
+  "shared": {
+    "search": "Suchen",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "remove": "Entfernen",
+    "delete": "Löschen",
+    "description": "Beschreibung",
+    "website": "Website",
+    "location": "Standort",
+    "email": "E-Mail",
+    "visibility": "Sichtbarkeit",
+    "all": "Alle",
+    "open": "Offen",
+    "closed": "Geschlossen",
+    "updated": "Aktualisiert {{date}}",
+    "private": "Privat",
+    "public": "Öffentlich",
+    "archived": "Archiviert",
+    "saveChanges": "Änderungen speichern",
+    "username": "Benutzername",
+    "usernameOrEmail": "Benutzername oder E-Mail",
+    "projects": "Projekte",
+    "allProjects": "Alle Projekte",
+    "members": "Mitglieder",
+    "team": "Team",
+    "allTeams": "Alle Teams",
+    "issues": "Issues",
+    "mergeRequests": "Merge-Requests",
+    "milestones": "Meilensteine",
+    "notifications": "Benachrichtigungen",
+    "organizations": "Organisationen",
+    "issueBoards": "Issue-Boards"
+  },
+  "activity": {
+    "title": "Aktivität",
+    "orgTitle": "Aktivität von {{org}}",
+    "viewOrganization": "Organisation anzeigen",
+    "date": "Datum",
+    "allDates": "Alle Tage",
+    "empty": "Keine Aktivität vorhanden",
+    "contributions_one": "{{count, number}} Beitrag im letzten Jahr",
+    "contributions_other": "{{count, number}} Beiträge im letzten Jahr",
+    "dayContributions_one": "{{date}}: {{count}} Beitrag",
+    "dayContributions_other": "{{date}}: {{count}} Beiträge",
+    "events": {
+      "createdProject": {
+        "actor": "<actor/> hat das Projekt <repo/> erstellt",
+        "self": "Projekt <repo/> erstellt"
+      },
+      "renamedProject": {
+        "actor": "<actor/> hat das Projekt <repo/> umbenannt",
+        "self": "Projekt <repo/> umbenannt"
+      },
+      "starred": {
+        "actor": "<actor/> hat <repo/> favorisiert",
+        "self": "<repo/> favorisiert"
+      },
+      "startedWatching": {
+        "actor": "<actor/> beobachtet jetzt <repo/>",
+        "self": "Beobachtet jetzt <repo/>"
+      },
+      "pushedCommits": {
+        "actor": "<actor/> hat Commits auf <ref/> in <repo/> gepusht",
+        "self": "Commits auf <ref/> in <repo/> gepusht"
+      },
+      "openedIssue": {
+        "actor": "<actor/> hat das Issue <issue/> in <repo/> geöffnet",
+        "self": "Issue <issue/> in <repo/> geöffnet"
+      },
+      "openedMergeRequest": {
+        "actor": "<actor/> hat den Merge-Request <issue/> in <repo/> geöffnet",
+        "self": "Merge-Request <issue/> in <repo/> geöffnet"
+      },
+      "transferred": {
+        "actor": "<actor/> hat <repo/> übertragen",
+        "self": "<repo/> übertragen"
+      },
+      "createdTag": {
+        "actor": "<actor/> hat den Tag <ref/> in <repo/> erstellt",
+        "self": "Tag <ref/> in <repo/> erstellt"
+      },
+      "commented": {
+        "actor": "<actor/> hat das Issue <issue/> in <repo/> kommentiert",
+        "self": "Issue <issue/> in <repo/> kommentiert"
+      },
+      "mergedMergeRequest": {
+        "actor": "<actor/> hat den Merge-Request <issue/> in <repo/> gemergt",
+        "self": "Merge-Request <issue/> in <repo/> gemergt"
+      },
+      "closedIssue": {
+        "actor": "<actor/> hat das Issue <issue/> in <repo/> geschlossen",
+        "self": "Issue <issue/> in <repo/> geschlossen"
+      },
+      "reopenedIssue": {
+        "actor": "<actor/> hat das Issue <issue/> in <repo/> wieder geöffnet",
+        "self": "Issue <issue/> in <repo/> wieder geöffnet"
+      },
+      "closedMergeRequest": {
+        "actor": "<actor/> hat den Merge-Request <issue/> in <repo/> geschlossen",
+        "self": "Merge-Request <issue/> in <repo/> geschlossen"
+      },
+      "reopenedMergeRequest": {
+        "actor": "<actor/> hat den Merge-Request <issue/> in <repo/> wieder geöffnet",
+        "self": "Merge-Request <issue/> in <repo/> wieder geöffnet"
+      },
+      "deletedTag": {
+        "actor": "<actor/> hat den Tag <ref/> in <repo/> gelöscht",
+        "self": "Tag <ref/> in <repo/> gelöscht"
+      },
+      "deletedBranch": {
+        "actor": "<actor/> hat den Branch <ref/> in <repo/> gelöscht",
+        "self": "Branch <ref/> in <repo/> gelöscht"
+      },
+      "syncedMirror": {
+        "actor": "<actor/> hat <ref/> im Mirror <repo/> synchronisiert",
+        "self": "<ref/> im Mirror <repo/> synchronisiert"
+      },
+      "createdMirrorBranch": {
+        "actor": "<actor/> hat den Mirror-Branch <ref/> in <repo/> erstellt",
+        "self": "Mirror-Branch <ref/> in <repo/> erstellt"
+      },
+      "deletedMirrorBranch": {
+        "actor": "<actor/> hat den Mirror-Branch <ref/> in <repo/> gelöscht",
+        "self": "Mirror-Branch <ref/> in <repo/> gelöscht"
+      },
+      "approvedMergeRequest": {
+        "actor": "<actor/> hat den Merge-Request <issue/> in <repo/> genehmigt",
+        "self": "Merge-Request <issue/> in <repo/> genehmigt"
+      },
+      "requestedChanges": {
+        "actor": "<actor/> hat Änderungen an <issue/> in <repo/> angefordert",
+        "self": "Änderungen an <issue/> in <repo/> angefordert"
+      },
+      "commentedMergeRequest": {
+        "actor": "<actor/> hat den Merge-Request <issue/> in <repo/> kommentiert",
+        "self": "Merge-Request <issue/> in <repo/> kommentiert"
+      },
+      "publishedRelease": {
+        "actor": "<actor/> hat das Release <ref/> in <repo/> veröffentlicht",
+        "self": "Release <ref/> in <repo/> veröffentlicht"
+      },
+      "dismissedReview": {
+        "actor": "<actor/> hat ein Review zu <issue/> in <repo/> verworfen",
+        "self": "Review zu <issue/> in <repo/> verworfen"
+      },
+      "markedReady": {
+        "actor": "<actor/> hat den Merge-Request <issue/> in <repo/> als bereit zum Review markiert",
+        "self": "Merge-Request <issue/> in <repo/> als bereit zum Review markiert"
+      },
+      "enabledAutoMerge": {
+        "actor": "<actor/> hat den automatischen Merge für <issue/> in <repo/> aktiviert",
+        "self": "Automatischen Merge für <issue/> in <repo/> aktiviert"
+      },
+      "updated": {
+        "actor": "<actor/> hat <repo/> aktualisiert",
+        "self": "<repo/> aktualisiert"
+      }
+    }
+  },
+  "work": {
+    "subscriptions": "Abonnements",
+    "stateTabs": "Status der Arbeitselemente",
+    "filter": {
+      "label": "Arbeit filtern",
+      "yourProjects": "Deine Projekte",
+      "assigned": "Dir zugewiesen",
+      "createdBy": "Von dir erstellt",
+      "mentioned": "Erwähnungen",
+      "reviewRequested": "Review angefordert",
+      "reviewedBy": "Von dir reviewt"
+    },
+    "subscriptionType": "Art des Abonnements",
+    "issuesAndMergeRequests": "Issues und Merge-Requests",
+    "search": "Arbeitselemente durchsuchen",
+    "searchPlaceholder": "Arbeitselemente durchsuchen …",
+    "sort": {
+      "label": "Arbeitselemente sortieren",
+      "recentupdate": "Zuletzt aktualisiert",
+      "latest": "Neueste zuerst",
+      "oldest": "Älteste zuerst",
+      "leastupdate": "Am längsten nicht aktualisiert",
+      "mostcomment": "Meiste Kommentare",
+      "leastcomment": "Wenigste Kommentare",
+      "nearduedate": "Nächste Fälligkeit",
+      "farduedate": "Späteste Fälligkeit"
+    },
+    "meta": "{{project}} · #{{number}} · {{user}} · Aktualisiert {{date}}",
+    "state": {
+      "open": "Offen",
+      "closed": "Geschlossen"
+    },
+    "empty": "Keine passenden Arbeitselemente",
+    "board": "Issue-Board",
+    "allBoards": "Alle Boards",
+    "labels": "Label-IDs (kommagetrennt)"
+  },
+  "notifications": {
+    "sections": "Bereiche der Benachrichtigungen",
+    "inbox": "Posteingang",
+    "watching": "Beobachtet",
+    "markAllRead": "Alle gelesen",
+    "stateTabs": "Status der Benachrichtigungen",
+    "unread": "Ungelesen",
+    "read": "Gelesen",
+    "pin": "Anheften",
+    "unpin": "Loslösen",
+    "markRead": "Als gelesen markieren",
+    "markUnread": "Als ungelesen markieren",
+    "emptyTitle": "Du bist auf dem neuesten Stand",
+    "emptyUnread": "Keine ungelesenen Benachrichtigungen.",
+    "emptyRead": "Keine gelesenen Benachrichtigungen.",
+    "emptyOther": "Keine Benachrichtigungen („{{state}}“)."
+  },
+  "watching": {
+    "title": "Beobachtete Projekte",
+    "search": "Beobachtete Projekte durchsuchen",
+    "searchPlaceholder": "Beobachtete Projekte durchsuchen …",
+    "unwatch": "Nicht mehr beobachten",
+    "empty": "Keine beobachteten Projekte"
+  },
+  "milestones": {
+    "stateTabs": "Status der Meilensteine",
+    "search": "Meilensteine durchsuchen",
+    "searchPlaceholder": "Meilensteine durchsuchen …",
+    "project": "Projekt",
+    "progress": "Fortschritt von {{title}}",
+    "closedIssues_one": "{{closed}} von {{count}} Issue geschlossen",
+    "closedIssues_other": "{{closed}} von {{count}} Issues geschlossen",
+    "empty": "Keine passenden Meilensteine",
+    "selectedProjects": "Repositorys auswählen",
+    "sort": "Meilensteine sortieren",
+    "sorts": {
+      "soonestduedate": "Nächste Fälligkeit",
+      "furthestduedate": "Späteste Fälligkeit",
+      "leastcomplete": "Am wenigsten abgeschlossen",
+      "mostcomplete": "Am weitesten abgeschlossen",
+      "mostissues": "Meiste Issues",
+      "leastissues": "Wenigste Issues"
+    }
+  },
+  "codeSearch": {
+    "title": "Code durchsuchen",
+    "ownerTitle": "Code von {{owner}} durchsuchen",
+    "placeholder": "Code durchsuchen …",
+    "mode": "Suchmodus",
+    "modes": {
+      "exact": "Exakte Übereinstimmung",
+      "union": "Beliebiges Wort",
+      "regexp": "Regulärer Ausdruck",
+      "fuzzy": "Unscharfe Suche"
+    },
+    "language": "Sprache",
+    "allLanguages": "Alle Sprachen",
+    "disabled": "Die Code-Suche ist nicht aktiviert",
+    "disabledHint": "Deine Administration kann den Repository-Indexer aktivieren, um projektübergreifend zu suchen.",
+    "unavailable": "Der Code-Index ist vorübergehend nicht verfügbar",
+    "empty": "Kein passender Code",
+    "prompt": "Projektübergreifend suchen"
+  },
+  "users": {
+    "title": "Benutzer erkunden",
+    "search": "Benutzer durchsuchen",
+    "searchPlaceholder": "Benutzer durchsuchen …",
+    "empty": "Keine Benutzer vorhanden"
+  },
+  "profile": {
+    "tabs": {
+      "overview": "Übersicht",
+      "activity": "Aktivität",
+      "repositories": "Projekte",
+      "stars": "Favorisierte Projekte",
+      "watching": "Beobachtet",
+      "followers": "Follower",
+      "following": "Folgt",
+      "feed": "ActivityPub-Feed"
+    },
+    "edit": "Profil bearbeiten",
+    "follow": "Folgen",
+    "unfollow": "Nicht mehr folgen",
+    "actions": "Profilaktionen",
+    "more": "Mehr",
+    "reportAbuse": "Missbrauch melden",
+    "confirmBlock": "{{name}} blockieren?",
+    "confirmUnblock": "Blockierung von {{name}} aufheben?",
+    "blockUser": "Benutzer blockieren",
+    "unblockUser": "Blockierung aufheben",
+    "about": "Über",
+    "info": "Info",
+    "joined": "Dabei seit {{date}}",
+    "followers_one": "{{count}} Follower",
+    "followers_other": "{{count}} Follower",
+    "following_one": "folgt {{count}}",
+    "following_other": "folgt {{count}}",
+    "sections": "Profilbereiche",
+    "searchProjects": "Projekte durchsuchen",
+    "searchProjectsPlaceholder": "Projekte durchsuchen …",
+    "viewAll": "Alle anzeigen",
+    "noProjects": "Keine Projekte vorhanden",
+    "keys": "Öffentliche SSH-Schlüssel",
+    "gpg": "Öffentliche GPG-Schlüssel",
+    "adminDetails": "Benutzerdetails",
+    "rss": "RSS-Feed",
+    "atom": "Atom-Feed",
+    "packages": "Pakete",
+    "openIDs": "OpenID-Identitäten",
+    "badges": "Abzeichen",
+    "feedEmpty": "Noch keine föderierte Aktivität.",
+    "originalSource": "Originalquelle",
+    "signedIn": "Angemeldete Benutzer"
+  },
+  "organization": {
+    "documentTitle": {
+      "projects": "Projekte · {{org}}",
+      "members": "Mitglieder · {{org}}",
+      "teams": "Teams · {{org}}",
+      "settings": "Einstellungen · {{org}}"
+    },
+    "name": "Name der Organisation",
+    "allowTeamAccessChange": "Projektadministratoren dürfen den Teamzugriff ändern",
+    "visibility": {
+      "label": "Sichtbarkeit der Organisation",
+      "public": "Öffentlich",
+      "publicDescription": "Für alle sichtbar",
+      "limited": "Eingeschränkt",
+      "limitedDescription": "Für angemeldete Benutzer sichtbar",
+      "private": "Privat",
+      "privateDescription": "Für Mitglieder sichtbar"
+    },
+    "new": {
+      "title": "Neue Organisation",
+      "description": "Organisiere gemeinsame Projekte und verwalte den Zugriff über Teams.",
+      "creating": "Wird erstellt …",
+      "create": "Organisation erstellen"
+    },
+    "sections": "Bereiche der Organisation",
+    "newProject": "Neues Projekt",
+    "searchProjects": "Projekte der Organisation durchsuchen",
+    "searchProjectsPlaceholder": "Projekte der Organisation durchsuchen …",
+    "members": {
+      "leave": "Organisation verlassen",
+      "confirmLeave": "{{org}} verlassen?",
+      "addToTeams": "Zu Teams hinzufügen",
+      "invite": "Mitglied einladen",
+      "add": "Mitglied hinzufügen",
+      "owner": "Eigentümer",
+      "member": "Mitglied",
+      "actions": "Aktionen für {{name}}",
+      "manage": "Verwalten",
+      "makePrivate": "Mitgliedschaft verbergen",
+      "makePublic": "Mitgliedschaft öffentlich machen",
+      "confirmRemove": "{{name}} aus {{org}} entfernen?",
+      "remove": "Mitglied entfernen",
+      "twoFactor": "Zwei-Faktor-Authentifizierung",
+      "twoFactorEnabled": "Aktiviert",
+      "twoFactorDisabled": "Nicht aktiviert"
+    },
+    "teams": {
+      "title": "Teams",
+      "new": "Neues Team",
+      "newTitle": "Neues Team · {{org}}",
+      "members_one": "{{count}} Mitglied",
+      "members_other": "{{count}} Mitglieder",
+      "projects_one": "{{count}} Projekt",
+      "projects_other": "{{count}} Projekte",
+      "permission": {
+        "none": "kein Zugriff",
+        "read": "Lesen",
+        "write": "Schreiben",
+        "admin": "Administrator",
+        "owner": "Eigentümer"
+      },
+      "notFound": "Team nicht gefunden",
+      "edit": "Team bearbeiten",
+      "confirmLeave": "{{team}} verlassen?",
+      "leave": "Team verlassen",
+      "join": "Team beitreten",
+      "sections": "Bereiche des Teams",
+      "invite": "Einladen",
+      "add": "Hinzufügen",
+      "confirmRemove": "{{name}} aus {{team}} entfernen?",
+      "pendingInvitations": "Ausstehende Einladungen",
+      "invited": "Eingeladen {{date}}",
+      "cancelInvitation": "Einladung zurückziehen",
+      "allProjectsAccess": "Dieses Team hat Zugriff auf alle Projekte der Organisation.",
+      "projectName": "Projektname",
+      "projectPlaceholder": "{{org}}/projektname",
+      "addProject": "Hinzufügen",
+      "editTitle": "{{team}} bearbeiten",
+      "name": "Teamname",
+      "projectAccess": "Projektzugriff",
+      "selectedProjects": "Ausgewählte Projekte",
+      "role": "Teamrolle",
+      "customAccess": "Individueller Zugriff",
+      "customAccessDescription": "Zugriff für jede Projektfunktion festlegen",
+      "administrator": "Administrator",
+      "administratorDescription": "Alle Projektfunktionen und Einstellungen verwalten",
+      "canCreateProjects": "Mitglieder dürfen Projekte in der Organisation erstellen",
+      "permissions": "Projektberechtigungen",
+      "unitAccess": "Zugriff",
+      "noAccess": "Kein Zugriff",
+      "read": "Lesen",
+      "write": "Schreiben",
+      "create": "Team erstellen",
+      "save": "Team speichern",
+      "confirmDelete": "Team {{team}} löschen? Seine Mitglieder verlieren den Zugriff, den dieses Team gewährt.",
+      "delete": "Team löschen",
+      "addAll": "Alle Repositorys hinzufügen",
+      "removeAll": "Alle Repositorys entfernen",
+      "confirmAll": "Diese Aktion auf alle Repositorys der Organisation anwenden?",
+      "unitsTitle": "Berechtigungen der Bereiche",
+      "unit": "Bereich",
+      "readAccess": "Lesen",
+      "writeAccess": "Schreiben",
+      "adminAccess": "Administrator"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "navigation": "Einstellungen der Organisation",
+      "nav": {
+        "general": "Allgemein",
+        "avatar": "Avatar",
+        "labels": "Labels",
+        "applications": "Anwendungen",
+        "hooks": "Webhooks",
+        "runners": "Runner",
+        "secrets": "Secrets",
+        "variables": "Variablen",
+        "storage": "Speichernutzung",
+        "blocked": "Blockierte Benutzer",
+        "delete": "Organisation löschen",
+        "packages": "Pakete"
+      },
+      "general": "Allgemeine Einstellungen",
+      "generalDescription": "Aktualisiere das Profil und die Sichtbarkeit dieser Organisation.",
+      "displayName": "Anzeigename",
+      "saved": "Einstellungen der Organisation gespeichert.",
+      "maxRepositories": "Maximale Repositorys (−1 für unbegrenzt)"
+    },
+    "avatar": {
+      "title": "Avatar der Organisation",
+      "description": "Wähle ein Bild, das deine Organisation repräsentiert.",
+      "current": "Aktueller Avatar der Organisation",
+      "image": "Avatarbild",
+      "saved": "Avatar aktualisiert.",
+      "upload": "Avatar hochladen",
+      "remove": "Avatar entfernen"
+    },
+    "delete": {
+      "description": "Dadurch werden {{org}} und seine Teams dauerhaft entfernt. Übertrage oder lösche vorher seine Projekte und Pakete.",
+      "confirm": "Gib {{org}} zur Bestätigung ein"
+    },
+    "blocked": {
+      "block": "Benutzer blockieren",
+      "unblock": "Blockierung aufheben",
+      "empty": "Keine blockierten Benutzer"
+    },
+    "labels": {
+      "title": "Labels der Organisation",
+      "new": "Neues Label",
+      "description": "Diese Labels werden von allen Projekten der Organisation gemeinsam genutzt.",
+      "name": "Label-Name",
+      "color": "Farbe",
+      "exclusive": "Exklusives Label",
+      "save": "Label speichern",
+      "confirmDelete": "Label {{name}} löschen?",
+      "confirmDeleteText": "Dadurch wird das Label in der gesamten Organisation von Issues und Merge-Requests entfernt.",
+      "empty": "Keine Labels in der Organisation",
+      "useTemplate": "Label-Vorlage verwenden",
+      "template": "Label-Vorlage",
+      "addTemplate": "Labels aus Vorlage hinzufügen"
+    },
+    "applications": {
+      "title": "OAuth-Anwendungen",
+      "confirmDelete": "Anwendung {{name}} löschen?",
+      "confirmDeleteText": "Anwendungen, die diesen Client verwenden, können sich nicht mehr authentifizieren.",
+      "add": "Anwendung hinzufügen",
+      "name": "Name der Anwendung",
+      "redirectUris": "Weiterleitungs-URIs",
+      "confidential": "Vertraulicher Client",
+      "create": "Anwendung erstellen"
+    }
+  },
+  "invitation": {
+    "title": "Team-Einladung",
+    "join": "{{name}} beitreten",
+    "text": "{{inviter}} hat dich in das Team {{team}} eingeladen.",
+    "accept": "Einladung annehmen"
+  },
+  "organizations": {
+    "search": "Organisationen durchsuchen",
+    "searchPlaceholder": "Organisationen durchsuchen …",
+    "viewProjects": "Projekte anzeigen",
+    "empty": "Keine Organisationen gefunden",
+    "emptyText": "Mit Organisationen teilen Teams Projekte und verwalten den Zugriff gemeinsam."
+  },
+  "storage": {
+    "title": "Speichernutzung",
+    "byType": "Speicher nach Typ",
+    "byTypeDescription": "Aktuell belegter Speicher in diesem Namensraum.",
+    "groupDescription": "Speicherlimits, die deine Administration festgelegt hat.",
+    "unlimited": "Unbegrenzt",
+    "used": "Belegter Speicher für {{name}}",
+    "disabled": "Speicherkontingente sind nicht aktiviert",
+    "disabledHint": "Die Administration kann die Speichererfassung und Kontingente für diese Instanz aktivieren.",
+    "subjects": {
+      "all": "Gesamter Speicher",
+      "reposAll": "Repositorys",
+      "reposPublic": "Öffentliche Repositorys",
+      "reposPrivate": "Private Repositorys",
+      "gitAll": "Git-Daten",
+      "assetsAll": "Assets",
+      "attachmentsAll": "Anhänge",
+      "attachmentsIssues": "Issue-Anhänge",
+      "attachmentsReleases": "Release-Anhänge",
+      "artifacts": "Job-Artefakte",
+      "packages": "Pakete",
+      "wiki": "Wikis"
+    }
+  },
+  "boards": {
+    "parity": {
+      "stateTabs": "Board-Status",
+      "open": "Offen",
+      "closed": "Geschlossen",
+      "search": "Boards suchen",
+      "searchButton": "Suchen",
+      "sortLabel": "Boards sortieren",
+      "sort": {
+        "newest": "Neueste",
+        "oldest": "Älteste",
+        "recentupdate": "Zuletzt aktualisiert",
+        "leastupdate": "Am längsten nicht aktualisiert"
+      },
+      "openCount": "{{count}} offen",
+      "closedCount": "{{count}} geschlossen",
+      "cardStyle": "Kartenstil",
+      "textOnly": "Nur Text",
+      "imagesAndText": "Bilder und Text"
+    },
+    "documentTitle": "Boards · {{owner}}",
+    "newTitle": "Neues Issue-Board",
+    "editTitle": "Issue-Board bearbeiten",
+    "new": "Neues Board",
+    "stateTabs": "Board-Status",
+    "search": "Boards durchsuchen",
+    "searchPlaceholder": "Boards durchsuchen …",
+    "empty": "Keine passenden Boards",
+    "name": "Board-Name",
+    "layout": "Anfangslayout",
+    "cardStyle": "Kartenstil",
+    "textOnly": "Nur Text",
+    "imagesAndText": "Bilder und Text",
+    "save": "Board speichern",
+    "create": "Board erstellen",
+    "invalidReference": "Gib eine Issue-Referenz wie {{owner}}/projekt#12 ein.",
+    "issueNotFound": "Issue nicht gefunden.",
+    "notFound": "Board nicht gefunden",
+    "all": "Alle Boards",
+    "filter": "Board filtern",
+    "filterPlaceholder": "Nach Titel/Label filtern …",
+    "actions": "Board-Aktionen",
+    "edit": "Board bearbeiten",
+    "editTrigger": "Bearbeiten",
+    "newColumn": "Neue Spalte",
+    "reopen": "Board wieder öffnen",
+    "close": "Board schließen",
+    "addExisting": "Vorhandenes Issue oder vorhandenen Merge-Request hinzufügen",
+    "reference": "Issue-Referenz",
+    "referencePlaceholder": "{{owner}}/projekt#12",
+    "addToBoard": "Zum Board hinzufügen",
+    "editColumn": "Spalte bearbeiten",
+    "columnTitle": "Spaltentitel",
+    "columnColor": "Spaltenfarbe",
+    "saveColumn": "Spalte speichern",
+    "columnActions": "Aktionen für Spalte {{title}}",
+    "setDefault": "Als Standard festlegen",
+    "moveLeft": "Nach links verschieben",
+    "moveRight": "Nach rechts verschieben",
+    "confirmDeleteColumn": "{{title}} löschen? Die Issues darin kommen zurück in die Standardspalte.",
+    "deleteColumn": "Spalte löschen",
+    "moveIssue": "{{title}} in Spalte verschieben",
+    "removeFromBoard": "Vom Board entfernen",
+    "emptyColumn": "Noch keine Issues",
+    "confirmDelete": "Board {{title}} löschen?",
+    "confirmDeleteText": "Das Board und seine Spalten werden gelöscht. Die Issues bleiben in ihren Projekten."
+  },
+  "releases": {
+    "documentTitle": "Releases · {{name}}",
+    "title": "Releases",
+    "latest": "Neuestes Release",
+    "new": "Neues Release",
+    "search": "Releases durchsuchen",
+    "searchPlaceholder": "Releases durchsuchen …",
+    "draft": "Entwurf",
+    "prerelease": "Pre-Release",
+    "noNotes": "Keine Release-Notes.",
+    "assets": "Assets",
+    "sourceZip": "Quellcode (zip)",
+    "sourceTarGz": "Quellcode (tar.gz)",
+    "noMatches": "Keine passenden Releases",
+    "empty": "Noch keine Releases",
+    "emptyHint": "Veröffentliche eine Version deines Projekts mit einem Tag und Release-Notes.",
+    "notCreated": "Das Release wurde nicht erstellt.",
+    "tagName": "Tag-Name",
+    "target": "Ziel-Branch oder Commit",
+    "releaseTitle": "Release-Titel",
+    "releaseTitlePlaceholder": "Version 1.0",
+    "notes": "Release-Notes",
+    "isPrerelease": "Dies ist ein Pre-Release",
+    "saveDraft": "Als Entwurf speichern",
+    "create": "Release erstellen",
+    "tags": "Tags",
+    "feed": "Release-Feed",
+    "downloads_one": "{{count}} Download",
+    "downloads_other": "{{count}} Downloads"
+  },
+  "wiki": {
+    "unavailable": "Diese Wiki-Seite ist für deine Sitzung nicht verfügbar.",
+    "notSaved": "Die Seite wurde nicht gespeichert.",
+    "documentTitle": "Wiki · {{name}}",
+    "title": "Wiki",
+    "newTitle": "Neue Wiki-Seite",
+    "editTitle": "Wiki-Seite bearbeiten",
+    "confirmDelete": "Wiki-Seite {{title}} löschen?",
+    "newPage": "Neue Seite",
+    "viewingRevision": "Du siehst die Revision <revision/>. <anchor>Aktuelle Seite anzeigen</anchor>",
+    "emptyTitle": "Dokumentiere dein Projekt",
+    "emptyText": "Erstelle eine Wiki-Seite für Anleitungen, Projektwissen und Teamdokumentation.",
+    "pages": "Seiten",
+    "pageTitle": "Seitentitel",
+    "pageContent": "Seiteninhalt",
+    "commitMessage": "Commit-Nachricht",
+    "commitMessagePlaceholder": "Beschreibe deine Änderungen",
+    "save": "Seite speichern",
+    "edited_one": "{{name}} hat diese Seite {{date}} bearbeitet · {{count}} Revision",
+    "edited_other": "{{name}} hat diese Seite {{date}} bearbeitet · {{count}} Revisionen",
+    "clone": "Wiki klonen",
+    "contents": "Inhaltsverzeichnis",
+    "filterPages": "Seiten filtern"
+  },
+  "pipelines": {
+    "documentTitle": "Pipelines · {{name}}",
+    "title": "Pipelines",
+    "latest": "Neueste Pipeline",
+    "run": "Pipeline ausführen",
+    "enableWorkflow": "Workflow aktivieren",
+    "disableWorkflow": "Workflow deaktivieren",
+    "repository": "Repository",
+    "all": "Alle Pipelines",
+    "workflow": "Workflow",
+    "allWorkflows": "Alle Workflows",
+    "statusFilter": "Pipeline-Status",
+    "allStatuses": "Alle Status",
+    "statusOption": {
+      "success": "Erfolgreich",
+      "failure": "Fehlgeschlagen",
+      "cancelled": "Abgebrochen",
+      "skipped": "Übersprungen",
+      "waiting": "Wartend",
+      "running": "Läuft",
+      "blocked": "Blockiert"
+    },
+    "status": {
+      "success": "Erfolgreich",
+      "failure": "Fehlgeschlagen",
+      "cancelled": "Abgebrochen",
+      "skipped": "Übersprungen",
+      "waiting": "Wartend",
+      "running": "Läuft",
+      "blocked": "Blockiert",
+      "unknown": "Unbekannt"
+    },
+    "triggeredBy": "Ausgelöst von",
+    "allUsers": "Alle Benutzer",
+    "noMatches": "Keine passenden Pipelines",
+    "empty": "Noch keine Pipelines",
+    "noMatchesHint": "Wähle andere Filter, um eine Pipeline zu finden.",
+    "emptyHint": "Füge einen Workflow in <path/> hinzu und verbinde einen Forgejo-Runner, um deine Builds auszuführen."
+  },
+  "pipeline": {
+    "title": "Pipeline #{{run}}",
+    "reviewApproval": "Workflow-Freigabe prüfen",
+    "removePriority": "Priorität entfernen",
+    "prioritize": "Pipeline priorisieren",
+    "cancel": "Pipeline abbrechen",
+    "confirmDelete": "Pipeline #{{run}} löschen?",
+    "retry": "Erneut ausführen",
+    "jobs": "Jobs",
+    "attempt": "Job-Versuch",
+    "attemptOption": "Versuch {{number}} · {{status}}",
+    "downloadLog": "Log herunterladen",
+    "retryJob": "Job erneut ausführen",
+    "noLog": "Noch keine Log-Ausgabe.",
+    "waitingTitle": "Wartet auf einen Runner",
+    "waitingText": "Die Job-Schritte erscheinen, sobald ein Runner diesen Job startet.",
+    "prioritized": "Priorisiert",
+    "workflowRuns": "Alle Läufe dieses Workflows",
+    "timestamps": "Zeitstempel anzeigen",
+    "seconds": "Sekunden anzeigen",
+    "fullScreen": "Logs im Vollbild",
+    "exitFullScreen": "Vollbild verlassen"
+  },
+  "projectSettings": {
+    "documentTitle": "Allgemeine Einstellungen · {{name}}",
+    "adminRequired": "Für die Projekteinstellungen sind Administratorrechte erforderlich",
+    "title": "Allgemeine Einstellungen",
+    "details": "Projektdetails",
+    "detailsDescription": "Aktualisiere die Beschreibung und Website, die in deinem Projekt angezeigt werden.",
+    "name": "Projektname",
+    "visibilityPrivate": "Sichtbarkeit: Privat",
+    "visibilityPublic": "Sichtbarkeit: Öffentlich",
+    "saved": "Projektdetails gespeichert."
+  },
+  "context": {
+    "label": "Übersicht wechseln",
+    "personal": "Deine Arbeit"
+  },
+  "repoFilters": {
+    "projectType": "Projekttyp",
+    "types": {
+      "all": "Alle Typen",
+      "source": "Quellen",
+      "fork": "Forks",
+      "mirror": "Mirrors",
+      "collaborative": "Gemeinsam"
+    },
+    "sort": "Sortierung",
+    "archived": "Archiviert",
+    "fork": "Fork",
+    "mirror": "Mirror",
+    "template": "Vorlage",
+    "private": "Privat",
+    "language": "Sprache",
+    "yes": "Ja",
+    "no": "Nein",
+    "sorts": {
+      "recentupdate": "Zuletzt aktualisiert",
+      "leastupdate": "Am längsten unverändert",
+      "newest": "Neueste",
+      "oldest": "Älteste",
+      "alphabetically": "Name, A–Z",
+      "reversealphabetically": "Name, Z–A",
+      "moststars": "Meiste Favoriten",
+      "feweststars": "Wenigste Favoriten",
+      "mostforks": "Meiste Forks",
+      "fewestforks": "Wenigste Forks",
+      "size": "Kleinste",
+      "reversesize": "Größte"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "loading": "Wird geladen …",
+  "pagination": {
+    "results_one": "{{count}} Ergebnis",
+    "results_other": "{{count}} Ergebnisse",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "page": "Seite {{page}}"
+  },
+  "copy": {
+    "label": "Kopieren",
+    "copied": "Kopiert",
+    "manual": "Bitte manuell markieren und kopieren"
+  },
+  "select": {
+    "placeholder": "Auswählen …",
+    "searchPlaceholder": "Suchen …",
+    "searchLabel": "{{label}} durchsuchen",
+    "noMatches": "Keine Treffer gefunden",
+    "noOptions": "Keine Optionen verfügbar"
+  },
+  "theme": {
+    "appearance": "Erscheinungsbild",
+    "colorMode": "Farbmodus",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "systemHint": "„System“ folgt dem Erscheinungsbild deines Geräts."
+  },
+  "code": {
+    "line": "Zeile {{number}}"
+  },
+  "api": {
+    "requestFailed": "Die Anfrage ist fehlgeschlagen ({{status}}). Bitte versuche es erneut.",
+    "notFound": "Diese Ressource existiert nicht oder du hast keinen Zugriff darauf.",
+    "sessionExpired": "Deine Sitzung erfordert deine Aufmerksamkeit. Melde dich an, um fortzufahren.",
+    "notCompleted": "Die Anfrage konnte nicht abgeschlossen werden.",
+    "pageUnavailable": "Diese Seite ist für deine aktuelle Sitzung nicht verfügbar.",
+    "changesUnavailable": "Diese Änderungen konnten nicht geladen werden. Prüfe deinen Zugriff und versuche es erneut.",
+    "changesTooLarge": "Diese Änderungen überschreiten das Vorschaulimit von 2 MB. Lade den Diff herunter, um ihn lokal zu prüfen."
+  },
+  "markup": {
+    "taskFailed": "Die Aufgabenliste konnte nicht aktualisiert werden."
+  }
+}

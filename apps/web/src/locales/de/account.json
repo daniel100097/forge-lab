@@ -1,0 +1,564 @@
+{
+  "auth": {
+    "tagline": "Dein selbst gehosteter Git-Arbeitsbereich",
+    "language": "Sprache",
+    "documentTitle": {
+      "forgot": "Passwort-Wiederherstellung",
+      "login": "Anmelden",
+      "verification": "Kontobestätigung"
+    },
+    "errors": {
+      "unavailable": "Diese Anmeldemethode ist nicht verfügbar.",
+      "resetLimited": "Vor Kurzem wurde bereits eine E-Mail zum Zurücksetzen gesendet. Bitte warte, bevor du es erneut versuchst.",
+      "prohibited": "Dieses Konto kann sich nicht anmelden. Wende dich an deinen Administrator.",
+      "failed": "Die Anmeldung konnte nicht abgeschlossen werden. Überprüfe deine Angaben und versuche es erneut."
+    },
+    "resetSent": "Falls diese Adresse zu einem Konto gehört, ist eine E-Mail zum Zurücksetzen des Passworts unterwegs.",
+    "titles": {
+      "login": "Anmelden",
+      "twoFactor": "Nur noch ein Schritt.",
+      "recovery": "Verwende einen Wiederherstellungscode.",
+      "password": "Wähle ein neues Passwort.",
+      "forgot": "Passwort vergessen?",
+      "verification": "Kontobestätigung"
+    },
+    "descriptions": {
+      "login": "Verwende dein Forgejo-Konto, um fortzufahren.",
+      "twoFactor": "Gib den sechsstelligen Code aus deiner Authenticator-App ein.",
+      "recovery": "Gib deinen einmaligen Wiederherstellungscode ein, um die Anmeldung abzuschließen.",
+      "password": "Dein Konto benötigt ein neues Passwort, bevor du fortfahren kannst.",
+      "forgot": "Wir senden dir einen Link, mit dem du wieder in deinen Arbeitsbereich gelangst."
+    },
+    "backToSignIn": "Zurück zur Anmeldung",
+    "recoveryDisabled": "Die Wiederherstellung per E-Mail ist auf dieser Instanz deaktiviert. Dein Administrator kann dein Passwort zurücksetzen.",
+    "chooseProvider": "Wähle unten einen Identitätsanbieter, um dich anzumelden.",
+    "invalidLink": "Dieser Bestätigungslink ist ungültig. Kehre zur Anmeldung zurück, um fortzufahren.",
+    "usernameOrEmail": "Benutzername oder E-Mail",
+    "newPassword": "Neues Passwort",
+    "password": "Passwort",
+    "passwordPlaceholder": "Gib dein Passwort ein",
+    "hidePassword": "Passwort verbergen",
+    "showPassword": "Passwort anzeigen",
+    "confirmPassword": "Passwort bestätigen",
+    "rememberDevice": "Dieses Gerät merken",
+    "forgotPassword": "Passwort vergessen?",
+    "email": "E-Mail-Adresse",
+    "authenticationCode": "Authentifizierungscode",
+    "recoveryCode": "Wiederherstellungscode",
+    "submit": {
+      "login": "Anmelden",
+      "forgot": "Link zum Zurücksetzen senden",
+      "password": "Passwort aktualisieren",
+      "verify": "Bestätigen und fortfahren"
+    },
+    "useRecoveryInstead": "Stattdessen einen Wiederherstellungscode verwenden",
+    "exploreProjects": "Projekte erkunden",
+    "restriction": {
+      "title": "Dein Konto erfordert deine Aufmerksamkeit.",
+      "securitySetup": "Dein Administrator verlangt die Zwei-Faktor-Authentifizierung. Richte deinen Authenticator ein, um fortzufahren.",
+      "inactive": "Dieses Konto ist inaktiv oder gesperrt. Wende dich an deinen Administrator, um fortzufahren.",
+      "activate": "Konto aktivieren",
+      "setUp": "Authentifizierung einrichten",
+      "signOut": "Abmelden"
+    },
+    "username": "Benutzername",
+    "captcha": {
+      "loadFailed": "Das Verifizierungs-Widget konnte nicht geladen werden. Lade die Seite neu.",
+      "reload": "Verifizierungsbild neu laden",
+      "characters": "Verifizierungszeichen",
+      "frameTitle": "Verifizierung"
+    },
+    "providers": {
+      "orContinueWith": "Oder weiter mit",
+      "openid": "Mit OpenID anmelden",
+      "register": "Neu in diesem Arbeitsbereich? <anchor>Konto erstellen</anchor>"
+    },
+    "extras": {
+      "invalidRedirect": "Ungültiges Weiterleitungsprotokoll.",
+      "invalidLink": "Dieser Link ist ungültig oder abgelaufen.",
+      "incorrectPassword": "Falsches Passwort.",
+      "resendLimited": "Vor Kurzem wurde bereits eine E-Mail gesendet. Bitte warte, bevor du es erneut versuchst.",
+      "manualActivation": "Dein Konto wurde erstellt. Ein Administrator muss es aktivieren, bevor du dich anmelden kannst.",
+      "checkEmail": "Prüfe dein Postfach, um dein Konto zu aktivieren.",
+      "received": "Deine Anfrage ist eingegangen.",
+      "webauthnUnsupported": "Sicherheitsschlüssel erfordern HTTPS oder localhost und einen kompatiblen Browser.",
+      "webauthnCancelled": "Die Authentifizierung mit dem Sicherheitsschlüssel wurde abgebrochen.",
+      "titles": {
+        "register": "Konto erstellen",
+        "recoverAccount": "Passwort zurücksetzen",
+        "activate": "Konto aktivieren",
+        "activateEmail": "E-Mail-Adresse bestätigen",
+        "openid": "Mit OpenID anmelden",
+        "openidConnect": "Konto verbinden",
+        "openidRegister": "OpenID-Konto erstellen",
+        "linkAccount": "Konto verknüpfen",
+        "webauthn": "Mit Sicherheitsschlüssel bestätigen",
+        "authorize": "Anwendung autorisieren"
+      },
+      "registrationDisabled": "Die Registrierung ist auf dieser Instanz deaktiviert.",
+      "webauthnHint": "Verwende den Sicherheitsschlüssel, der für dein Konto registriert ist.",
+      "useSecurityKey": "Sicherheitsschlüssel verwenden",
+      "useAuthenticatorCode": "Authenticator-Code verwenden",
+      "useRecoveryCode": "Wiederherstellungscode verwenden",
+      "existingAccount": "Bestehendes Konto",
+      "newAccount": "Neues Konto",
+      "openidOptions": "OpenID-Kontooptionen",
+      "openidUri": "OpenID-URI",
+      "connecting": "{{openid}} wird verbunden",
+      "adminActivation": "Ein Administrator muss dieses Konto aktivieren.",
+      "consent": {
+        "request": "<app>{{name}}</app> möchte auf dein Konto zugreifen.",
+        "redirect": "Nach der Autorisierung kehrst du zu {{uri}} zurück.",
+        "scope": "Angeforderte Berechtigungen: <code>{{scope}}</code>",
+        "basicAccess": "Grundlegender Kontozugriff",
+        "authorize": "Autorisieren",
+        "deny": "Ablehnen",
+        "failed": "Autorisierung fehlgeschlagen",
+        "failedHelp": "Die Anwendung hat eine ungültige Anfrage gesendet. Wende dich an die Betreuer der Anwendung, die du autorisieren wolltest."
+      },
+      "submit": {
+        "register": "Konto erstellen",
+        "reset": "Passwort zurücksetzen",
+        "continue": "Weiter"
+      },
+      "linkOptions": "Optionen zum Verknüpfen des Kontos",
+      "openidDescription": "Gib deine OpenID-URI ein, zum Beispiel alice.openid.example.org oder https://openid.example.org/alice."
+    },
+    "activation": {
+      "disabled": "Die E-Mail-Bestätigung ist auf dieser Instanz deaktiviert. Wende dich an deine Administration, um dein Konto aktivieren zu lassen.",
+      "limited": "Du hast vor Kurzem bereits eine Aktivierungs-E-Mail angefordert. Bitte warte 3 Minuten und versuche es dann erneut.",
+      "sent": "Eine neue Bestätigungs-E-Mail wurde an <email>{{email}}</email> gesendet. Folge innerhalb der nächsten {{lives}} dem Link darin, um dein Konto zu aktivieren.",
+      "resend": "Aktivierungs-E-Mail erneut senden",
+      "changeSummary": "Adresse ändern, an die die Aktivierungs-E-Mail gesendet wird",
+      "changeDescription": "Falls du bei der Registrierung eine falsche Adresse angegeben hast, kannst du sie hier ändern. Die Aktivierungs-E-Mail wird dann stattdessen an die neue Adresse gesendet.",
+      "changeSubmit": "Adresse ändern und erneut senden"
+    }
+  },
+  "avatar": {
+    "title": "Profilbild",
+    "upload": "Avatar hochladen",
+    "remove": "Avatar entfernen",
+    "updated": "Profilbild aktualisiert.",
+    "lookup": "Avatar anhand der E-Mail-Adresse suchen",
+    "email": "E-Mail-Adresse für den Avatar",
+    "custom": "Eigenen Avatar verwenden",
+    "update": "Avatar aktualisieren",
+    "constraints": "Bilder dürfen bis zu {{size}} groß sein und höchstens {{width}} × {{height}} Pixel haben."
+  },
+  "preferences": {
+    "title": "Präferenzen",
+    "saved": "Präferenzen gespeichert.",
+    "save": "Präferenzen speichern",
+    "theme": {
+      "title": "Farbschema",
+      "description": "Wähle, wie dieser Arbeitsbereich aussieht. Die Auswahl wird in deinem Konto gespeichert und gilt überall, wo du dich anmeldest.",
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "Systemeinstellung folgen",
+      "variant": "Dein Konto verwendet das Forgejo-Theme „{{name}}“. Diese Oberfläche zeigt es in seinen hellen bzw. dunklen Farben an; Varianten für Farbsehschwächen und Gitea-Varianten ändern nur die integrierten Seiten von Forgejo.",
+      "unsupported": "Dein Konto verwendet das Forgejo-Theme „{{name}}“, das diese Oberfläche nicht darstellen kann. Wenn du hier ein Farbschema auswählst, wird es ersetzt.",
+      "serverOnly": "Diese Instanz bietet außerdem Gitea-Themes und Varianten für Farbsehschwächen an. Sie ändern nur die integrierten Seiten von Forgejo und werden daher hier nicht angeboten."
+    },
+    "language": {
+      "title": "Sprache",
+      "description": "Wird für die Oberfläche, Servermeldungen und E-Mail-Benachrichtigungen verwendet. Die Oberfläche ist auf Englisch und Deutsch verfügbar; andere Sprachen gelten für Servermeldungen.",
+      "default": "Standard"
+    },
+    "hints": {
+      "title": "Projekthinweise",
+      "label": "Zusätzliche Hinweise zu Projektfunktionen anzeigen"
+    },
+    "events": {
+      "title": "Aktivitätsereignisse",
+      "description": "Wähle die Arten von Aktivitätsereignissen, die in Diskussionen angezeigt werden sollen.",
+      "types": {
+        "reference": "Referenz",
+        "label": "Label",
+        "milestone": "Meilenstein",
+        "assignee": "Zuweisung",
+        "title": "Titel",
+        "branch": "Branch",
+        "time_tracking": "Zeiterfassung",
+        "deadline": "Fälligkeitsdatum",
+        "dependency": "Abhängigkeit",
+        "lock": "Sperrung",
+        "review_request": "Review-Anfrage",
+        "pull_request_push": "Merge-Request-Push",
+        "project": "Issue-Board",
+        "issue_ref": "Issue-Referenz"
+      }
+    }
+  },
+  "resources": {
+    "organizations": "Organisationen",
+    "repositories": "Repositorys",
+    "private": "Privat",
+    "public": "Öffentlich",
+    "settings": "Einstellungen",
+    "noOrganizations": "Keine Organisationsmitgliedschaften",
+    "noRepositories": "Keine Repositorys",
+    "unadopted": "Nicht übernommenes Repository",
+    "adopt": "Übernehmen",
+    "confirmDelete": "Nicht übernommenes Repository {{name}} endgültig löschen?",
+    "delete": "Löschen",
+    "previous": "Zurück",
+    "page": "Seite {{page}}",
+    "next": "Weiter",
+    "newOrganization": "Neue Organisation",
+    "leave": "Verlassen",
+    "confirmLeave": "Organisation {{name}} verlassen?"
+  },
+  "integrations": {
+    "title": "Autorisierte Integrationen",
+    "editTitle": "Autorisierte Integration bearbeiten",
+    "newTitle": "Neue autorisierte Integration",
+    "description": "Erlaube einem vertrauenswürdigen Workflow oder Identitätsanbieter, mit ausgewählten Berechtigungen zu handeln.",
+    "name": "Name",
+    "descriptionLabel": "Beschreibung",
+    "audience": "Zielgruppe (Audience)",
+    "issuer": "OIDC-Aussteller",
+    "claimRules": "Claim-Regeln",
+    "sourceRepo": "Workflow-Repository",
+    "workflowFile": "Muster für Workflow-Dateien",
+    "gitRef": "Muster für Git-Referenzen",
+    "events": "Erlaubte Ereignisse",
+    "resource": {
+      "label": "Repository-Zugriff",
+      "all": "Alle Repositorys",
+      "publicOnly": "Nur öffentliche Repositorys",
+      "selected": "Ausgewählte Repositorys"
+    },
+    "selectRepositories": "Repositorys auswählen",
+    "permissions": "Berechtigungen",
+    "allPermissions": "Alle Berechtigungen gewähren",
+    "scope": {
+      "label": "Berechtigung für {{category}}",
+      "none": "Kein Zugriff",
+      "read": "Lesen",
+      "write": "Lesen und schreiben"
+    },
+    "save": "Integration speichern",
+    "cancel": "Abbrechen",
+    "connectActions": "Forgejo Actions verbinden",
+    "connectOidc": "OIDC-Anbieter verbinden",
+    "deleteLabel": "{{name}} löschen",
+    "confirmDelete": "Integration {{name}} löschen?",
+    "empty": "Keine autorisierten Integrationen",
+    "descriptionPlaceholder": "Wird zum Veröffentlichen von Paketen verwendet, wenn …",
+    "sourceRepoHelp": "Forgejo Actions in diesem Repository können die Integration verwenden. Es werden nur Repositorys mit aktivierten Actions angezeigt.",
+    "workflowFileHelp": "Optionales Muster für den Namen der Workflow-Datei ohne Verzeichnis, zum Beispiel testing.yml oder test-*.yml. Leer lassen, um jeden Workflow zu erlauben.",
+    "gitRefHelp": "Optionales Muster für die Git-Referenz, zum Beispiel refs/heads/main oder refs/pull/*/head. Leer lassen, um jede Referenz zu erlauben.",
+    "eventsHelp": "Wenn keine Ereignisse ausgewählt sind, ist jedes Ereignis erlaubt.",
+    "kind": {
+      "actions": "Forgejo Actions",
+      "generic": "OIDC-Anbieter"
+    },
+    "added": "Hinzugefügt am {{date}}",
+    "lastUsed": "Zuletzt verwendet am {{date}}",
+    "noActivity": "Keine aktuelle Aktivität",
+    "edit": "Bearbeiten"
+  },
+  "settings": {
+    "title": "Benutzereinstellungen",
+    "nav": {
+      "profile": "Profil",
+      "preferences": "Präferenzen",
+      "account": "Konto und E-Mails",
+      "security": "Passwort und Sicherheit",
+      "keys": "SSH- und GPG-Schlüssel",
+      "applications": "Anwendungen",
+      "integrations": "Autorisierte Integrationen",
+      "webhooks": "Webhooks",
+      "organizations": "Organisationen",
+      "repositories": "Repositorys",
+      "packages": "Paket-Registry",
+      "storage": "Speichernutzung",
+      "runners": "Runner",
+      "secrets": "Actions-Secrets",
+      "variables": "Actions-Variablen",
+      "blocked": "Blockierte Benutzer"
+    },
+    "saved": "Änderungen gespeichert.",
+    "secret": {
+      "notice": "Kopiere diesen Wert jetzt und bewahre ihn sicher auf. Er wird nicht noch einmal angezeigt.",
+      "copy": "{{label}} kopieren"
+    }
+  },
+  "details": {
+    "documentTitle": "Kontoeinstellungen",
+    "title": "Konto und E-Mails",
+    "emails": {
+      "title": "E-Mail-Adressen",
+      "description": "Verwalte die Adressen, die mit deinem Konto verbunden sind.",
+      "primary": "Primäre E-Mail-Adresse",
+      "verified": "Bestätigt",
+      "unverified": "Nicht bestätigt",
+      "makePrimary": "Als primär festlegen",
+      "resend": "Bestätigung erneut senden",
+      "remove": "{{email}} entfernen",
+      "confirmRemove": "{{email}} entfernen?",
+      "limited": "Vor Kurzem wurde bereits eine E-Mail gesendet. Warte ein paar Minuten, bevor du eine weitere Adresse hinzufügst.",
+      "add": "E-Mail-Adresse hinzufügen",
+      "confirmationSent": "Eine Bestätigungs-E-Mail wurde an {{email}} gesendet. Folge dem Link darin, um die Adresse zu bestätigen.",
+      "pending": "Aktivierung ausstehend",
+      "pendingHint": "Vor Kurzem wurde bereits eine Aktivierungs-E-Mail gesendet. Versuche es in ein paar Minuten erneut."
+    },
+    "notifications": {
+      "title": "E-Mail-Benachrichtigungen",
+      "label": "Einstellung für E-Mail-Benachrichtigungen",
+      "enabled": "Alle Aktivitäten außer deinen eigenen",
+      "andYourOwn": "Alle Aktivitäten einschließlich deiner eigenen",
+      "onMention": "Nur Erwähnungen",
+      "disabled": "Deaktiviert",
+      "save": "Benachrichtigungseinstellung speichern"
+    },
+    "delete": {
+      "title": "Konto löschen",
+      "description": "Lösche dein Konto endgültig. Übertrage oder entferne zuerst deine Repositorys und Organisationsmitgliedschaften.",
+      "summary": "Dieses Konto löschen",
+      "confirm": "Dein Konto endgültig löschen?",
+      "password": "Bestätige dein Passwort",
+      "submit": "Konto endgültig löschen",
+      "withComments": "Dein Konto ist jünger als {{duration}}. Damit keine verwaisten Kommentare zurückbleiben, werden alle deine Kommentare zu Issues und Merge-Requests mit gelöscht."
+    }
+  },
+  "security": {
+    "documentTitle": "Authentifizierung",
+    "title": "Passwort und Sicherheit",
+    "recoveryCode": "Wiederherstellungscode",
+    "password": {
+      "title": "Passwort",
+      "description": "Wähle ein sicheres Passwort, das du nirgendwo sonst verwendest.",
+      "current": "Aktuelles Passwort",
+      "new": "Neues Passwort",
+      "confirm": "Neues Passwort bestätigen",
+      "save": "Passwort speichern"
+    },
+    "twoFactor": {
+      "title": "Zwei-Faktor-Authentifizierung",
+      "description": "Bei der Anmeldung einen Einmalcode verlangen.",
+      "enabled": "Die Zwei-Faktor-Authentifizierung ist aktiviert.",
+      "notEnabled": "Die Zwei-Faktor-Authentifizierung ist nicht aktiviert.",
+      "replace": "Authenticator ersetzen",
+      "confirmRegenerate": "Deinen Wiederherstellungscode ersetzen? Der bisherige Code funktioniert dann nicht mehr.",
+      "regenerate": "Wiederherstellungscode neu generieren",
+      "confirmDisable": "Zwei-Faktor-Authentifizierung deaktivieren?",
+      "disable": "Zwei-Faktor-Authentifizierung deaktivieren",
+      "enable": "Zwei-Faktor-Authentifizierung aktivieren"
+    },
+    "keys": {
+      "title": "Sicherheitsschlüssel",
+      "description": "Schütze dein Konto mit einem Passkey oder einem Hardware-Sicherheitsschlüssel.",
+      "cloneWarning": "Diesen Schlüssel prüfen",
+      "delete": "Sicherheitsschlüssel {{name}} löschen",
+      "confirmDelete": "Sicherheitsschlüssel {{name}} löschen?",
+      "name": "Name des Sicherheitsschlüssels",
+      "namePlaceholder": "Arbeitslaptop",
+      "register": "Sicherheitsschlüssel registrieren",
+      "unsupported": "Sicherheitsschlüssel erfordern einen unterstützten Browser und eine sichere HTTPS-Verbindung.",
+      "cancelled": "Die Registrierung des Sicherheitsschlüssels wurde abgebrochen."
+    },
+    "linked": {
+      "title": "Verknüpfte Konten",
+      "unlink": "Verknüpfung aufheben",
+      "empty": "Es sind keine externen Konten verknüpft.",
+      "connect": "Mit {{provider}} verbinden"
+    },
+    "openid": {
+      "title": "OpenID-Identitäten",
+      "hide": "Im Profil verbergen",
+      "show": "Im Profil anzeigen",
+      "delete": "OpenID {{uri}} löschen",
+      "uri": "OpenID-URI",
+      "connect": "OpenID verbinden"
+    }
+  },
+  "twoFactor": {
+    "incomplete": "Die Einrichtung der Zwei-Faktor-Authentifizierung wurde nicht abgeschlossen.",
+    "title": "Zwei-Faktor-Authentifizierung einrichten",
+    "done": "Fertig",
+    "connect": "Authenticator verbinden",
+    "description": "Scanne diesen QR-Code mit deiner Authenticator-App und gib dann den sechsstelligen Code ein.",
+    "qrAlt": "QR-Code zur Einrichtung des Authenticators",
+    "manual": "Einrichtungsschlüssel manuell eingeben",
+    "copyKey": "Einrichtungsschlüssel kopieren",
+    "code": "Authentifizierungscode",
+    "verify": "Bestätigen und aktivieren"
+  },
+  "keys": {
+    "title": "SSH- und GPG-Schlüssel",
+    "sections": {
+      "ssh": "SSH-Schlüssel",
+      "gpg": "GPG-Schlüssel",
+      "principal": "SSH-Principals"
+    },
+    "verified": "Bestätigt",
+    "delete": {
+      "ssh": "SSH-Schlüssel {{name}} löschen",
+      "gpg": "GPG-Schlüssel {{name}} löschen",
+      "principal": "Principal {{name}} löschen"
+    },
+    "confirmDelete": "Diesen öffentlichen Schlüssel löschen?",
+    "verify": {
+      "summary": "Inhaberschaft bestätigen",
+      "instructions": "Signiere das folgende Token mit diesem Schlüssel und füge die ASCII-armored Signatur ein.",
+      "copyToken": "Bestätigungstoken kopieren",
+      "signature": "Signatur",
+      "submit": "Schlüssel bestätigen",
+      "signWith": "Erzeuge die Signatur mit:",
+      "sshAgent": "Oder, wenn du einen SSH-Agent verwendest (mit gesetztem SSH_AUTH_SOCK):",
+      "windows": "Befehle für Windows",
+      "copyCommand": "Befehl kopieren",
+      "sshPlaceholder": "Beginnt mit -----BEGIN SSH SIGNATURE-----",
+      "gpgPlaceholder": "Beginnt mit -----BEGIN PGP SIGNATURE-----",
+      "tokenRequired": "Signiere dieses Token mit dem Schlüssel und füge die ASCII-armored Signatur ein, um ihn hinzuzufügen."
+    },
+    "empty": {
+      "ssh": "Keine SSH-Schlüssel hinzugefügt.",
+      "gpg": "Keine GPG-Schlüssel hinzugefügt.",
+      "principal": "Keine SSH-Principals hinzugefügt."
+    },
+    "add": {
+      "title": "Öffentlichen Schlüssel hinzufügen",
+      "type": "Schlüsseltyp",
+      "types": {
+        "ssh": "SSH-Schlüssel",
+        "gpg": "GPG-Schlüssel",
+        "principal": "SSH-Principal"
+      },
+      "name": "Titel",
+      "publicKey": "Öffentlicher Schlüssel",
+      "submit": "Schlüssel hinzufügen",
+      "principal": "Principal",
+      "gpgPlaceholder": "Beginnt mit -----BEGIN PGP PUBLIC KEY BLOCK-----"
+    },
+    "descriptions": {
+      "ssh": "SSH-Schlüssel gewähren vollen Zugriff auf deine Repositorys. Bestätigte Schlüssel können außerdem SSH-signierte Commits verifizieren.",
+      "gpg": "GPG-Schlüssel verifizieren die Commits, die du signierst. Halte deine privaten Schlüssel sicher: Mit ihnen kann jeder Commits in deinem Namen signieren.",
+      "principal": "SSH-Zertifikats-Principals gewähren vollen Zugriff auf deine Repositorys."
+    },
+    "signOnly": "SSH ist auf dieser Instanz deaktiviert. Diese Schlüssel werden daher nur zum Verifizieren von Commit-Signaturen verwendet.",
+    "externallyManaged": "Dieser SSH-Schlüssel wird von deiner Authentifizierungsquelle verwaltet.",
+    "meta": {
+      "added": "Hinzugefügt am {{date}}",
+      "lastUsed": "Zuletzt verwendet am {{date}}",
+      "noActivity": "Keine aktuelle Aktivität",
+      "validUntil": "Gültig bis {{date}}",
+      "validForever": "Unbegrenzt gültig",
+      "subkeys": "Unterschlüssel: {{ids}}",
+      "identities": "Zugeordnete Identitäten: {{emails}}"
+    }
+  },
+  "applications": {
+    "title": "Anwendungen",
+    "newToken": "Neues Token",
+    "accessToken": "Zugriffstoken",
+    "tokens": {
+      "title": "Zugriffstoken",
+      "description": "Verwalte Token für Git-Operationen und externe Anwendungen.",
+      "confirmRegenerate": "Token {{name}} neu generieren? Das alte Token funktioniert dann nicht mehr.",
+      "regenerate": "Neu generieren",
+      "confirmRevoke": "Token {{name}} widerrufen?",
+      "revoke": "Widerrufen",
+      "empty": "Keine Zugriffstoken."
+    },
+    "oauth": {
+      "title": "OAuth-Anwendungen",
+      "delete": "Anwendung {{name}} löschen",
+      "confirmDelete": "Anwendung {{name}} löschen?",
+      "create": "Anwendung erstellen"
+    },
+    "grants": {
+      "title": "Autorisierte Anwendungen",
+      "revoke": "Zugriff widerrufen",
+      "empty": "Keine autorisierten Anwendungen.",
+      "description": "Diese Anwendungen von Drittanbietern können auf dein Konto zugreifen. Entziehe Anwendungen, die du nicht mehr verwendest, den Zugriff.",
+      "unnamed": "Anwendung #{{id}}",
+      "added": "Hinzugefügt am {{date}}",
+      "confirmRevoke": "Zugriff für {{name}} entziehen?"
+    }
+  },
+  "newToken": {
+    "failed": "Das Token wurde nicht erstellt.",
+    "title": "Neues Zugriffstoken",
+    "done": "Fertig",
+    "name": "Name des Tokens",
+    "permissionsHint": "Wähle den Zugriff, den dieses Token benötigt.",
+    "submit": "Token generieren"
+  },
+  "oauthApp": {
+    "title": "OAuth-Anwendung",
+    "clientSecret": "Client-Secret",
+    "details": "Anwendungsdetails",
+    "clientId": "Client-ID",
+    "copyClientId": "Client-ID kopieren",
+    "name": "Name der Anwendung",
+    "redirectUris": "Weiterleitungs-URIs",
+    "confidential": "Vertraulicher Client",
+    "save": "Änderungen speichern",
+    "confirmRegenerate": "Client-Secret neu generieren? Das aktuelle Secret funktioniert dann nicht mehr.",
+    "regenerate": "Secret neu generieren"
+  },
+  "blocked": {
+    "title": "Blockierte Benutzer",
+    "unblock": "Blockierung aufheben",
+    "empty": "Keine blockierten Benutzer"
+  },
+  "profile": {
+    "saved": "Profil aktualisiert.",
+    "username": {
+      "label": "Benutzername",
+      "prompt": "Wenn du deinen Benutzernamen änderst, ändert sich auch die URL deines Kontos.",
+      "redirect": "Der alte Benutzername leitet weiter, bis jemand anderes ihn übernimmt.",
+      "cooldown_one": "Der alte Benutzername steht nach einer Wartezeit von {{count}} Tag allen zur Verfügung. Während der Wartezeit kannst du ihn noch zurückholen.",
+      "cooldown_other": "Der alte Benutzername steht nach einer Wartezeit von {{count}} Tagen allen zur Verfügung. Während der Wartezeit kannst du ihn noch zurückholen.",
+      "disabled": "Nicht-lokale Benutzer können ihren Benutzernamen nicht ändern. Wende dich für Details an deine Administration.",
+      "confirm": "Benutzernamen in {{name}} ändern? Die URLs deines Profils und deiner Repositorys ändern sich."
+    },
+    "fullName": "Vollständiger Name",
+    "pronouns": "Pronomen",
+    "pronounsUnspecified": "Nicht angegeben",
+    "location": "Standort",
+    "website": "Website",
+    "bio": "Biografie",
+    "visibility": {
+      "label": "Sichtbarkeit des Profils",
+      "public": "Öffentlich",
+      "limited": "Angemeldete Benutzer",
+      "private": "Privat",
+      "publicHelp": "Alle können dein Profil sehen.",
+      "limitedHelp": "Nur angemeldete Benutzer können dein Profil sehen.",
+      "privateHelp": "Nur Mitglieder von Organisationen, denen du angehörst, können dein Profil sehen."
+    },
+    "keepEmailPrivate": "E-Mail-Adresse privat halten",
+    "keepEmailPrivateHelp": "Deine E-Mail-Adresse wird weder in deinem Profil angezeigt noch für Commits verwendet, die du in der Weboberfläche erstellst. Diese Commits verwenden stattdessen {{email}}.",
+    "keepActivityPrivate": "Aktivität privat halten",
+    "keepActivityPrivateHelp": "Deine öffentliche Aktivität ist nur für dich und die Administration der Instanz sichtbar.",
+    "keepPronounsPrivate": "Pronomen privat halten",
+    "keepPronounsPrivateHelp": "Blendet deine Pronomen für Besucher aus, die nicht angemeldet sind.",
+    "save": "Profil speichern"
+  },
+  "repoPicker": {
+    "available": "Verfügbare Repositorys",
+    "searchLabel": "Repositorys suchen",
+    "searchPlaceholder": "Repositorys suchen …",
+    "search": "Suchen",
+    "add": "Hinzufügen",
+    "addLabel": "{{name}} hinzufügen",
+    "remove": "Entfernen",
+    "removeLabel": "{{name}} entfernen",
+    "selected_one": "{{count}} ausgewähltes Repository",
+    "selected_other": "{{count}} ausgewählte Repositorys",
+    "noneFound": "Keine Repositorys gefunden.",
+    "noneSelected": "Keine Repositorys ausgewählt.",
+    "select": "Auswählen",
+    "selectLabel": "{{name}} auswählen",
+    "change": "Ändern",
+    "private": "Privat",
+    "results_one": "{{count}} Repository",
+    "results_other": "{{count}} Repositorys",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "page": "Seite {{page}} von {{pages}}"
+  }
+}

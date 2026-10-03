@@ -1,0 +1,56 @@
+name: Publish versioned image
+on:
+  push:
+    tags: ["v*"]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    enable-openid-connect: true
+    timeout-minutes: 90
+    env:
+      CI_IMAGE_PROJECT: zz-test-forgejo-ui-ci-${{ forgejo.run_id }}
+      FORGEJO_SERVER_URL: ${{ forgejo.server_url }}
+      FORGEJO_REPOSITORY: ${{ forgejo.repository }}
+      RELEASE_IMAGE: ${{ vars.RELEASE_IMAGE }}
+      REGISTRY_OIDC_AUDIENCE: ${{ vars.REGISTRY_OIDC_AUDIENCE }}
+      REGISTRY_OIDC_ISSUER: ${{ vars.REGISTRY_OIDC_ISSUER }}
+      RELEASE_TAG: ${{ forgejo.ref_name }}
+    steps:
+      - uses: https://github.com/actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Validate version and publication target
+        env:
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER || forgejo.repository_owner }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+          REQUIRE_REGISTRY_CREDENTIALS: "1"
+        run: node scripts/release-image.mjs validate
+      - name: Build the patched Forgejo image
+        run: node scripts/ci-image.mjs build
+      - name: Publish the commit image (not yet tested)
+        env:
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER || forgejo.repository_owner }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+        run: node scripts/release-image.mjs candidate
+      - name: Validate source
+        run: |
+          npm ci --no-audit --no-fund
+          npm run check
+          npm run check:automation
+          npm run check:docs
+          npm run check:patches
+          npm run test:go
+      - name: Test the exact image to publish
+        run: npm run test:ci
+      - name: Publish the tested version
+        env:
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER || forgejo.repository_owner }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+        run: node scripts/release-image.mjs publish
+      - name: Remove the isolated build container and volume
+        if: always()
+        run: node scripts/ci-image.mjs cleanup

@@ -1,0 +1,24 @@
+--- a/routers/web/repo/setting/lfs.go
++++ b/routers/web/repo/setting/lfs.go
+@@ -27,6 +27,7 @@
+ 	"forgejo.org/modules/storage"
+ 	"forgejo.org/modules/typesniffer"
+ 	"forgejo.org/modules/util"
++	"forgejo.org/routers/common"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -277,6 +278,13 @@
+ 		return
+ 	}
+ 	defer dataRc.Close()
++	// Browser downloads retain the native settings route and its session permissions.
++	// The Git LFS protocol endpoints intentionally do not authenticate browser sessions.
++	if ctx.FormBool("raw") {
++		ctx.Resp.Header().Set("Cache-Control", "private, no-store")
++		common.ServeContentByReadSeeker(ctx.Base, meta.Oid, nil, dataRc)
++		return
++	}
+ 	buf := make([]byte, 1024)
+ 	n, err := util.ReadAtMost(dataRc, buf)
+ 	if err != nil {

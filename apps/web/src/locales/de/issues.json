@@ -1,0 +1,670 @@
+{
+  "boardParity": {
+    "state": {
+      "open": "Offen",
+      "closed": "Geschlossen",
+      "merged": "Gemergt"
+    },
+    "tasks": "{{done}} / {{total}} Aufgaben",
+    "assignedTo": "{{name}} zugewiesen",
+    "moveUp": "Nach oben",
+    "moveDown": "Nach unten",
+    "invalidMove": "Diese Karte oder Spalte ist nicht mehr verfügbar. Lade das Board neu und versuche es erneut."
+  },
+  "nativeManagement": {
+    "selectedLabels_one": "{{count}} ausgewähltes Label",
+    "selectedLabels_other": "{{count}} ausgewählte Labels",
+    "excludeLabel": "{{name}} ausschließen",
+    "unexcludeLabel": "{{name}} nicht mehr ausschließen",
+    "showArchivedLabels": "Archivierte Labels anzeigen",
+    "searchLabels": "Labels suchen",
+    "labelSort": "Labels sortieren",
+    "alphabetically": "Name (A–Z)",
+    "reverseAlphabetically": "Name (Z–A)",
+    "leastIssues": "Wenigste Issues",
+    "nameSort": "Name",
+    "openCount": "{{count}} offen",
+    "closedCount": "{{count}} geschlossen",
+    "newIssue": "Neues Issue",
+    "itemStatus": "Status der Issues und Merge-Requests",
+    "filterLabels": "Nach Label filtern",
+    "allLabels": "Alle Labels",
+    "noLabels": "Ohne Labels",
+    "filterAssignee": "Nach Zuständigkeit filtern",
+    "allAssignees": "Alle Zuständigen",
+    "unassigned": "Nicht zugewiesen",
+    "filterAuthor": "Nach Autor filtern",
+    "allAuthors": "Alle Autoren",
+    "itemSort": {
+      "label": "Issues und Merge-Requests sortieren",
+      "latest": "Neueste",
+      "oldest": "Älteste",
+      "recentupdate": "Zuletzt aktualisiert",
+      "leastupdate": "Am längsten nicht aktualisiert",
+      "mostcomment": "Meiste Kommentare",
+      "leastcomment": "Wenigste Kommentare",
+      "nearduedate": "Nächste Fälligkeit",
+      "farduedate": "Entfernteste Fälligkeit",
+      "priority": "Höchste Priorität"
+    }
+  },
+  "advancedDiff": {
+    "loadError": "Die Dateiversionen konnten nicht geladen werden.",
+    "tooLarge": "Diese Datei ist für die Vorschau zu groß. Öffne stattdessen die Rohdatei.",
+    "csvLegend": "Geänderte Zellen zeigen den alten Wert durchgestrichen und den neuen Wert in Grün.",
+    "row": "Zeile",
+    "column": "Spalte {{number}}",
+    "moreRows": "Weitere Zeilen anzeigen ({{count}} verbleibend)",
+    "before": "Vorher: {{name}}",
+    "after": "Nachher: {{name}}",
+    "modes": {
+      "side": "Nebeneinander",
+      "swipe": "Schieben",
+      "overlay": "Überlagern"
+    },
+    "swipePosition": "Schiebeposition",
+    "opacity": "Deckkraft der Überlagerung",
+    "dimensions": "{{side}} · {{width}} × {{height}} px · {{bytes}} Bytes"
+  },
+  "contentMenu": {
+    "label": "Inhaltsaktionen",
+    "copyLink": "Link kopieren",
+    "copyError": "Der Link konnte nicht kopiert werden.",
+    "quote": "Als Zitat antworten",
+    "reference": "In neuem Issue referenzieren",
+    "report": "Inhalt melden"
+  },
+  "list": {
+    "details": {
+      "success": "Prüfungen erfolgreich",
+      "failure": "Prüfungen fehlgeschlagen",
+      "pending": "Prüfungen ausstehend",
+      "targetBranch": "Zielbranch",
+      "approvals_one": "{{count}} Zustimmung",
+      "approvals_other": "{{count}} Zustimmungen",
+      "changesRequested_one": "{{count}} Änderungsanfrage",
+      "changesRequested_other": "{{count}} Änderungsanfragen",
+      "overdue": "Überfällig",
+      "due": "Fälligkeitsdatum",
+      "tasks": "{{done}} von {{total}} Aufgaben"
+    },
+    "title": {
+      "issues": "Issues · {{project}}",
+      "pulls": "Merge-Requests · {{project}}"
+    },
+    "heading": {
+      "issues": "Issues",
+      "pulls": "Merge-Requests"
+    },
+    "stateTabs": {
+      "issues": "Issue-Status",
+      "pulls": "Merge-Request-Status"
+    },
+    "states": {
+      "open": "Offen",
+      "merged": "Gemergt",
+      "closed": "Geschlossen",
+      "all": "Alle"
+    },
+    "new": {
+      "issues": "Neues Issue",
+      "pulls": "Neuer Merge-Request"
+    },
+    "search": {
+      "issues": "Issues durchsuchen",
+      "pulls": "Merge-Requests durchsuchen"
+    },
+    "searchPlaceholder": "Ergebnisse suchen oder filtern …",
+    "clearSearch": "Suche leeren",
+    "searchButton": "Suchen",
+    "sort": {
+      "label": "Arbeitselemente sortieren",
+      "menuTitle": "Sortieren nach",
+      "recentupdate": "Zuletzt aktualisiert",
+      "latest": "Neueste zuerst",
+      "oldest": "Älteste zuerst",
+      "leastupdate": "Am längsten nicht aktualisiert",
+      "mostcomment": "Meiste Kommentare",
+      "leastcomment": "Wenigste Kommentare",
+      "nearduedate": "Fälligkeit: früheste",
+      "farduedate": "Fälligkeit: späteste",
+      "relevance": "Relevanz"
+    },
+    "filters": {
+      "title": "Filter",
+      "summary": "Labels, Zuständige, Autor, Meilenstein und Board",
+      "label": "Label",
+      "includeLabel": "Label einschließen",
+      "addLabelFilter": "Label-Filter hinzufügen",
+      "noLabels": "Keine Labels",
+      "excludeLabel": "Label ausschließen",
+      "excludeALabel": "Ein Label ausschließen",
+      "assignee": "Zuständig",
+      "anyAssignee": "Alle Zuständigen",
+      "unassigned": "Nicht zugewiesen",
+      "author": "Autor",
+      "anyAuthor": "Alle Autoren",
+      "authorFallback": "Autor #{{id}}",
+      "selectedAuthor": "Ausgewählter Autor",
+      "milestone": "Meilenstein",
+      "anyMilestone": "Alle Meilensteine",
+      "noMilestone": "Kein Meilenstein",
+      "board": "Board",
+      "anyBoard": "Alle Boards",
+      "noBoard": "Kein Board",
+      "involvement": "Meine Beteiligung",
+      "allWorkItems": "Alle Arbeitselemente",
+      "assignedToMe": "Mir zugewiesen",
+      "createdByMe": "Von mir erstellt",
+      "mentioningMe": "Erwähnt mich",
+      "reviewRequested": "Review von mir angefordert",
+      "reviewedByMe": "Von mir reviewt",
+      "showArchived": "Archivierte Labels anzeigen",
+      "labelChip": "Label: {{name}}",
+      "excludeChip": "Ausgeschlossen: {{name}}",
+      "removeLabelFilter": "Label-Filter entfernen",
+      "clear": "Filter zurücksetzen"
+    },
+    "pinned": {
+      "label": "Angeheftete Arbeitselemente",
+      "title": {
+        "issues": "Angeheftete Issues",
+        "pulls": "Angeheftete Merge-Requests"
+      },
+      "moveUp": "Angeheftetes Element „{{title}}“ nach oben verschieben",
+      "moveDown": "Angeheftetes Element „{{title}}“ nach unten verschieben",
+      "unpin": "„{{title}}“ loslösen"
+    },
+    "bulk": {
+      "selectAllLabel": "Alle Elemente auf dieser Seite auswählen",
+      "selected": "{{number}} ausgewählt",
+      "selectAll": "Alle auswählen",
+      "close": "Ausgewählte schließen",
+      "reopen": "Ausgewählte wieder öffnen",
+      "labels": "Labels der Auswahl ändern",
+      "labelsOption": "Labels",
+      "removeAllLabels": "Alle Labels entfernen",
+      "addLabel": "{{name}} hinzufügen",
+      "removeLabel": "{{name}} entfernen",
+      "milestone": "Meilenstein der Auswahl ändern",
+      "milestoneOption": "Meilenstein",
+      "removeMilestone": "Meilenstein entfernen",
+      "assignees": "Zuständige der Auswahl ändern",
+      "assigneesOption": "Zuständige",
+      "clearAssignees": "Zuständige entfernen",
+      "toggleAssignee": "@{{name}} umschalten",
+      "board": "Board der Auswahl ändern",
+      "boardOption": "Board",
+      "removeFromBoard": "Vom Board entfernen",
+      "delete": "Ausgewählte löschen",
+      "deleteLabel": "Ausgewählte Arbeitselemente löschen",
+      "deleteTitle": {
+        "issues_one": "{{count}} ausgewähltes Issue löschen?",
+        "issues_other": "{{count}} ausgewählte Issues löschen?",
+        "pulls_one": "{{count}} ausgewählten Merge-Request löschen?",
+        "pulls_other": "{{count}} ausgewählte Merge-Requests löschen?"
+      },
+      "deleteText": "Zugehörige Kommentare und angehängte Dateien werden ebenfalls entfernt. Das kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen"
+    },
+    "row": {
+      "select": "„{{title}}“ auswählen",
+      "opened": "{{reference}} · {{date}} von {{user}} geöffnet",
+      "assignedTo": "Zugewiesen an {{user}}",
+      "comments_one": "{{count}} Kommentar",
+      "comments_other": "{{count}} Kommentare",
+      "actions": "Aktionen für „{{title}}“",
+      "quickActions": "Schnellaktionen",
+      "unpin": "Loslösen",
+      "pinToTop": "Oben anheften",
+      "updated": "aktualisiert {{date}}"
+    },
+    "empty": {
+      "issues": {
+        "open": "Keine offenen Issues",
+        "merged": "Keine gemergten Issues",
+        "closed": "Keine geschlossenen Issues",
+        "all": "Keine passenden Issues"
+      },
+      "pulls": {
+        "open": "Keine offenen Merge-Requests",
+        "merged": "Keine gemergten Merge-Requests",
+        "closed": "Keine geschlossenen Merge-Requests",
+        "all": "Keine passenden Merge-Requests"
+      },
+      "hint": {
+        "issues": "Probiere andere Filter aus oder erstelle ein neues Issue.",
+        "pulls": "Probiere andere Filter aus oder erstelle einen neuen Merge-Request."
+      }
+    }
+  },
+  "confirm": {
+    "delete": "Löschen",
+    "working": "Wird ausgeführt …",
+    "cancel": "Abbrechen"
+  },
+  "labels": {
+    "title": "Labels",
+    "description": "Organisiere Issues und Merge-Requests mit Labels.",
+    "new": "Neues Label",
+    "search": "Labels durchsuchen",
+    "count_one": "{{count}} Label",
+    "count_other": "{{count}} Labels",
+    "organization": "Organisations-Label",
+    "scoped": "Exklusiv",
+    "archived": "Archiviert",
+    "editLabel": "Label {{name}} bearbeiten",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteTitle": "Label „{{name}}“ löschen?",
+    "deleteText": "Das Label wird von allen Issues und Merge-Requests in diesem Projekt entfernt.",
+    "empty": "Noch keine Labels",
+    "emptyText": "Erstelle ein Label oder importiere ein Label-Set, um loszulegen.",
+    "import": {
+      "title": "Label-Set importieren",
+      "description": "Füge diesem Projekt die Labels aus einer integrierten Vorlage hinzu.",
+      "template": "Label-Vorlage",
+      "choose": "Vorlage auswählen",
+      "submit": "Labels importieren"
+    },
+    "editor": {
+      "edit": "Label bearbeiten",
+      "new": "Neues Label",
+      "title": "Titel",
+      "description": "Beschreibung",
+      "color": "Hintergrundfarbe",
+      "pickColor": "Label-Farbe auswählen",
+      "preview": "Label-Vorschau",
+      "exclusive": "Exklusives Label (immer nur ein Label aus diesem Bereich)",
+      "save": "Änderungen speichern",
+      "create": "Label erstellen",
+      "cancel": "Abbrechen"
+    }
+  },
+  "milestones": {
+    "title": "Meilensteine",
+    "milestone": "Meilenstein",
+    "new": "Neuer Meilenstein",
+    "editTitle": "Meilenstein bearbeiten",
+    "statusTabs": "Meilensteinstatus",
+    "active": "Aktiv",
+    "closed": "Geschlossen",
+    "all": "Alle",
+    "search": "Meilensteine durchsuchen",
+    "searchPlaceholder": "Meilensteine durchsuchen …",
+    "searchButton": "Suchen",
+    "sort": {
+      "label": "Meilensteine sortieren",
+      "closestduedate": "Fälligkeitsdatum",
+      "furthestduedate": "Fälligkeitsdatum absteigend",
+      "mostcomplete": "Am vollständigsten",
+      "leastcomplete": "Am wenigsten vollständig",
+      "mostissues": "Meiste Issues"
+    },
+    "due": "Fällig am {{date}}",
+    "noDueDate": "Kein Fälligkeitsdatum",
+    "edit": "Bearbeiten",
+    "empty": "Keine Meilensteine gefunden",
+    "emptyText": "Mit Meilensteinen gruppierst du Issues und Merge-Requests rund um ein gemeinsames Ziel.",
+    "completion": "Fortschritt von {{title}}",
+    "progress": "{{progress}} % erledigt · {{completed}}/{{total}}",
+    "writeRequired": "Zum Bearbeiten von Meilensteinen ist Schreibzugriff erforderlich",
+    "form": {
+      "title": "Titel",
+      "description": "Beschreibung",
+      "dueDate": "Fälligkeitsdatum",
+      "save": "Änderungen speichern",
+      "create": "Meilenstein erstellen",
+      "cancel": "Abbrechen"
+    },
+    "reopen": "Meilenstein wieder öffnen",
+    "close": "Meilenstein schließen",
+    "deleteTitle": "Meilenstein löschen?",
+    "deleteText": "Issues und Merge-Requests bleiben erhalten und werden von diesem Meilenstein gelöst.",
+    "noDescription": "Keine Beschreibung angegeben.",
+    "items": "Issues und Merge-Requests",
+    "itemState": {
+      "open": "offen",
+      "closed": "geschlossen"
+    },
+    "noItems": "Nichts zugeordnet",
+    "noItemsText": "Weise diesen Meilenstein in einem Issue oder Merge-Request zu."
+  },
+  "metadata": {
+    "edit": "Bearbeiten",
+    "close": "Schließen",
+    "none": "Keine",
+    "closedOption": "{{title}} (geschlossen)",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "assignees": {
+      "title": "Zuständige",
+      "popover": "Zuständige",
+      "edit": "Zuständige bearbeiten",
+      "search": "Zuständige durchsuchen",
+      "searchPlaceholder": "Benutzer suchen",
+      "removeAll": "Alle Zuständigen entfernen",
+      "none": "Nicht zugewiesen"
+    },
+    "labels": {
+      "title": "Labels",
+      "popover": "Labels",
+      "edit": "Labels bearbeiten",
+      "search": "Labels durchsuchen",
+      "searchPlaceholder": "Labels suchen",
+      "manage": "Projekt-Labels verwalten"
+    },
+    "milestone": {
+      "title": "Meilenstein",
+      "select": "Meilenstein",
+      "view": "Meilenstein anzeigen"
+    },
+    "dueDate": {
+      "title": "Fälligkeitsdatum",
+      "popover": "Fälligkeitsdatum",
+      "edit": "Fälligkeitsdatum bearbeiten",
+      "save": "Datum speichern",
+      "remove": "Datum entfernen"
+    },
+    "time": {
+      "title": "Zeiterfassung",
+      "popover": "Zeiterfassung",
+      "edit": "Zeiterfassung bearbeiten",
+      "hours": "Stunden",
+      "minutes": "Minuten",
+      "add": "Zeit hinzufügen",
+      "duration": "{{hours}} Std. {{minutes}} Min.",
+      "delete": "Von {{user}} erfasste {{duration}} löschen",
+      "spent": "{{duration}} erfasst",
+      "stop": "Timer stoppen",
+      "start": "Timer starten",
+      "cancel": "Timer abbrechen"
+    },
+    "dependencies": {
+      "title": "Abhängigkeiten",
+      "popover": "Abhängigkeiten",
+      "edit": "Abhängigkeiten bearbeiten",
+      "blockedBy": "Blockiert durch",
+      "blocks": "Blockiert",
+      "input": "Abhängiges Issue",
+      "placeholder": "#12 oder owner/project#12",
+      "add": "Abhängigkeit hinzufügen",
+      "remove": "Abhängigkeit {{title}} entfernen",
+      "invalid": "Gib eine Issue-Nummer oder owner/project#nummer ein."
+    }
+  },
+  "editIssue": {
+    "edit": "Bearbeiten",
+    "label": "Issue bearbeiten",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "removeAttachment": "Anhang entfernen",
+    "save": "Änderungen speichern",
+    "cancel": "Abbrechen",
+    "descriptionPlaceholder": "Beschreibung schreiben …"
+  },
+  "boardSettings": {
+    "title": "Board-Einstellungen",
+    "writeRequired": "Für die Board-Einstellungen ist Schreibzugriff erforderlich",
+    "return": "Zurück zum Board",
+    "boardTitle": "Board-Titel",
+    "description": "Beschreibung",
+    "cardLayout": "Kartenlayout",
+    "textOnly": "Nur Text",
+    "imagesAndText": "Bilder und Text",
+    "saved": "Board gespeichert.",
+    "save": "Änderungen speichern",
+    "lists": "Listen",
+    "addList": "Liste hinzufügen",
+    "listTitle": "Listentitel",
+    "listColor": "Listenfarbe",
+    "status": "Board-Status",
+    "reopen": "Board wieder öffnen",
+    "close": "Board schließen",
+    "deleteTitle": "Dieses Board löschen?",
+    "deleteText": "Das Board und seine Listen werden gelöscht. Die Issues bleiben im Projekt erhalten.",
+    "column": {
+      "default": "Standard",
+      "moveLeft": "{{title}} nach links verschieben",
+      "moveRight": "{{title}} nach rechts verschieben",
+      "actions": "Aktionen für {{title}}",
+      "edit": "Liste bearbeiten",
+      "setDefault": "Als Standardliste festlegen",
+      "deleteTitle": "Liste „{{title}}“ löschen?",
+      "deleteText": "Die Issues dieser Liste bleiben auf dem Board.",
+      "save": "Liste speichern"
+    }
+  },
+  "lifecycle": {
+    "moreActions": "Weitere Aktionen",
+    "subscribe": "Abonnieren",
+    "unsubscribe": "Abbestellen",
+    "pin": "Anheften",
+    "unpin": "Loslösen",
+    "lock": "Diskussion sperren",
+    "unlock": "Diskussion entsperren",
+    "lockTitle": "Diese Diskussion sperren?",
+    "lockText": "Danach können nur noch Mitarbeiter kommentieren.",
+    "lockReason": "Grund für die Sperre",
+    "noReason": "Kein Grund angegeben",
+    "delete": {
+      "issues": "Issue löschen",
+      "pulls": "Merge-Request löschen"
+    },
+    "deleteTitle": {
+      "issues": "Issue #{{number}} löschen?",
+      "pulls": "Merge-Request #{{number}} löschen?"
+    },
+    "deleteText": "Die Diskussion, Kommentare und Anhänge werden gelöscht.",
+    "locked": "Diese Diskussion ist gesperrt. Nur Mitarbeiter können kommentieren.",
+    "reactions": {
+      "title": "Reaktion hinzufügen",
+      "reactWith": "Mit {{type}} reagieren",
+      "add": "Reaktion {{type}} hinzufügen ({{total}})",
+      "remove": "Reaktion {{type}} entfernen ({{total}})"
+    }
+  },
+  "sidebar": {
+    "copyReference": "Issue-Referenz kopieren",
+    "participants_one": "{{count}} Beteiligter",
+    "participants_other": "{{count}} Beteiligte",
+    "board": "Board",
+    "boardSelect": "Board",
+    "none": "Keine",
+    "closedOption": "{{title}} (geschlossen)",
+    "reference": "Referenz",
+    "referenceInput": "Issue-Referenz",
+    "referencePlaceholder": "Branch, Tag oder Commit",
+    "saveReference": "Referenz speichern"
+  },
+  "timeline": {
+    "duration": "{{hours}} Std. {{minutes}} Min. {{seconds}} Sek.",
+    "events": {
+      "reopen": "<user>{{user}}</user> hat diese Diskussion <time>{{time}}</time> wieder geöffnet",
+      "close": "<user>{{user}}</user> hat diese Diskussion <time>{{time}}</time> geschlossen",
+      "issueRef": "<user>{{user}}</user> hat dieses Issue <time>{{time}}</time> erwähnt",
+      "pullRef": "<user>{{user}}</user> hat diesen Merge-Request <time>{{time}}</time> erwähnt",
+      "commentRef": "<user>{{user}}</user> hat dies <time>{{time}}</time> in einem Kommentar erwähnt",
+      "commitRef": "<user>{{user}}</user> hat <time>{{time}}</time> in einem Commit hierauf verwiesen",
+      "label": "<user>{{user}}</user> hat <time>{{time}}</time> die Labels aktualisiert",
+      "milestone": "<user>{{user}}</user> hat <time>{{time}}</time> den Meilenstein aktualisiert",
+      "assignees": "<user>{{user}}</user> hat <time>{{time}}</time> die Zuständigen aktualisiert",
+      "changeTitle": "<user>{{user}}</user> hat <time>{{time}}</time> den Titel geändert",
+      "deleteBranch": "<user>{{user}}</user> hat <time>{{time}}</time> den Quell-Branch gelöscht",
+      "startTracking": "<user>{{user}}</user> hat <time>{{time}}</time> die Zeiterfassung gestartet",
+      "stopTracking": "<user>{{user}}</user> hat <time>{{time}}</time> die Zeiterfassung gestoppt",
+      "addTime": "<user>{{user}}</user> hat <time>{{time}}</time> erfasste Zeit hinzugefügt",
+      "cancelTracking": "<user>{{user}}</user> hat <time>{{time}}</time> den Timer abgebrochen",
+      "addedDeadline": "<user>{{user}}</user> hat <time>{{time}}</time> das Fälligkeitsdatum festgelegt",
+      "modifiedDeadline": "<user>{{user}}</user> hat <time>{{time}}</time> das Fälligkeitsdatum geändert",
+      "removedDeadline": "<user>{{user}}</user> hat <time>{{time}}</time> das Fälligkeitsdatum entfernt",
+      "addDependency": "<user>{{user}}</user> hat <time>{{time}}</time> eine Abhängigkeit hinzugefügt",
+      "removeDependency": "<user>{{user}}</user> hat <time>{{time}}</time> eine Abhängigkeit entfernt",
+      "review": "<user>{{user}}</user> hat <time>{{time}}</time> ein Review abgegeben",
+      "lock": "<user>{{user}}</user> hat diese Diskussion <time>{{time}}</time> gesperrt",
+      "unlock": "<user>{{user}}</user> hat diese Diskussion <time>{{time}}</time> entsperrt",
+      "changeTargetBranch": "<user>{{user}}</user> hat <time>{{time}}</time> den Ziel-Branch geändert",
+      "deleteTime": "<user>{{user}}</user> hat <time>{{time}}</time> erfasste Zeit gelöscht",
+      "reviewRequest": "<user>{{user}}</user> hat <time>{{time}}</time> eine Review-Anfrage aktualisiert",
+      "mergePull": "<user>{{user}}</user> hat diesen Merge-Request <time>{{time}}</time> gemergt",
+      "pullPush": "<user>{{user}}</user> hat <time>{{time}}</time> den Quell-Branch aktualisiert",
+      "project": "<user>{{user}}</user> hat <time>{{time}}</time> das Board geändert",
+      "projectColumn": "<user>{{user}}</user> hat dieses Element <time>{{time}}</time> auf dem Board verschoben",
+      "scheduledMerge": "<user>{{user}}</user> hat <time>{{time}}</time> einen automatischen Merge geplant",
+      "cancelledMerge": "<user>{{user}}</user> hat <time>{{time}}</time> den automatischen Merge abgebrochen",
+      "dismissReview": "<user>{{user}}</user> hat <time>{{time}}</time> ein Review verworfen",
+      "changeIssueRef": "<user>{{user}}</user> hat <time>{{time}}</time> die Referenz geändert",
+      "pin": "<user>{{user}}</user> hat diese Diskussion <time>{{time}}</time> angeheftet",
+      "unpin": "<user>{{user}}</user> hat diese Diskussion <time>{{time}}</time> losgelöst",
+      "other": "<user>{{user}}</user> {{event}} <time>{{time}}</time>"
+    },
+    "none": "Keine",
+    "noBoard": "Kein Board",
+    "removed": "{{name}} entfernt",
+    "pushed": "Gepusht: <commits/>",
+    "forcePushed": "Force-Push: <commits/>",
+    "comment": {
+      "review": "hat ein Review abgegeben",
+      "approved": "Zugestimmt",
+      "changesRequested": "Änderungen angefordert",
+      "commented": "Kommentiert",
+      "dismissedReview": "hat ein Review verworfen",
+      "edit": "Kommentar bearbeiten",
+      "delete": "Kommentar löschen",
+      "deleteTitle": "Diesen Kommentar löschen?",
+      "deleteText": "Dieser Kommentar wird entfernt.",
+      "removeAttachment": "Anhang entfernen",
+      "save": "Kommentar speichern",
+      "cancel": "Abbrechen",
+      "editPlaceholder": "Kommentar schreiben …"
+    }
+  },
+  "history": {
+    "commentLabel": "Bearbeitungsverlauf des Kommentars",
+    "descriptionLabel": "Bearbeitungsverlauf der Beschreibung",
+    "trigger": "Verlauf",
+    "title": "Bearbeitungsverlauf",
+    "close": "Verlauf schließen",
+    "introComment": "Frühere Versionen dieses Kommentars.",
+    "introDescription": "Frühere Versionen dieser Beschreibung.",
+    "revision": "Version",
+    "created": "{{user}} · erstellt {{date}}",
+    "edited": "{{user}} · bearbeitet {{date}}",
+    "deleted": "{{revision}} (gelöscht)",
+    "previous": "Vorherige Version",
+    "noPrevious": "Kein vorheriger Inhalt",
+    "selected": "Ausgewählte Version",
+    "removed": "Inhalt entfernt",
+    "deleteRevision": "Version löschen",
+    "deleteTitle": "Diese Version löschen?",
+    "deleteText": "Diese Version wird aus dem Bearbeitungsverlauf entfernt.",
+    "empty": "Keine Bearbeitungen erfasst."
+  },
+  "detail": {
+    "kind": {
+      "issues": "Issue",
+      "pulls": "Merge-Request"
+    },
+    "state": {
+      "open": "offen",
+      "merged": "gemergt",
+      "closed": "geschlossen"
+    },
+    "code": {
+      "label": "Code-Aktionen des Merge-Requests",
+      "trigger": "Code",
+      "sourceBranch": "Quell-Branch öffnen",
+      "targetBranch": "Ziel-Branch öffnen",
+      "downloadDiff": "Diff herunterladen"
+    },
+    "requestedToMerge": "<user>{{user}}</user> möchte mergen:",
+    "into": "nach",
+    "opened": {
+      "issues": "Issue {{reference}} · {{date}} von <user>{{user}}</user> geöffnet",
+      "pulls": "Merge-Request {{reference}} · {{date}} von <user>{{user}}</user> geöffnet"
+    },
+    "all": {
+      "issues": "Alle Issues",
+      "pulls": "Alle Merge-Requests"
+    },
+    "tabs": {
+      "label": "Ansichten des Merge-Requests",
+      "overview": "Übersicht",
+      "commits": "Commits",
+      "changes": "Änderungen"
+    },
+    "description": "Beschreibung",
+    "noDescription": "Keine Beschreibung angegeben.",
+    "merge": {
+      "merged": "Gemergt",
+      "closed": "Merge-Request geschlossen",
+      "draft": "Merge-Request-Entwurf",
+      "ready": "Bereit zum Mergen",
+      "blocked": "Mergen blockiert",
+      "conflict": "Automatisches Mergen nicht möglich",
+      "mergedText": "Die Änderungen wurden in {{branch}} gemergt.",
+      "draftText": "Dieser Merge-Request ist ein Entwurf. Markiere ihn als bereit, sobald er bereit für ein Review ist.",
+      "checksText": "Branch-Schutz, Freigaben und erforderliche Prüfungen werden beim Mergen durchgesetzt.",
+      "markingReady": "Wird als bereit markiert …",
+      "markReady": "Als bereit markieren",
+      "merging": "Wird gemergt …",
+      "merge": "Mergen",
+      "method": "Merge-Methode",
+      "styles": {
+        "merge": "Merge-Commit",
+        "squash": "Squash und Merge",
+        "rebase": "Rebase",
+        "rebaseMerge": "Rebase und Merge",
+        "fastForwardOnly": "Nur Fast-Forward"
+      },
+      "incomplete": "Der Merge wurde nicht abgeschlossen. Lade die Seite neu und prüfe den aktuellen Merge-Status.",
+      "draftChanged": "Der Entwurfsstatus hat sich geändert. Lade diesen Merge-Request neu."
+    },
+    "activity": "Aktivität",
+    "comments_one": "{{count}} Kommentar",
+    "comments_other": "{{count}} Kommentare",
+    "addComment": "Kommentar hinzufügen",
+    "commentLabel": "Kommentar",
+    "comment": "Kommentieren",
+    "closeIssue": "Issue schließen",
+    "reopenIssue": "Issue wieder öffnen",
+    "commentsUnavailable": "Kommentare sind für dieses Konto oder Projekt nicht verfügbar.",
+    "commentPlaceholder": "Kommentar schreiben …"
+  },
+  "create": {
+    "title": "Neues Issue",
+    "signIn": "Melde dich an, um ein Issue zu erstellen.",
+    "failed": "Das Issue konnte nicht erstellt werden.",
+    "chooseIntro": "Wähle eine Vorlage, um loszulegen.",
+    "useTemplate": "Vorlage verwenden",
+    "openLink": "Öffnen",
+    "blank": "Leeres Issue erstellen",
+    "chooseTemplate": "Vorlage wählen",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "Ein kurzer, aussagekräftiger Titel",
+    "metadata": "Labels, Zuständige, Meilenstein und Board",
+    "labels": "Labels",
+    "assignees": "Zuständige",
+    "milestone": "Meilenstein",
+    "noMilestone": "Kein Meilenstein",
+    "board": "Board",
+    "noBoard": "Kein Board",
+    "reference": "Referenz",
+    "creating": "Issue wird erstellt …",
+    "submit": "Issue erstellen",
+    "cancel": "Abbrechen",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Beschreibung schreiben …"
+  },
+  "templateFields": {
+    "selectOption": "Option auswählen"
+  },
+  "attachments": {
+    "attach": "Dateien anhängen",
+    "remove": "{{name}} entfernen"
+  },
+  "files": {
+    "filter": "Dateien filtern",
+    "toggleTree": "Dateibaum ein-/ausblenden",
+    "noMatches": "Keine passenden Dateien"
+  }
+}

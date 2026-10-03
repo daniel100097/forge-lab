@@ -1,0 +1,11 @@
+--- a/routers/web/repo/repo.go
++++ b/routers/web/repo/repo.go
+@@ -398,7 +398,7 @@
+ 			ctx.ServerError(fmt.Sprintf("Action (%s)", action), err)
+ 			return
+ 		}
+-		if !ok {
++		if !ok || ctx.Written() {
+ 			return
+ 		}
+ 

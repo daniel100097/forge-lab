@@ -1,0 +1,72 @@
+name: Build, publish and test Docker image
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  verify:
+    if: forgejo.event_name != 'pull_request' || forgejo.event.pull_request.head.repo.full_name == forgejo.repository
+    runs-on: ubuntu-latest
+    enable-openid-connect: true
+    timeout-minutes: 75
+    env:
+      CI_IMAGE_PROJECT: zz-test-forgejo-ui-ci-${{ forgejo.run_id }}
+      FORGEJO_SERVER_URL: ${{ forgejo.server_url }}
+      FORGEJO_REPOSITORY: ${{ forgejo.repository }}
+      FORGEJO_REF: ${{ forgejo.ref }}
+      FORGEJO_EVENT_NAME: ${{ forgejo.event_name }}
+      RELEASE_IMAGE: ${{ vars.RELEASE_IMAGE }}
+      REGISTRY_OIDC_AUDIENCE: ${{ vars.REGISTRY_OIDC_AUDIENCE }}
+      REGISTRY_OIDC_ISSUER: ${{ vars.REGISTRY_OIDC_ISSUER }}
+    steps:
+      - uses: https://github.com/actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: https://github.com/actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Check registry credentials before building
+        if: forgejo.ref == 'refs/heads/main' && forgejo.event_name != 'pull_request'
+        env:
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER || forgejo.repository_owner }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+        run: node scripts/release-image.mjs validate-main
+      - name: Build the patched Forgejo image
+        run: node scripts/ci-image.mjs build
+      - name: Publish the commit image (not yet tested)
+        if: forgejo.ref == 'refs/heads/main' && forgejo.event_name != 'pull_request'
+        env:
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER || forgejo.repository_owner }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+        run: node scripts/release-image.mjs candidate-main
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Typecheck and unit tests
+        run: |
+          npm run check
+          npm run check:automation
+          npm run check:docs
+      - name: Check patches against a clean pinned upstream checkout
+        run: npm run check:patches
+      - name: Test native SPA routes
+        run: npm run test:go
+      - name: Native integration, browser regression, accessibility and visuals
+        run: npm run test:ci
+      - name: Promote the tested image to main
+        if: forgejo.ref == 'refs/heads/main' && forgejo.event_name != 'pull_request'
+        env:
+          REGISTRY_USER: ${{ secrets.REGISTRY_USER || forgejo.repository_owner }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+        run: node scripts/release-image.mjs publish-main
+      - name: Retain comparison images on failure
+        if: failure()
+        uses: https://code.forgejo.org/actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5
+        with:
+          name: browser-comparisons
+          path: playwright-results/**/*.png
+          retention-days: 7
+      - name: Remove the isolated build container and volume
+        if: always()
+        run: node scripts/ci-image.mjs cleanup

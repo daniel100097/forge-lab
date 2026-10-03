@@ -1,0 +1,12 @@
+--- a/routers/web/web.go
++++ b/routers/web/web.go
+@@ -305,7 +305,8 @@
+ 			return
+ 		}
+ 
+-		if !options.SignOutRequired && !options.DisableCSRF {
++		// SPA form responses also protect signed-out authentication steps.
++		if (!options.SignOutRequired || ctx.Req.Header.Get("X-Forgejo-UI") == "1") && !options.DisableCSRF {
+ 			if err := crossOriginProtection.Check(ctx.Req); err != nil {
+ 				http.Error(ctx.Resp, err.Error(), http.StatusForbidden)
+ 				return

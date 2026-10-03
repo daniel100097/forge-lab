@@ -1,0 +1,107 @@
+--- a/routers/web/repo/release.go
++++ b/routers/web/repo/release.go
+@@ -397,6 +397,11 @@
+ 	ctx.Data["OpenGraphImageURL"] = release.SummaryCardURL()
+ 	ctx.Data["OpenGraphImageAltText"] = ctx.Tr("repo.release.summary_card_alt", release.DisplayName(), release.Repo.FullName())
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"item": convert.ToAPIRelease(ctx, ctx.Repo.Repository, release, false), "can_write": writeAccess && !ctx.Repo.Repository.IsArchived})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplReleasesList)
+ }
+ 
+@@ -708,6 +713,11 @@
+ 	}
+ 	ctx.Data["Assignees"] = MakeSelfOnTop(ctx.Doer, assigneeUsers)
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"item": convert.ToAPIRelease(ctx, ctx.Repo.Repository, rel, false), "target": rel.Target, "attachments_enabled": setting.Attachment.Enabled})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplReleaseNew)
+ }
+ 
+--- a/routers/web/repo/wiki.go
++++ b/routers/web/repo/wiki.go
+@@ -102,6 +102,9 @@
+ 	}
+ 
+ 	commit, err := wikiRepo.GetBranchCommit(ctx.Repo.Repository.GetWikiBranchName())
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" && ctx.FormString("revision") != "" {
++		commit, err = wikiRepo.GetCommit(ctx.FormString("revision"))
++	}
+ 	if err != nil {
+ 		return wikiRepo, nil, err
+ 	}
+@@ -579,6 +582,15 @@
+ 	}
+ 	ctx.Data["Author"] = lastCommit.Author
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		items := make([]map[string]any, 0)
++		if commits, ok := ctx.Data["Commits"].([]*git_model.SignCommitWithStatuses); ok {
++			for _, c := range commits { items = append(items, map[string]any{"sha": c.ID.String(), "message": c.Summary(), "author": c.Author.Name, "date": c.Author.When}) }
++		}
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"items": items, "title": ctx.Data["Title"], "total": ctx.Data["CommitCount"], "page_size": setting.Git.CommitsRangeSize})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplWikiRevision)
+ }
+ 
+@@ -648,6 +660,11 @@
+ 	}
+ 	ctx.Data["Pages"] = pages
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"empty": true, "pages": pages, "can_write": ctx.Repo.CanWrite(unit.TypeWiki) && !ctx.Repo.Repository.IsArchived})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplWikiPages)
+ }
+ 
+@@ -828,6 +845,13 @@
+ 		return
+ 	}
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		items := make([]map[string]any, 0, len(res))
++		for _, item := range res { items = append(items, map[string]any{"title": item.Title, "path": strings.TrimSuffix(item.Filename, ".md"), "lines": item.LineCodes, "numbers": item.LineNumbers}) }
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"items": items})
++		return
++	}
+ 	ctx.Data["Results"] = res
+ 	ctx.HTML(http.StatusOK, tplWikiSearch)
+ }
+--- a/routers/web/repo/actions/actions.go
++++ b/routers/web/repo/actions/actions.go
+@@ -261,7 +261,9 @@
+ 		}
+ 		files := make([]string, 0, len(workflows))
+ 		for _, workflow := range workflows { files = append(files, workflow.Entry.Name()) }
+-		ctx.JSON(http.StatusOK, map[string]any{"items": items, "total": total, "workflows": files})
++		actorOptions := make([]map[string]any, 0, len(actors))
++		for _, actor := range actors { actorOptions = append(actorOptions, map[string]any{"id": actor.ID, "name": actor.Name, "full_name": actor.FullName}) }
++		ctx.JSON(http.StatusOK, map[string]any{"actors": actorOptions, "items": items, "total": total, "workflows": files, "can_run": ctx.Repo.CanWrite(unit.TypeActions) && !ctx.Repo.Repository.IsArchived, "can_toggle": ctx.Data["AllowDisableOrEnableWorkflow"] == true, "disabled": ctx.Data["CurWorkflowDisabled"] == true, "dispatch": ctx.Data["CurWorkflowDispatch"], "input_keys": ctx.Data["CurWorkflowDispatchInputKeys"]})
+ 		return
+ 	}
+ 	if listInner {
+--- a/services/context/context.go
++++ b/services/context/context.go
+@@ -246,6 +246,11 @@
+ }
+ 
+ func (ctx *Context) JSONRedirect(redirect string) {
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" && ctx.Flash != nil && ctx.Flash.ErrorMsg != "" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusUnprocessableEntity, map[string]string{"errorMessage": ctx.Flash.ErrorMsg})
++		return
++	}
+  if ctx.Req.Header.Get("X-Forgejo-UI") == "1" && ctx.Flash.ErrorMsg != "" {
+   ctx.JSON(http.StatusUnprocessableEntity, map[string]string{"errorMessage": ctx.Flash.ErrorMsg})
+   return

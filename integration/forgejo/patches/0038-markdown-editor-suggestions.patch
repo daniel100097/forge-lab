@@ -1,0 +1,18 @@
+--- a/routers/web/web.go
++++ b/routers/web/web.go
+@@ -605,6 +605,7 @@ func registerRoutes(m *web.Route) {
+ 	m.Get("/-/ui/data/bootstrap", spa.NoCache, spa.Bootstrap)
+ 	m.Group("/-/ui/data", func() {
+ 		m.Get("", func(ctx *context.Context) { ctx.JSON(http.StatusNotFound, map[string]string{"message": "Unknown UI data route"}) })
++		m.Get("/emoji", reqSignIn, spa.Emoji)
+ 		m.Group("/repos/{username}/{reponame}", func() {
+ 			m.Get("", spa.Repository)
+ 			m.Get("/{people:stars|watchers|forks}", spa.RepositoryPeople)
+@@ -614,6 +615,7 @@ func registerRoutes(m *web.Route) {
+ 			m.Get("/milestones/{id}", spa.IssueMilestone)
+ 			m.Get("/{kind:issues|pulls}/{index}/metadata", spa.IssueMetadata)
+ 			m.Get("/pull-sources", spa.PullSources)
++			m.Get("/mentions", reqSignIn, spa.Mentions)
+ 			m.Get("/pulls/{index}/review", spa.PullReviewData)
+ 			m.Get("/overview", reqRepoCodeReader, spa.Overview)
+ 			m.Get("/branches", reqRepoCodeReader, spa.Branches)

@@ -1,0 +1,11 @@
+node_modules/
+apps/web/dist/
+apps/web/*.tsbuildinfo
+.forgejo/*
+!.forgejo/workflows/
+playwright-results/
+.env
+.env.*
+!.env.example
+
+.playwright-mcp/

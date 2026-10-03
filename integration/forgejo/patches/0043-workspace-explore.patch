@@ -1,0 +1,16 @@
+--- a/routers/web/explore/repo.go
++++ b/routers/web/explore/repo.go
+@@ -15,5 +15,6 @@
+ 	"forgejo.org/modules/sitemap"
+ 	"forgejo.org/routers/web/shared/spaadmin"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -163,5 +164,6 @@
+ 	ctx.Data["Page"] = pager
+ 
+ 	if spaadmin.Write(ctx, opts.TplName) { return }
++	if opts.TplName == tplExploreRepos && spapages.ExploreRepositories(ctx) { return }
+ 	ctx.HTML(http.StatusOK, opts.TplName)
+ }

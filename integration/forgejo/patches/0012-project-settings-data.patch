@@ -1,0 +1,167 @@
+--- a/routers/web/repo/setting/setting.go
++++ b/routers/web/repo/setting/setting.go
+@@ -104,6 +104,7 @@
+ 	ctx.Data["Title"] = ctx.Tr("repo.settings.units.units")
+ 	ctx.Data["PageIsRepoSettingsUnits"] = true
+ 
++	if writeSettingsUI(ctx,"units") {return}
+ 	ctx.HTML(http.StatusOK, tplSettingsUnits)
+ }
+ 
+@@ -300,6 +301,7 @@
+ 
+ // Settings show a repository's settings page
+ func Settings(ctx *context.Context) {
++	if writeSettingsUI(ctx,"general") {return}
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		r := ctx.Repo.Repository
+--- a/routers/web/repo/setting/collaboration.go
++++ b/routers/web/repo/setting/collaboration.go
+@@ -47,6 +47,7 @@
+ 	ctx.Data["Org"] = ctx.Repo.Repository.Owner
+ 	ctx.Data["Units"] = unit_model.Units
+ 
++	if writeSettingsUI(ctx,"members") {return}
+ 	ctx.HTML(http.StatusOK, tplCollaboration)
+ }
+ 
+@@ -132,8 +133,9 @@
+ 		ctx.Repo.Repository,
+ 		ctx.FormInt64("uid"),
+ 		perm.AccessMode(ctx.FormInt("mode"))); err != nil {
++        if writeAccessModeUI(ctx,err) {return}
+ 		log.Error("ChangeCollaborationAccessMode: %v", err)
+-	}
++	} else { writeAccessModeUI(ctx,nil) }
+ }
+ 
+ // DeleteCollaboration delete a collaboration for a repository
+--- a/routers/web/repo/setting/protected_branch.go
++++ b/routers/web/repo/setting/protected_branch.go
+@@ -47,6 +47,7 @@
+ 		return
+ 	}
+ 
++	if writeSettingsUI(ctx,"branches") {return}
+ 	ctx.HTML(http.StatusOK, tplBranches)
+ }
+ 
+@@ -97,6 +98,7 @@
+ 	}
+ 
+ 	c.Data["Rule"] = rule
++	if writeSettingsUI(c,"branch-rule") {return}
+ 	c.HTML(http.StatusOK, tplProtectedBranch)
+ }
+ 
+--- a/routers/web/repo/setting/protected_tag.go
++++ b/routers/web/repo/setting/protected_tag.go
+@@ -29,6 +29,7 @@
+ 		return
+ 	}
+ 
++	if writeSettingsUI(ctx,"tags") {return}
+ 	ctx.HTML(http.StatusOK, tplTags)
+ }
+ 
+--- a/routers/web/repo/setting/deploy_key.go
++++ b/routers/web/repo/setting/deploy_key.go
+@@ -29,6 +29,7 @@
+ 	}
+ 	ctx.Data["Deploykeys"] = keys
+ 
++	if writeSettingsUI(ctx,"keys") {return}
+ 	ctx.HTML(http.StatusOK, tplDeployKeys)
+ }
+ 
+--- a/routers/web/repo/setting/secrets.go
++++ b/routers/web/repo/setting/secrets.go
+@@ -89,6 +89,7 @@
+ 	if ctx.Written() {
+ 		return
+ 	}
++	if writeSettingsUI(ctx,"secrets") {return}
+ 	ctx.HTML(http.StatusOK, sCtx.SecretsTemplate)
+ }
+ 
+--- a/routers/web/repo/setting/variables.go
++++ b/routers/web/repo/setting/variables.go
+@@ -97,6 +97,7 @@
+ 		return
+ 	}
+ 
++	if writeSettingsUI(ctx,"variables") {return}
+ 	ctx.HTML(http.StatusOK, vCtx.VariablesTemplate)
+ }
+ 
+--- a/routers/web/shared/actions/runners.go
++++ b/routers/web/shared/actions/runners.go
+@@ -200,6 +200,7 @@
+ 	pager := context.NewPagination(int(count), opts.PageSize, opts.Page, 5)
+ 
+ 	ctx.Data["Page"] = pager
++	if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"list") {return}
+ 	ctx.HTML(http.StatusOK, rCtx.RunnersTemplate)
+ }
+ 
+@@ -263,6 +264,7 @@
+ 	ctx.Data["Page"] = pager
+ 	ctx.Data["RunnersListLink"] = rCtx.RedirectLink
+ 
++	if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"details") {return}
+ 	ctx.HTML(http.StatusOK, rCtx.RunnerDetailsTemplate)
+ }
+ 
+@@ -277,6 +279,7 @@
+ 	ctx.Data["PageIsSharedSettingsRunners"] = true
+ 	ctx.Data["Title"] = ctx.Tr("actions.runners.create_runner.page_title")
+ 	ctx.Data["RunnersListLink"] = rCtx.RedirectLink
++	if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"create") {return}
+ 	ctx.HTML(http.StatusOK, rCtx.RunnerCreateTemplate)
+ }
+ 
+@@ -309,7 +312,8 @@
+ 	ctx.Data["RunnersListLink"] = rCtx.RedirectLink
+ 
+ 	if ctx.HasError() {
+-		ctx.HTML(http.StatusOK, rCtx.RunnerCreateTemplate)
++		if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"create") {return}
++	ctx.HTML(http.StatusOK, rCtx.RunnerCreateTemplate)
+ 		return
+ 	}
+ 
+@@ -319,6 +323,7 @@
+ 		return
+ 	}
+ 
++	if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"setup") {return}
+ 	ctx.HTML(http.StatusOK, rCtx.RunnerSetupTemplate)
+ }
+ 
+@@ -354,6 +359,7 @@
+ 	ctx.Data["RunnerOwnerID"] = rCtx.OwnerID
+ 	ctx.Data["RunnerRepoID"] = rCtx.RepoID
+ 	ctx.Data["RunnersListLink"] = rCtx.RedirectLink
++	if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"edit") {return}
+ 	ctx.HTML(http.StatusOK, rCtx.RunnerEditTemplate)
+ }
+ 
+@@ -396,7 +402,8 @@
+ 	runner.Description = form.RunnerDescription
+ 
+ 	if ctx.HasError() {
+-		ctx.HTML(http.StatusOK, rCtx.RunnerEditTemplate)
++		if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"edit") {return}
++	ctx.HTML(http.StatusOK, rCtx.RunnerEditTemplate)
+ 		return
+ 	}
+ 
+@@ -425,6 +432,7 @@
+ 		return
+ 	}
+ 
++	if writeRunnersUI(ctx,rCtx.OwnerID,rCtx.RepoID,"setup") {return}
+ 	ctx.HTML(http.StatusOK, rCtx.RunnerSetupTemplate)
+ }
+ 

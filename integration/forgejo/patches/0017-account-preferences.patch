@@ -1,0 +1,73 @@
+--- a/routers/web/user/setting/profile.go
++++ b/routers/web/user/setting/profile.go
+@@ -22,6 +22,7 @@
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/optional"
+ 	"forgejo.org/modules/setting"
++"forgejo.org/modules/spaui"
+ 	"forgejo.org/modules/translation"
+ 	"forgejo.org/modules/util"
+ 	"forgejo.org/modules/web"
+@@ -71,7 +72,7 @@
+ 			"name": u.Name, "full_name": u.FullName, "website": u.Website, "location": u.Location,
+ 			"pronouns": u.Pronouns, "biography": u.Description, "visibility": u.Visibility,
+ 			"keep_email_private": u.KeepEmailPrivate, "keep_activity_private": u.KeepActivityPrivate,
+-			"keep_pronouns_private": u.KeepPronounsPrivate,
++			"keep_pronouns_private": u.KeepPronounsPrivate, "rename_disabled":ctx.Data["UserRenameDisabled"], "visibility_options":ctx.Data["AllowedUserVisibilityModes"],
+ 		})
+ 		return
+ 	}
+@@ -218,7 +219,7 @@
+ 	pager := context.NewPagination(int(total), opts.PageSize, opts.Page, 5)
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
+-	ctx.HTML(http.StatusOK, tplSettingsOrganization)
++	if writeAccountUI(ctx,"organizations") { return };ctx.HTML(http.StatusOK, tplSettingsOrganization)
+ }
+ 
+ // Repos display a list of all repositories of the user
+@@ -324,7 +325,7 @@
+ 	pager := context.NewPagination(count, opts.PageSize, opts.Page, 5)
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
+-	ctx.HTML(http.StatusOK, tplSettingsRepositories)
++	if writeAccountUI(ctx,"repositories") { return };ctx.HTML(http.StatusOK, tplSettingsRepositories)
+ }
+ 
+ // Appearance render user's appearance settings
+@@ -352,7 +353,14 @@
+ 		return forms.IsUserHiddenCommentTypeGroupChecked(commentTypeGroup, hiddenCommentTypes)
+ 	}
+ 
+-	ctx.HTML(http.StatusOK, tplSettingsAppearance)
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++    groups:=map[string]bool{}
++    for _,key:=range []string{"reference","label","milestone","assignee","title","branch","time_tracking","deadline","dependency","lock","review_request","pull_request_push","project","issue_ref"} { groups[key]=forms.IsUserHiddenCommentTypeGroupChecked(key,hiddenCommentTypes) }
++    ctx.Resp.Header().Set("Cache-Control","no-store")
++    ctx.JSON(http.StatusOK,map[string]any{"language":ctx.Doer.Language,"languages":spaui.Rows(ctx.Data["AllLangs"],"Lang","Name"),"hints":ctx.Doer.EnableRepoUnitHints,"comments":groups})
++    return
++   }
++   ctx.HTML(http.StatusOK, tplSettingsAppearance)
+ }
+ 
+ // UpdateUIThemePost is used to update users' specific theme
+--- a/routers/web/user/setting/authorized_integrations.go
++++ b/routers/web/user/setting/authorized_integrations.go
+@@ -125,7 +125,7 @@
+ 	ctx.Data["AuthorizedIntegrations"] = ais
+ 	ctx.Data["UIs"] = authorizedIntegrationUIs
+ 
+-	ctx.HTML(http.StatusOK, tplAuthorizedIntegrationList)
++	if writeAccountUI(ctx,"integrations") { return };ctx.HTML(http.StatusOK, tplAuthorizedIntegrationList)
+ }
+ 
+ func getAuthorizedIntegration(ctx *context.Context) *auth_model.AuthorizedIntegration {
+@@ -343,7 +343,7 @@
+ 		return
+ 	}
+ 
+-	ctx.HTML(http.StatusOK, authorizedIntegrationUI(ctx).editTemplate())
++	if writeAccountUI(ctx,"integration_edit") { return };ctx.HTML(http.StatusOK, authorizedIntegrationUI(ctx).editTemplate())
+ }
+ 
+ func repoMultiSelect(ctx *context.Context) {

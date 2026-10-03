@@ -1,0 +1,5 @@
+services:
+  forgejo:
+    ports: !reset []
+    entrypoint: ["/bin/sh", "-c", "exec sleep infinity"]
+    restart: "no"

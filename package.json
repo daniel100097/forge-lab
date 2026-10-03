@@ -1,0 +1,36 @@
+{
+  "name": "forgejo-ui-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @forgejo-ui/web",
+    "build:web": "npm run build --workspace @forgejo-ui/web",
+    "check": "npm run check --workspace @forgejo-ui/web",
+    "forgejo:prepare": "node scripts/prepare-forgejo.mjs",
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/start.mjs",
+    "test:integration": "node --test tests/integration.test.mjs",
+    "test:go": "node scripts/test-go.mjs",
+    "test:ci": "node scripts/ci-tests.mjs",
+    "format": "prettier --write apps/web/src apps/web/vite.config.ts scripts tests package.json apps/web/package.json",
+    "test:docker": "node tests/test-docker.mjs",
+    "test:ui": "playwright test --config tests/playwright.config.mjs",
+    "check:patches": "node scripts/check-patches.mjs",
+    "check:automation": "node --test tests/automation.test.mjs tests/fixture-safety.test.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
+    "test:quality": "node scripts/browser-tests.mjs quality",
+    "test:visual:update": "node scripts/browser-tests.mjs quality --project chromium --grep \"project and file layout\" --update-snapshots",
+    "test:advanced": "node scripts/browser-tests.mjs advanced"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "prettier": "^3.9.9"
+  }
+}

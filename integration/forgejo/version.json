@@ -1,0 +1,7 @@
+{
+  "repository": "https://codeberg.org/forgejo/forgejo.git",
+  "tag": "v16.0.5",
+  "commit": "8d24b7d52df327118cd776cf461d34e52e0ec1ce",
+  "goToolchain": "go1.26.7",
+  "uiContract": 1
+}

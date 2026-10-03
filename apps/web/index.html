@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <base href="__FORGEJO_UI_BASE__" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ececef" />
+    <script>
+      // Resolve the preference before styles or React render to avoid a light flash.
+      (() => {
+        const base = new URL(
+          document.querySelector("base").href,
+        ).pathname.replace(/\/$/, "");
+        const subpath = base.slice(0, -"/-/ui".length);
+        let mode = "system";
+        try {
+          const stored = localStorage.getItem(
+            `forgejo-ui:${subpath || "/"}:color-mode:v1`,
+          );
+          if (stored === "light" || stored === "dark") mode = stored;
+        } catch {}
+        const theme =
+          mode === "system"
+            ? matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light"
+            : mode;
+        document.documentElement.dataset.colorMode = mode;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        document.documentElement.style.backgroundColor =
+          theme === "dark" ? "#050506" : "#ececef";
+        document.querySelector('meta[name="theme-color"]').content =
+          theme === "dark" ? "#050506" : "#ececef";
+      })();
+    </script>
+    <meta
+      name="description"
+      content="A new workspace for your Forgejo projects."
+    />
+    <title>Projects · Forgejo</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

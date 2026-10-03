@@ -1,0 +1,496 @@
+{
+  "mergeOptions": {
+    "closeRequest": "Merge-Request schließen",
+    "reopenRequest": "Merge-Request wieder öffnen",
+    "closeWithComment": "Kommentieren und Merge-Request schließen",
+    "reopenWithComment": "Kommentieren und Merge-Request öffnen",
+    "files": {
+      "viewedCounter": "{{viewed}} / {{total}} Dateien angesehen",
+      "showOutdated_one": "Veralteten Thread anzeigen ({{count}})",
+      "showOutdated_other": "Veraltete Threads anzeigen ({{count}})",
+      "editHead": "Im Quell-Branch bearbeiten"
+    },
+    "threadSnippet": "Code um diesen Review-Thread",
+    "noPermission": "Du darfst nicht in den Ziel-Branch mergen.",
+    "signed": "Der Merge-Commit wird mit dem Schlüssel {{key}} signiert.",
+    "method": "Merge-Methode",
+    "title": "Titel des Merge-Commits",
+    "message": "Nachricht des Merge-Commits",
+    "commit": "SHA des Merge-Commits",
+    "deleteBranch": "Quell-Branch nach dem Mergen löschen",
+    "force": "Trotzdem mergen (Branch-Schutz übergehen)",
+    "reset": "Auf Standardwerte zurücksetzen",
+    "clearCommits": "Commit-Liste entfernen",
+    "merge": "Mergen",
+    "working": "Wird ausgeführt …",
+    "scheduled": "Auto-Merge ist für diesen Merge-Request geplant.",
+    "noStyles": "Derzeit ist keine Merge-Methode zulässig. Prüfe die Repository-Einstellungen und Signaturanforderungen.",
+    "instructions": "Lokal über die Kommandozeile mergen",
+    "manualWarning": "Die automatische Erkennung manueller Merges ist deaktiviert. Markiere diesen Merge-Request nach dem Pushen als manuell gemergt.",
+    "copyCommands": "Befehle kopieren",
+    "copyMessage": "Merge-Nachricht kopieren",
+    "incomplete": "Die Aktion wurde nicht abgeschlossen. Lade neu und prüfe den Status des Merge-Requests.",
+    "markDraft": "Als Entwurf markieren",
+    "dismissMessage": "Nachricht zur Verwerfung (optional)",
+    "styles": {
+      "merge": "Merge-Commit",
+      "rebase": "Rebase",
+      "rebaseMerge": "Rebase mit Merge-Commit",
+      "squash": "Squash",
+      "fastForward": "Nur Fast-Forward",
+      "manual": "Als manuell gemergt markieren"
+    },
+    "blocked": {
+      "dependencies": "Offene Abhängigkeiten müssen vor dem Mergen geschlossen werden.",
+      "broken": "Der Quell- oder Ziel-Branch fehlt oder die Merge-Request-Daten sind beschädigt.",
+      "checking": "Forgejo prüft, ob dieser Merge-Request gemergt werden kann.",
+      "ancestor": "Diese Commits sind bereits im Ziel-Branch enthalten.",
+      "empty": "Dieser Merge-Request enthält keine Änderungen.",
+      "conflict": "Dieser Merge-Request kann nicht automatisch gemergt werden. Merge ihn lokal, um Konflikte zu lösen."
+    }
+  },
+  "markdownEditor": {
+    "defaultLabel": "Beschreibung",
+    "tabs": "Editor für {{label}}",
+    "formatting": "Formatierung für {{label}}",
+    "write": "Schreiben",
+    "preview": "Vorschau",
+    "placeholder": "Beschreibung schreiben …",
+    "nothingToPreview": "Noch nichts für die Vorschau vorhanden.",
+    "supported": "Markdown wird unterstützt",
+    "actions": {
+      "bold": "Fett",
+      "italic": "Kursiv",
+      "heading": "Überschrift",
+      "quote": "Zitat",
+      "code": "Code",
+      "link": "Link",
+      "bulletedList": "Aufzählung",
+      "numberedList": "Nummerierte Liste",
+      "taskList": "Aufgabenliste",
+      "indent": "Einrücken",
+      "outdent": "Ausrücken",
+      "table": "Tabelle einfügen",
+      "mention": "Benutzer erwähnen",
+      "reference": "Issue oder Merge-Request referenzieren",
+      "font": "Monospace-Schrift umschalten",
+      "strikethrough": "Durchstreichen",
+      "heading1": "Überschrift 1",
+      "heading2": "Überschrift 2",
+      "heading3": "Überschrift 3",
+      "headingBigger": "Überschrift vergrößern",
+      "headingSmaller": "Überschrift verkleinern",
+      "checkedTask": "Erledigte Aufgabe einfügen",
+      "image": "Bild einfügen",
+      "rule": "Trennlinie einfügen",
+      "split": "Geteilte Vorschau umschalten",
+      "fullscreen": "Vollbildeditor umschalten",
+      "codeBlock": "Codeblock einfügen"
+    },
+    "sample": {
+      "text": "Text",
+      "heading": "Überschrift",
+      "quote": "Zitat",
+      "code": "Code",
+      "link": "Linktext",
+      "listItem": "Listeneintrag",
+      "task": "Aufgabe"
+    },
+    "loadingPreview": "Vorschau wird geladen …",
+    "suggestions": "Vorschläge",
+    "upload": {
+      "placeholder": "Wird hochgeladen …",
+      "failed": "{{name}} konnte nicht hochgeladen werden. {{message}}",
+      "uploading_one": "{{count}} Datei wird hochgeladen …",
+      "uploading_other": "{{count}} Dateien werden hochgeladen …",
+      "hint": "Dateien zum Anhängen einfügen oder hierher ziehen"
+    },
+    "tools": {
+      "tableTitle": "Tabelle einfügen",
+      "linkTitle": "Link einfügen",
+      "hint": "Markdown am markierten Text oder Cursor einfügen.",
+      "rows": "Zeilen",
+      "columns": "Spalten",
+      "url": "Link-URL",
+      "description": "Linktext",
+      "cancel": "Abbrechen",
+      "insert": "Einfügen",
+      "header": "Kopfzeile",
+      "cell": "Inhalt"
+    }
+  },
+  "diff": {
+    "empty": {
+      "title": "Keine Änderungen vorhanden",
+      "body": "Quelle und Ziel enthalten dieselben Änderungen."
+    },
+    "changedFiles_one": "{{count}} geänderte Datei",
+    "changedFiles_other": "{{count}} geänderte Dateien",
+    "expandAll": "Alle ausklappen",
+    "collapseAll": "Alle einklappen",
+    "changedFilesNav": "Geänderte Dateien",
+    "large_one": "Dieser Diff hat {{lines}} Zeile. Lade ihn, sobald du bereit bist, diese Datei zu prüfen.",
+    "large_other": "Dieser Diff hat {{lines}} Zeilen. Lade ihn, sobald du bereit bist, diese Datei zu prüfen.",
+    "loadFile": "Diff für {{name}} laden",
+    "commentPreviousLine": "Vorherige Zeile {{line}} in {{name}} kommentieren",
+    "commentLine": "Zeile {{line}} in {{name}} kommentieren",
+    "options": {
+      "layout": "Diff-Layout",
+      "unified": "Vereinheitlicht",
+      "split": "Geteilt",
+      "whitespace": "Leerzeichen"
+    },
+    "whitespace": {
+      "showAll": "Alle Änderungen anzeigen",
+      "ignoreAll": "Alle Leerzeichen ignorieren",
+      "ignoreChange": "Änderungen der Leerzeichenanzahl ignorieren",
+      "ignoreEol": "Leerzeichen am Zeilenende ignorieren"
+    },
+    "toggleFolder": "Ordner {{name}} auf- oder zuklappen",
+    "contextFailed": "Die unveränderten Zeilen konnten nicht geladen werden.",
+    "expandAllLines_one": "{{count}} ausgeblendete Zeile anzeigen",
+    "expandAllLines_other": "{{count}} ausgeblendete Zeilen anzeigen",
+    "expandDown": "20 weitere Zeilen darunter anzeigen",
+    "expandUp": "20 weitere Zeilen darüber anzeigen",
+    "viewFile": "Datei anzeigen",
+    "viewFileTitle": "{{name}} in dieser Revision anzeigen"
+  },
+  "review": {
+    "blocked": {
+      "title": "Mergen blockiert",
+      "approvals": "{{granted}} von {{required}} erforderlichen Zustimmungen erhalten.",
+      "rejection": "Ein Reviewer hat Änderungen angefordert.",
+      "reviewRequests": "Erforderliche Reviews stehen noch aus.",
+      "outdated": "Der Quellbranch muss mit dem Zielbranch aktualisiert werden.",
+      "checks": "Erforderliche Statusprüfungen sind noch nicht bestanden.",
+      "signing": "Ein signierter Merge-Commit ist erforderlich, aber Forgejo kann diesen Merge nicht signieren.",
+      "conflicts": "Dateien mit Konflikten:",
+      "protected": "Geänderte geschützte Dateien:"
+    },
+    "checks": {
+      "summary": "Statusprüfungen: {{state}}",
+      "required": "Erforderlich",
+      "details": "Details",
+      "states": {
+        "pending": "Ausstehend",
+        "success": "Bestanden",
+        "skipped": "Übersprungen",
+        "warning": "Warnung",
+        "failure": "Fehlgeschlagen",
+        "error": "Fehler"
+      }
+    },
+    "commits": {
+      "title": "Commits",
+      "empty": "Keine Commits vorhanden"
+    },
+    "changes": {
+      "viewedError": "Der Status „Angesehen“ konnte nicht gespeichert werden.",
+      "downloadDiff": "Vollständigen Diff herunterladen",
+      "downloadPatch": "Patch herunterladen",
+      "fromCommit": "Von Commit",
+      "singleNotice": "Änderungen von Commit {{commit}}",
+      "rangeNotice": "Änderungen von Commit {{from}} bis {{to}}",
+      "showAll": "Alle Änderungen anzeigen",
+      "toCommit": "Bis Commit",
+      "allChanges": "Alle Commits",
+      "mergeBase": "Merge-Basis",
+      "latestVersion": "Aktuell",
+      "whitespace": {
+        "label": "Leerzeichenänderungen",
+        "showAll": "Leerzeichen anzeigen",
+        "ignoreAll": "Alle Leerzeichen ignorieren",
+        "ignoreChange": "Leerzeichenanzahl ignorieren",
+        "ignoreEol": "Leerzeichen am Zeilenende ignorieren"
+      },
+      "unified": "Einheitlich",
+      "sideBySide": "Nebeneinander",
+      "viewed": "Angesehen",
+      "outdatedHint": "Veraltete Diskussionen findest du im Tab „Übersicht“."
+    },
+    "inline": {
+      "replyForm": "Auf Diskussion antworten",
+      "newForm": "Neue Inline-Diskussion",
+      "replyLabel": "Antwort",
+      "commentLabel": "Inline-Kommentar",
+      "reply": "Antworten",
+      "addToReview": "Zum Review hinzufügen",
+      "addNow": "Sofort kommentieren",
+      "cancel": "Abbrechen"
+    },
+    "submit": {
+      "finish": "Review abschließen",
+      "finishWithCount": "Review abschließen ({{pending}})",
+      "title": "Review absenden",
+      "close": "Review-Formular schließen",
+      "summary": "Review-Zusammenfassung",
+      "outcome": "Review-Ergebnis",
+      "outcomes": {
+        "comment": "Kommentieren",
+        "approve": "Genehmigen",
+        "reject": "Änderungen anfordern"
+      },
+      "pendingHint_one": "{{count}} ausstehender Inline-Kommentar wird mit deinem Review veröffentlicht.",
+      "pendingHint_other": "{{count}} ausstehende Inline-Kommentare werden mit deinem Review veröffentlicht.",
+      "hint": "Dein Review wird der Diskussion hinzugefügt.",
+      "submit": "Review absenden"
+    },
+    "thread": {
+      "pending": "Review ausstehend",
+      "outdated": "Veraltet",
+      "resolved": "Gelöst",
+      "reopen": "Diskussion wieder öffnen",
+      "resolve": "Diskussion auflösen",
+      "reply": "Antworten …"
+    },
+    "comment": {
+      "edit": "Kommentar bearbeiten",
+      "deleteTitle": "Diesen Kommentar löschen?",
+      "deleteBody": "Der Kommentar wird aus dieser Diskussion entfernt.",
+      "editLabel": "Inline-Kommentar bearbeiten",
+      "save": "Kommentar speichern",
+      "cancel": "Abbrechen"
+    },
+    "overview": {
+      "title": "Reviews",
+      "status": {
+        "approved": "Genehmigt",
+        "changesRequested": "Änderungen angefordert",
+        "requested": "Review angefordert"
+      },
+      "staleStatus": "{{status}} · veraltet",
+      "removeRequest": "Anfrage entfernen",
+      "requestAgain": "Erneut anfordern",
+      "dismiss": "Verwerfen",
+      "dismissTitle": "Review von {{reviewer}} verwerfen?",
+      "dismissBody": "Dadurch zählt das Review nicht mehr für die Merge-Voraussetzungen.",
+      "noReviews": "Noch keine Reviews.",
+      "requestFrom": "Review anfordern von",
+      "chooseReviewer": "Reviewer auswählen",
+      "request": "Review anfordern"
+    },
+    "settings": {
+      "title": "Merge-Request-Einstellungen",
+      "updateSource": "Quell-Branch aktualisieren",
+      "mergeTarget": "Ziel-Branch einmergen",
+      "rebaseSource": "Quell-Branch rebasen",
+      "targetBranch": "Ziel-Branch",
+      "changeTarget": "Ziel-Branch ändern",
+      "allowMaintainerEdit": "Maintainern erlauben, den Quell-Branch zu bearbeiten",
+      "cancelAutoMerge": "Auto-Merge abbrechen",
+      "setAutoMerge": "Auto-Merge aktivieren",
+      "autoMergeHint": "Mergen, sobald die erforderlichen Checks erfolgreich sind.",
+      "reopen": "Merge-Request wieder öffnen",
+      "close": "Merge-Request schließen",
+      "deleteSource": "Quell-Branch löschen",
+      "deleteSourceTitle": "Quell-Branch löschen?",
+      "deleteSourceBody": "Der Quell-Branch dieses geschlossenen Merge-Requests wird gelöscht."
+    },
+    "trust": {
+      "approvalRequired": "Pipeline-Freigabe erforderlich",
+      "trusted": "Pipeline-Autor vertrauenswürdig",
+      "approvalBody": "Dieser Merge-Request enthält Workflows von einer Person, deren Beiträge freigegeben werden müssen. Prüfe die Änderungen, bevor du sie ausführen lässt.",
+      "trustedBody": "Diese Person darf Workflows in diesem Projekt ausführen.",
+      "revoke": {
+        "label": "Workflow-Vertrauen entziehen",
+        "title": "Workflow-Vertrauen entziehen?",
+        "body": "Künftige Workflows dieser Person müssen freigegeben werden, wenn die nativen Vertrauensregeln greifen."
+      },
+      "deny": {
+        "label": "Ausstehende Pipelines ablehnen",
+        "title": "Ausstehende Pipelines ablehnen?",
+        "body": "Die Pipelines dieses Merge-Requests, die auf Freigabe warten, werden abgebrochen."
+      },
+      "once": {
+        "label": "Einmal freigeben",
+        "title": "Ausstehende Pipelines freigeben?",
+        "body": "Die Pipelines, die derzeit auf Freigabe warten, dürfen ausgeführt werden."
+      },
+      "always": {
+        "label": "Person immer vertrauen",
+        "title": "Den Workflows dieser Person vertrauen?",
+        "body": "Künftige Workflows dieser Person dürfen in diesem Projekt ohne Freigabe ausgeführt werden."
+      }
+    }
+  },
+  "create": {
+    "title": "Neuer Merge-Request",
+    "errors": {
+      "alreadyCreated": "Für diese Branches wurde bereits ein Merge-Request erstellt.",
+      "unavailable": "Mit diesen Branches kann kein Merge-Request mehr erstellt werden.",
+      "failed": "Der Merge-Request konnte nicht erstellt werden.",
+      "sourceMissing": "Das Quellprojekt existiert nicht oder du hast keinen Zugriff darauf."
+    },
+    "archived": "Dieses Projekt ist archiviert. Stelle das Projekt wieder her, bevor du einen Merge-Request erstellst.",
+    "sourceBranch": "Quell-Branch",
+    "sourceProject": "Quellprojekt",
+    "selectSourceBranch": "Quell-Branch auswählen",
+    "searchBranches": "Branches durchsuchen",
+    "targetBranch": "Ziel-Branch",
+    "targetProject": "Zielprojekt",
+    "sameBranch": "Quell- und Ziel-Branch müssen sich unterscheiden.",
+    "compare": "Branches vergleichen und fortfahren",
+    "cancel": "Abbrechen",
+    "fromInto": "Von <sourceBranch>{{source}}</sourceBranch> nach <targetBranch>{{target}}</targetBranch>",
+    "changeBranches": "Branches ändern",
+    "existing": "Für diese Branches existiert bereits ein Merge-Request",
+    "nothingToMerge": {
+      "title": "Es gibt keine Änderungen zum Mergen",
+      "body": "Wähle einen Quell-Branch mit Commits, die noch nicht im Ziel-Branch enthalten sind."
+    },
+    "noChangesYet": {
+      "title": "Diese Branches haben noch keine Änderungen",
+      "body": "Du kannst diesen Merge-Request jetzt erstellen und später Commits in den Quell-Branch pushen."
+    },
+    "titleRequired": "Titel (erforderlich)",
+    "titleLabel": "Titel",
+    "markDraft": "Als Entwurf markieren",
+    "draftHint": "Entwürfe können erst gemergt werden, wenn sie als bereit markiert sind.",
+    "description": "Beschreibung",
+    "assignees": "Zuständige",
+    "unassigned": "Nicht zugewiesen",
+    "milestone": "Meilenstein",
+    "noMilestone": "Kein Meilenstein",
+    "labels": "Labels",
+    "noLabels": "Keine Labels",
+    "board": "Board",
+    "noBoard": "Kein Board",
+    "allowMaintainerEdit": "Bearbeitung durch Maintainer erlauben",
+    "maintainerEditHint": "Mitglieder mit Schreibzugriff auf das Zielprojekt können Commits in deinen Quell-Branch pushen.",
+    "creating": "Merge-Request wird erstellt …",
+    "submit": "Merge-Request erstellen",
+    "noPermission": "Du hast keine Berechtigung, in diesem Projekt einen Merge-Request zu erstellen.",
+    "comparison": "Branch-Vergleich",
+    "commitsTab": "Commits",
+    "changesTab": "Änderungen",
+    "truncated": "Die ersten {{shown}} von {{total}} Commits werden angezeigt.",
+    "noCommits": "Noch keine Commits zum Vergleichen.",
+    "authored": "Verfasst von {{author}}, {{date}}",
+    "noFileChanges": "Keine Dateiänderungen vorhanden.",
+    "multiSelect": {
+      "search": "{{label}} durchsuchen",
+      "noMatches": "Keine Treffer",
+      "clear": "Auswahl aufheben",
+      "remove": "{{label}} entfernen"
+    }
+  },
+  "editor": {
+    "documentTitle": {
+      "create": "Neue Datei · {{project}}",
+      "edit": "{{file}} bearbeiten · {{project}}"
+    },
+    "readOnly": {
+      "title": "Diese Datei ist schreibgeschützt",
+      "body": "Wähle eine Textdatei auf einem Branch in einem Projekt, in dem du Schreibzugriff hast. Archivierte Projekte können nicht bearbeitet werden."
+    },
+    "notEditable": {
+      "title": "Diese Datei kann nicht online bearbeitet werden",
+      "body": "Wähle eine bearbeitbare Textdatei auf einem Branch. Binärdateien, große Dateien und Commit-Stände sind über Git verfügbar."
+    },
+    "defaultSummary": {
+      "add": "{{name}} hinzufügen",
+      "addNew": "Neue Datei hinzufügen",
+      "update": "{{name}} aktualisieren"
+    },
+    "fileContent": "Dateiinhalt",
+    "discard": "Deine ungespeicherten Dateiänderungen verwerfen?",
+    "commitFailed": "Der Commit wurde nicht abgeschlossen. Prüfe deine Änderungen und versuche es erneut.",
+    "newFile": "Neue Datei",
+    "editFile": "Datei bearbeiten",
+    "fileName": "Dateiname",
+    "fileNamePlaceholder": "Dateiname, einschließlich Verzeichnissen",
+    "section": "Datei-Editor",
+    "view": "Ansicht des Datei-Editors",
+    "edit": "Bearbeiten",
+    "previewChanges": "Änderungsvorschau",
+    "wrapLines": "Zeilen umbrechen",
+    "untitled": "Unbenannte Datei",
+    "unsaved": "Ungespeicherte Änderungen",
+    "noChanges": {
+      "title": "Keine Änderungen vorhanden",
+      "body": "Bearbeite die Datei, um eine Vorschau deiner Änderungen zu sehen."
+    },
+    "position": "Zeile {{line}}, Spalte {{column}}",
+    "lineCount_one": "{{count}} Zeile",
+    "lineCount_other": "{{count}} Zeilen",
+    "preview": "Vorschau",
+    "renderFailed": "Die Vorschau konnte nicht erstellt werden.",
+    "editorconfigHint": "Einrückung aus .editorconfig",
+    "indentTabs_one": "Tabbreite: {{count}}",
+    "indentTabs_other": "Tabbreite: {{count}}",
+    "indentSpaces_one": "Leerzeichen: {{count}}",
+    "indentSpaces_other": "Leerzeichen: {{count}}"
+  },
+  "commit": {
+    "title": "Änderungen committen",
+    "message": "Commit-Nachricht",
+    "extendedDescription": "Ausführliche Beschreibung",
+    "optional": "(optional)",
+    "descriptionPlaceholder": "Beschreibe, warum du diese Änderungen vorgenommen hast …",
+    "targetBranch": "Ziel-Branch",
+    "commitTo": "Auf <branch>{{branch}}</branch> committen",
+    "protected": "Dieser Branch ist geschützt. Committe deine Änderungen auf einen neuen Branch.",
+    "newBranch": "Neuen Branch erstellen",
+    "newBranchName": "Name des neuen Branches",
+    "startMergeRequest": "Mit diesen Änderungen einen neuen Merge-Request starten",
+    "email": "Commit-E-Mail",
+    "signoff": "Signed-off-by-Zeile hinzufügen",
+    "committing": "Wird committet …",
+    "submit": "Änderungen committen",
+    "cancel": "Abbrechen",
+    "titleSigned": "Signierte Änderungen committen",
+    "willSign": "Dieser Commit wird signiert.",
+    "willNotSign": "Dieser Commit wird nicht signiert."
+  },
+  "operations": {
+    "titles": {
+      "upload": "Dateien hochladen",
+      "delete": "Datei löschen",
+      "patch": "Patch anwenden",
+      "cherryPick": "Commit cherry-picken",
+      "revert": "Commit rückgängig machen"
+    },
+    "documentTitle": "{{operation}} · {{project}}",
+    "readOnly": {
+      "title": "Dieses Projekt ist schreibgeschützt",
+      "body": "Wähle einen Branch in einem Projekt, in dem du Schreibzugriff hast."
+    },
+    "deleteSummary": "{{path}} löschen",
+    "discard": "Deine ungespeicherten Änderungen verwerfen?",
+    "commitFailed": "Der Commit wurde nicht abgeschlossen. Prüfe die Angaben und versuche es erneut.",
+    "upload": {
+      "tooLarge": "{{name}} überschreitet das Upload-Limit von {{size}} MiB.",
+      "duplicate": "Eine Datei namens {{name}} ist bereits ausgewählt.",
+      "tooMany_one": "Wähle höchstens {{count}} Datei pro Commit.",
+      "tooMany_other": "Wähle höchstens {{count}} Dateien pro Commit.",
+      "removeFailed": "Der temporäre Upload konnte nicht entfernt werden.",
+      "progress": "Datei {{current}} von {{total}} wird hochgeladen: {{name}}",
+      "creatingCommit": "Commit wird erstellt …",
+      "failed": "Der Upload wurde nicht committet. Prüfe die Commit-Angaben und versuche es erneut.",
+      "directory": "In Verzeichnis hochladen",
+      "root": "Stammverzeichnis des Repositorys",
+      "drop": "Dateien hierher ziehen oder <browse>durchsuchen</browse>",
+      "choose": "Dateien zum Hochladen auswählen",
+      "limits_one": "Bis zu {{count}} Datei mit je {{size}} MiB.",
+      "limits_other": "Bis zu {{count}} Dateien mit je {{size}} MiB.",
+      "replaceHint": "Dateien mit demselben Namen werden in diesem Commit ersetzt. Frühere Versionen bleiben in der Commit-Historie erhalten.",
+      "size": "{{size}} KiB",
+      "remove": "{{name}} entfernen"
+    },
+    "patch": {
+      "view": "Patch-Ansicht",
+      "tab": "Patch",
+      "preview": "Änderungsvorschau",
+      "content": "Patch-Inhalt",
+      "placeholder": "Füge hier einen Git-Diff im Unified-Format oder einen Patch ein …"
+    },
+    "delete": {
+      "title": "{{path}} löschen?",
+      "body": "Dadurch wird ein Commit erstellt, der die Datei aus dem ausgewählten Branch entfernt. Die Datei bleibt in der Commit-Historie verfügbar."
+    },
+    "commitIntro": {
+      "revert": "Es wird auf <branch>{{branch}}</branch> ein Commit erstellt, der die mit <sha>{{sha}}</sha> eingeführten Änderungen rückgängig macht. Die bestehende Historie bleibt erhalten.",
+      "cherryPick": "Die mit <sha>{{sha}}</sha> eingeführten Änderungen werden auf <branch>{{branch}}</branch> übernommen. Die bestehende Historie bleibt erhalten."
+    }
+  }
+}

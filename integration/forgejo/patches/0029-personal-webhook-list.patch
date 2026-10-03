@@ -1,0 +1,19 @@
+--- a/routers/web/user/setting/webhooks.go
++++ b/routers/web/user/setting/webhooks.go
+@@ -11,6 +11,7 @@
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/services/context"
++ repo_setting "forgejo.org/routers/web/repo/setting"
+ 	webhook_service "forgejo.org/services/webhook"
+ )
+ 
+@@ -34,7 +35,7 @@
+ 	}
+ 
+ 	ctx.Data["Webhooks"] = ws
+-	ctx.HTML(http.StatusOK, tplSettingsHooks)
++	if repo_setting.WriteWebhooksUI(ctx, "list") { return }; ctx.HTML(http.StatusOK, tplSettingsHooks)
+ }
+ 
+ // DeleteWebhook response for delete webhook

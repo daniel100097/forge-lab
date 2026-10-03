@@ -1,0 +1,39 @@
+--- a/routers/web/repo/release.go
++++ b/routers/web/repo/release.go
+@@ -27,6 +27,7 @@ import (
+ 	"forgejo.org/modules/markup/markdown"
+ 	"forgejo.org/modules/optional"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/modules/spaui"
+ 	"forgejo.org/modules/util"
+ 	"forgejo.org/modules/web"
+ 	"forgejo.org/routers/web/feed"
+@@ -224,7 +225,7 @@ func Releases(ctx *context.Context) {
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		items := make([]any, 0, len(releases))
+-		for _, rel := range releases { items = append(items, convert.ToAPIRelease(ctx, ctx.Repo.Repository, rel.Release, false)) }
++		for _, rel := range releases { items = append(items, spaui.WithFields(convert.ToAPIRelease(ctx, ctx.Repo.Repository, rel.Release, false), map[string]any{"body_html": string(rel.Release.RenderedNote)})) }
+ 		ctx.JSON(http.StatusOK, map[string]any{"items": items, "total": releasesCount, "can_create": writeAccess && !ctx.Repo.Repository.IsArchived})
+ 		return
+ 	}
+@@ -399,7 +400,7 @@ func SingleRelease(ctx *context.Context) {
+ 
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+-		ctx.JSON(http.StatusOK, map[string]any{"item": convert.ToAPIRelease(ctx, ctx.Repo.Repository, release, false), "can_write": writeAccess && !ctx.Repo.Repository.IsArchived})
++		ctx.JSON(http.StatusOK, map[string]any{"item": spaui.WithFields(convert.ToAPIRelease(ctx, ctx.Repo.Repository, release, false), map[string]any{"body_html": string(release.RenderedNote)}), "can_write": writeAccess && !ctx.Repo.Repository.IsArchived})
+ 		return
+ 	}
+ 	ctx.HTML(http.StatusOK, tplReleasesList)
+--- a/routers/web/repo/wiki.go
++++ b/routers/web/repo/wiki.go
+@@ -541,7 +541,7 @@ func Wiki(ctx *context.Context) {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		content := string(wikiContentsByEntry(ctx, entry))
+ 		if ctx.Written() { return }
+-		ctx.JSON(http.StatusOK, map[string]any{"title": ctx.Data["Title"], "content": content, "pages": ctx.Data["Pages"], "can_write": ctx.Data["CanWriteWiki"]})
++		ctx.JSON(http.StatusOK, map[string]any{"title": ctx.Data["Title"], "content": content, "content_html": ctx.Data["content"], "pages": ctx.Data["Pages"], "can_write": ctx.Data["CanWriteWiki"]})
+ 		return
+ 	}
+ 	ctx.HTML(http.StatusOK, tplWikiView)

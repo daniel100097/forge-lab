@@ -1,0 +1,20 @@
+--- a/routers/web/repo/issue.go
++++ b/routers/web/repo/issue.go
+@@ -1034,7 +1034,7 @@
+ 		return
+ 	}
+ 
+-	ctx.HTML(http.StatusOK, tplIssueNew)
++	if writeRenderedIssueCreationUI(ctx, false) { return };ctx.HTML(http.StatusOK, tplIssueNew)
+ }
+ 
+ func renderErrorOfTemplates(ctx *context.Context, errs map[string]error) template.HTML {
+@@ -1086,7 +1086,7 @@
+ 	ctx.Data["milestone"] = ctx.FormInt64("milestone")
+ 	ctx.Data["project"] = ctx.FormInt64("project")
+ 
+-	ctx.HTML(http.StatusOK, tplIssueChoose)
++	if writeRenderedIssueCreationUI(ctx, true) { return };ctx.HTML(http.StatusOK, tplIssueChoose)
+ }
+ 
+ // DeleteIssue deletes an issue

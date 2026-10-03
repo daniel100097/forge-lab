@@ -1,0 +1,239 @@
+--- a/routers/web/repo/issue_label.go
++++ b/routers/web/repo/issue_label.go
+@@ -36,7 +36,7 @@
+ func InitializeLabels(ctx *context.Context) {
+ 	form := web.GetForm(ctx).(*forms.InitializeLabelsForm)
+ 	if ctx.HasError() {
+-		ctx.Redirect(ctx.Repo.RepoLink + "/labels")
++		issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/labels")
+ 		return
+ 	}
+ 
+@@ -44,13 +44,13 @@
+ 		if label.IsErrTemplateLoad(err) {
+ 			originalErr := err.(label.ErrTemplateLoad).OriginalError
+ 			ctx.Flash.Error(ctx.Tr("repo.issues.label_templates.fail_to_load_file", form.TemplateName, originalErr))
+-			ctx.Redirect(ctx.Repo.RepoLink + "/labels")
++			issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/labels")
+ 			return
+ 		}
+ 		ctx.ServerError("InitializeLabels", err)
+ 		return
+ 	}
+-	ctx.Redirect(ctx.Repo.RepoLink + "/labels")
++	issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/labels")
+ }
+ 
+ // RetrieveLabels find all the labels of a repository and organization
+@@ -106,7 +106,7 @@
+ 
+ 	if ctx.HasError() {
+ 		ctx.Flash.Error(ctx.Data["ErrorMsg"].(string))
+-		ctx.Redirect(ctx.Repo.RepoLink + "/labels")
++		issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/labels")
+ 		return
+ 	}
+ 
+@@ -121,12 +121,16 @@
+ 		ctx.ServerError("NewLabel", err)
+ 		return
+ 	}
+-	ctx.Redirect(ctx.Repo.RepoLink + "/labels")
++	issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/labels")
+ }
+ 
+ // UpdateLabel update a label's name and color
+ func UpdateLabel(ctx *context.Context) {
+ 	form := web.GetForm(ctx).(*forms.CreateLabelForm)
++	if ctx.HasError() {
++		ctx.HTML(http.StatusUnprocessableEntity, tplLabels)
++		return
++	}
+ 	l, err := issues_model.GetLabelInRepoByID(ctx, ctx.Repo.Repository.ID, form.ID)
+ 	if err != nil {
+ 		switch {
+@@ -147,7 +151,7 @@
+ 		ctx.ServerError("UpdateLabel", err)
+ 		return
+ 	}
+-	ctx.Redirect(ctx.Repo.RepoLink + "/labels")
++	issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/labels")
+ }
+ 
+ // DeleteLabel delete a label
+@@ -158,7 +162,7 @@
+ 		ctx.Flash.Success(ctx.Tr("repo.issues.label_deletion_success"))
+ 	}
+ 
+-	ctx.JSONRedirect(ctx.Repo.RepoLink + "/labels")
++	issueManagementRedirect(ctx, true, ctx.Repo.RepoLink + "/labels")
+ }
+ 
+ // UpdateIssueLabel change issue's labels
+@@ -227,3 +231,16 @@
+ 
+ 	ctx.JSONOK()
+ }
++
++// issueManagementRedirect preserves native validation failures in the SPA's
++// explicit response mode, rather than treating a flash-error redirect as success.
++func issueManagementRedirect(ctx *context.Context, jsonRedirect bool, location string, status ...int) {
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" && (ctx.HasError() || ctx.Flash.ErrorMsg != "") {
++		message := ctx.Flash.ErrorMsg
++		if message == "" { message = ctx.GetErrMsg() }
++		ctx.JSON(http.StatusUnprocessableEntity, map[string]string{"errorMessage": message})
++		return
++	}
++	if jsonRedirect { ctx.JSONRedirect(location); return }
++	ctx.Redirect(location, status...)
++}
+--- a/routers/web/repo/milestone.go
++++ b/routers/web/repo/milestone.go
+@@ -152,7 +152,7 @@
+ 	}
+ 
+ 	ctx.Flash.Success(ctx.Tr("repo.milestones.create_success", form.Title))
+-	ctx.Redirect(ctx.Repo.RepoLink + "/milestones")
++	issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/milestones")
+ }
+ 
+ // EditMilestone render edting milestone page
+@@ -219,7 +219,7 @@
+ 	}
+ 
+ 	ctx.Flash.Success(ctx.Tr("repo.milestones.edit_success", m.Name))
+-	ctx.Redirect(ctx.Repo.RepoLink + "/milestones")
++	issueManagementRedirect(ctx, false, ctx.Repo.RepoLink + "/milestones")
+ }
+ 
+ // ChangeMilestoneStatus response for change a milestone's status
+@@ -231,7 +231,7 @@
+ 	case "close":
+ 		toClose = true
+ 	default:
+-		ctx.JSONRedirect(ctx.Repo.RepoLink + "/milestones")
++		issueManagementRedirect(ctx, true, ctx.Repo.RepoLink + "/milestones")
+ 		return
+ 	}
+ 	id := ctx.ParamsInt64(":id")
+@@ -244,7 +244,7 @@
+ 		}
+ 		return
+ 	}
+-	ctx.JSONRedirect(ctx.Repo.RepoLink + "/milestones?state=" + url.QueryEscape(ctx.Params(":action")))
++	issueManagementRedirect(ctx, true, ctx.Repo.RepoLink + "/milestones?state=" + url.QueryEscape(ctx.Params(":action")))
+ }
+ 
+ // DeleteMilestone delete a milestone
+@@ -255,7 +255,7 @@
+ 		ctx.Flash.Success(ctx.Tr("repo.milestones.deletion_success"))
+ 	}
+ 
+-	ctx.JSONRedirect(ctx.Repo.RepoLink + "/milestones")
++	issueManagementRedirect(ctx, true, ctx.Repo.RepoLink + "/milestones")
+ }
+ 
+ // MilestoneIssuesAndPulls lists all the issues and pull requests of the milestone
+--- a/routers/web/repo/issue_dependency.go
++++ b/routers/web/repo/issue_dependency.go
+@@ -38,7 +38,7 @@
+ 	dep, err := issues_model.GetIssueByID(ctx, depID)
+ 	if err != nil {
+ 		ctx.Flash.Error(ctx.Tr("repo.issues.dependency.add_error_dep_issue_not_exist"))
+-		ctx.Redirect(issue.Link())
++		issueManagementRedirect(ctx, false, issue.Link())
+ 		return
+ 	}
+ 
+@@ -46,7 +46,7 @@
+ 	if issue.RepoID != dep.RepoID {
+ 		if !setting.Service.AllowCrossRepositoryDependencies {
+ 			ctx.Flash.Error(ctx.Tr("repo.issues.dependency.add_error_dep_not_same_repo"))
+-			ctx.Redirect(issue.Link())
++			issueManagementRedirect(ctx, false, issue.Link())
+ 			return
+ 		}
+ 		if err := dep.LoadRepo(ctx); err != nil {
+@@ -61,7 +61,7 @@
+ 		}
+ 		if !depRepoPerm.CanReadIssuesOrPulls(dep.IsPull) {
+ 			// you can't see this dependency
+-			ctx.Redirect(issue.Link())
++			issueManagementRedirect(ctx, false, issue.Link())
+ 			return
+ 		}
+ 	}
+@@ -69,7 +69,7 @@
+ 	// Check if issue and dependency is the same
+ 	if dep.ID == issue.ID {
+ 		ctx.Flash.Error(ctx.Tr("repo.issues.dependency.add_error_same_issue"))
+-		ctx.Redirect(issue.Link())
++		issueManagementRedirect(ctx, false, issue.Link())
+ 		return
+ 	}
+ 
+@@ -77,18 +77,18 @@
+ 	if err != nil {
+ 		if issues_model.IsErrDependencyExists(err) {
+ 			ctx.Flash.Error(ctx.Tr("repo.issues.dependency.add_error_dep_exists"))
+-			ctx.Redirect(issue.Link())
++			issueManagementRedirect(ctx, false, issue.Link())
+ 			return
+ 		} else if issues_model.IsErrCircularDependency(err) {
+ 			ctx.Flash.Error(ctx.Tr("repo.issues.dependency.add_error_cannot_create_circular"))
+-			ctx.Redirect(issue.Link())
++			issueManagementRedirect(ctx, false, issue.Link())
+ 			return
+ 		}
+ 		ctx.ServerError("CreateOrUpdateIssueDependency", err)
+ 		return
+ 	}
+ 
+-	ctx.Redirect(issue.Link())
++	issueManagementRedirect(ctx, false, issue.Link())
+ }
+ 
+ // RemoveDependency removes the dependency
+@@ -145,5 +145,5 @@
+ 	}
+ 
+ 	// Redirect
+-	ctx.Redirect(issue.Link())
++	issueManagementRedirect(ctx, false, issue.Link())
+ }
+--- a/routers/web/repo/issue_timetrack.go
++++ b/routers/web/repo/issue_timetrack.go
+@@ -30,7 +30,7 @@
+ 
+ 	if c.HasError() {
+ 		c.Flash.Error(c.GetErrMsg())
+-		c.Redirect(url)
++		issueManagementRedirect(c, false, url)
+ 		return
+ 	}
+ 
+@@ -38,7 +38,7 @@
+ 
+ 	if total <= 0 {
+ 		c.Flash.Error(c.Tr("repo.issues.add_time_sum_to_small"))
+-		c.Redirect(url, http.StatusSeeOther)
++		issueManagementRedirect(c, false, url, http.StatusSeeOther)
+ 		return
+ 	}
+ 
+@@ -47,7 +47,7 @@
+ 		return
+ 	}
+ 
+-	c.Redirect(url, http.StatusSeeOther)
++	issueManagementRedirect(c, false, url, http.StatusSeeOther)
+ }
+ 
+ // DeleteTime deletes tracked time
+@@ -83,5 +83,5 @@
+ 	}
+ 
+ 	c.Flash.Success(c.Tr("repo.issues.del_time_history", util.SecToTime(t.Time)))
+-	c.Redirect(issue.Link())
++	issueManagementRedirect(c, false, issue.Link())
+ }

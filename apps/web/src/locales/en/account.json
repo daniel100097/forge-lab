@@ -1,0 +1,564 @@
+{
+  "auth": {
+    "tagline": "Your self-hosted Git workspace",
+    "language": "Language",
+    "documentTitle": {
+      "forgot": "Password recovery",
+      "login": "Sign in",
+      "verification": "Account verification"
+    },
+    "errors": {
+      "unavailable": "This sign-in method is not available.",
+      "resetLimited": "A reset email was sent recently. Please wait before trying again.",
+      "prohibited": "This account cannot sign in. Contact your administrator.",
+      "failed": "Sign-in could not be completed. Check your details and try again."
+    },
+    "resetSent": "If this address belongs to an account, a password reset email is on its way.",
+    "titles": {
+      "login": "Sign in",
+      "twoFactor": "One more step.",
+      "recovery": "Use a recovery code.",
+      "password": "Choose a new password.",
+      "forgot": "Forgot your password?",
+      "verification": "Account verification"
+    },
+    "descriptions": {
+      "login": "Use your Forgejo account to continue.",
+      "twoFactor": "Enter the six-digit code from your authenticator app.",
+      "recovery": "Enter your one-time recovery code to finish signing in.",
+      "password": "Your account requires a new password before you continue.",
+      "forgot": "We’ll send you a link to get back into your workspace."
+    },
+    "backToSignIn": "Back to sign in",
+    "recoveryDisabled": "Email recovery is disabled on this instance. Your administrator can reset your password.",
+    "chooseProvider": "Choose an identity provider below to sign in.",
+    "invalidLink": "This verification link is not valid. Return to sign in to continue.",
+    "usernameOrEmail": "Username or email",
+    "newPassword": "New password",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "hidePassword": "Hide password",
+    "showPassword": "Show password",
+    "confirmPassword": "Confirm password",
+    "rememberDevice": "Remember this device",
+    "forgotPassword": "Forgot password?",
+    "email": "Email address",
+    "authenticationCode": "Authentication code",
+    "recoveryCode": "Recovery code",
+    "submit": {
+      "login": "Sign in",
+      "forgot": "Send reset link",
+      "password": "Update password",
+      "verify": "Verify and continue"
+    },
+    "useRecoveryInstead": "Use a recovery code instead",
+    "exploreProjects": "Explore projects",
+    "restriction": {
+      "title": "Your account needs attention.",
+      "securitySetup": "Your administrator requires two-factor authentication. Set up your authenticator to continue.",
+      "inactive": "This account is inactive or blocked. Contact your administrator to continue.",
+      "activate": "Activate account",
+      "setUp": "Set up authentication",
+      "signOut": "Sign out"
+    },
+    "username": "Username",
+    "captcha": {
+      "loadFailed": "The verification widget could not load. Try reloading this page.",
+      "reload": "Reload verification image",
+      "characters": "Verification characters",
+      "frameTitle": "Verification"
+    },
+    "providers": {
+      "orContinueWith": "Or continue with",
+      "openid": "Sign in with OpenID",
+      "register": "New to this workspace? <anchor>Create an account</anchor>"
+    },
+    "extras": {
+      "invalidRedirect": "Invalid redirect protocol.",
+      "invalidLink": "This link is invalid or has expired.",
+      "incorrectPassword": "Incorrect password.",
+      "resendLimited": "An email was sent recently. Please wait before trying again.",
+      "manualActivation": "Your account was created. An administrator must activate it before you can sign in.",
+      "checkEmail": "Check your email to activate your account.",
+      "received": "Your request was received.",
+      "webauthnUnsupported": "Security keys require HTTPS or localhost and a compatible browser.",
+      "webauthnCancelled": "Security key authentication was cancelled.",
+      "titles": {
+        "register": "Create your account",
+        "recoverAccount": "Reset your password",
+        "activate": "Activate your account",
+        "activateEmail": "Confirm your email",
+        "openid": "Sign in with OpenID",
+        "openidConnect": "Connect your account",
+        "openidRegister": "Create an OpenID account",
+        "linkAccount": "Link your account",
+        "webauthn": "Verify with your security key",
+        "authorize": "Authorize application"
+      },
+      "registrationDisabled": "Registration is disabled on this instance.",
+      "webauthnHint": "Use the security key registered to your account.",
+      "useSecurityKey": "Use security key",
+      "useAuthenticatorCode": "Use an authenticator code",
+      "useRecoveryCode": "Use a recovery code",
+      "existingAccount": "Existing account",
+      "newAccount": "New account",
+      "openidOptions": "OpenID account options",
+      "openidUri": "OpenID URI",
+      "connecting": "Connecting {{openid}}",
+      "adminActivation": "An administrator must activate this account.",
+      "consent": {
+        "request": "<app>{{name}}</app> requests access to your account.",
+        "redirect": "After authorization, you will return to {{uri}}.",
+        "scope": "Requested permissions: <code>{{scope}}</code>",
+        "basicAccess": "Basic account access",
+        "authorize": "Authorize",
+        "deny": "Deny",
+        "failed": "Authorization failed",
+        "failedHelp": "The application sent an invalid request. Contact the maintainer of the application you tried to authorize."
+      },
+      "submit": {
+        "register": "Create account",
+        "reset": "Reset password",
+        "continue": "Continue"
+      },
+      "linkOptions": "Account linking options",
+      "openidDescription": "Enter your OpenID URI, for example alice.openid.example.org or https://openid.example.org/alice."
+    },
+    "activation": {
+      "disabled": "Email confirmation is disabled on this instance. Contact your administrator to activate your account.",
+      "limited": "You requested an activation email recently. Please wait 3 minutes and try again.",
+      "sent": "A new confirmation email has been sent to <email>{{email}}</email>. Follow the link in it within the next {{lives}} to activate your account.",
+      "resend": "Resend activation email",
+      "changeSummary": "Change the address the activation email is sent to",
+      "changeDescription": "If you entered the wrong address when you registered, change it here. The activation email is then sent to the new address instead.",
+      "changeSubmit": "Change address and resend"
+    }
+  },
+  "avatar": {
+    "title": "Profile picture",
+    "upload": "Upload avatar",
+    "remove": "Remove avatar",
+    "updated": "Profile picture updated.",
+    "lookup": "Look up avatar by email address",
+    "email": "Avatar email address",
+    "custom": "Use custom avatar",
+    "update": "Update avatar",
+    "constraints": "Images may be up to {{size}} and {{width}} × {{height}} pixels."
+  },
+  "preferences": {
+    "title": "Preferences",
+    "saved": "Preferences saved.",
+    "save": "Save preferences",
+    "theme": {
+      "title": "Color theme",
+      "description": "Choose how this workspace looks. The choice is saved to your account and applies wherever you sign in.",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "Follow system",
+      "variant": "Your account uses the Forgejo theme “{{name}}”. This interface shows it in its light or dark colors; color-vision and Gitea variants only change Forgejo’s built-in pages.",
+      "unsupported": "Your account uses the Forgejo theme “{{name}}”, which this interface can’t display. Choosing a color theme here replaces it.",
+      "serverOnly": "This instance also offers Gitea and color-vision theme variants. They only change Forgejo’s built-in pages, so they aren’t offered here."
+    },
+    "language": {
+      "title": "Language",
+      "description": "Used for the interface, server messages and email notifications. The interface is available in English and German; other languages apply to server messages.",
+      "default": "Default"
+    },
+    "hints": {
+      "title": "Project hints",
+      "label": "Show additional project feature hints"
+    },
+    "events": {
+      "title": "Activity events",
+      "description": "Choose the activity event types you want to show in discussions.",
+      "types": {
+        "reference": "reference",
+        "label": "label",
+        "milestone": "milestone",
+        "assignee": "assignee",
+        "title": "title",
+        "branch": "branch",
+        "time_tracking": "time tracking",
+        "deadline": "deadline",
+        "dependency": "dependency",
+        "lock": "lock",
+        "review_request": "review request",
+        "pull_request_push": "pull request push",
+        "project": "project",
+        "issue_ref": "issue ref"
+      }
+    }
+  },
+  "resources": {
+    "organizations": "Organizations",
+    "repositories": "Repositories",
+    "private": "Private",
+    "public": "Public",
+    "settings": "Settings",
+    "noOrganizations": "No organization memberships",
+    "noRepositories": "No repositories",
+    "unadopted": "Unadopted repository",
+    "adopt": "Adopt",
+    "confirmDelete": "Permanently delete unadopted repository {{name}}?",
+    "delete": "Delete",
+    "previous": "Previous",
+    "page": "Page {{page}}",
+    "next": "Next",
+    "newOrganization": "New organization",
+    "leave": "Leave",
+    "confirmLeave": "Leave organization {{name}}?"
+  },
+  "integrations": {
+    "title": "Authorized integrations",
+    "editTitle": "Edit authorized integration",
+    "newTitle": "New authorized integration",
+    "description": "Allow a trusted workflow or identity provider to act with selected permissions.",
+    "name": "Name",
+    "descriptionLabel": "Description",
+    "audience": "Audience",
+    "issuer": "OIDC issuer",
+    "claimRules": "Claim rules",
+    "sourceRepo": "Workflow repository",
+    "workflowFile": "Workflow file pattern",
+    "gitRef": "Git reference pattern",
+    "events": "Allowed events",
+    "resource": {
+      "label": "Repository access",
+      "all": "All repositories",
+      "publicOnly": "Public repositories only",
+      "selected": "Selected repositories"
+    },
+    "selectRepositories": "Select repositories",
+    "permissions": "Permissions",
+    "allPermissions": "Grant all permissions",
+    "scope": {
+      "label": "{{category}} permission",
+      "none": "No access",
+      "read": "Read",
+      "write": "Read and write"
+    },
+    "save": "Save integration",
+    "cancel": "Cancel",
+    "connectActions": "Connect Forgejo Actions",
+    "connectOidc": "Connect an OIDC provider",
+    "deleteLabel": "Delete {{name}}",
+    "confirmDelete": "Delete integration {{name}}?",
+    "empty": "No authorized integrations",
+    "descriptionPlaceholder": "Used to publish packages when…",
+    "sourceRepoHelp": "Forgejo Actions in this repository can use the integration. Only repositories with Actions enabled are listed.",
+    "workflowFileHelp": "Optional pattern for the workflow file name without its directory, for example testing.yml or test-*.yml. Leave empty to allow any workflow.",
+    "gitRefHelp": "Optional pattern for the Git reference, for example refs/heads/main or refs/pull/*/head. Leave empty to allow any reference.",
+    "eventsHelp": "If no events are selected, any event is allowed.",
+    "kind": {
+      "actions": "Forgejo Actions",
+      "generic": "OIDC provider"
+    },
+    "added": "Added on {{date}}",
+    "lastUsed": "Last used on {{date}}",
+    "noActivity": "No recent activity",
+    "edit": "Edit"
+  },
+  "settings": {
+    "title": "User settings",
+    "nav": {
+      "profile": "Profile",
+      "preferences": "Preferences",
+      "account": "Account and emails",
+      "security": "Password and authentication",
+      "keys": "SSH and GPG keys",
+      "applications": "Applications",
+      "integrations": "Authorized integrations",
+      "webhooks": "Webhooks",
+      "organizations": "Organizations",
+      "repositories": "Repositories",
+      "packages": "Package registry",
+      "storage": "Storage usage",
+      "runners": "Runners",
+      "secrets": "Actions secrets",
+      "variables": "Actions variables",
+      "blocked": "Blocked users"
+    },
+    "saved": "Changes saved.",
+    "secret": {
+      "notice": "Copy this value now and keep it somewhere secure. It will not be shown again.",
+      "copy": "Copy {{label, lowercase}}"
+    }
+  },
+  "details": {
+    "documentTitle": "Account settings",
+    "title": "Account and emails",
+    "emails": {
+      "title": "Email addresses",
+      "description": "Manage the addresses connected to your account.",
+      "primary": "Primary email",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "makePrimary": "Make primary",
+      "resend": "Resend confirmation",
+      "remove": "Remove {{email}}",
+      "confirmRemove": "Remove {{email}}?",
+      "limited": "An email was sent recently. Wait a few minutes before adding another address.",
+      "add": "Add email address",
+      "confirmationSent": "A confirmation email has been sent to {{email}}. Follow the link in it to confirm the address.",
+      "pending": "Activation pending",
+      "pendingHint": "An activation email was sent recently. Try again in a few minutes."
+    },
+    "notifications": {
+      "title": "Email notifications",
+      "label": "Email notification preference",
+      "enabled": "All activity except your own",
+      "andYourOwn": "All activity including your own",
+      "onMention": "Only mentions",
+      "disabled": "Disabled",
+      "save": "Save notification preference"
+    },
+    "delete": {
+      "title": "Delete account",
+      "description": "Delete your account permanently. Transfer or remove your repositories and organization memberships first.",
+      "summary": "Delete this account",
+      "confirm": "Permanently delete your account?",
+      "password": "Confirm your password",
+      "submit": "Delete account permanently",
+      "withComments": "Your account is younger than {{duration}}. To avoid ghost comments, all your issue and merge request comments will be deleted with it."
+    }
+  },
+  "security": {
+    "documentTitle": "Authentication",
+    "title": "Password and authentication",
+    "recoveryCode": "Recovery code",
+    "password": {
+      "title": "Password",
+      "description": "Choose a strong password that you do not use elsewhere.",
+      "current": "Current password",
+      "new": "New password",
+      "confirm": "Confirm new password",
+      "save": "Save password"
+    },
+    "twoFactor": {
+      "title": "Two-factor authentication",
+      "description": "Require a one-time code when signing in.",
+      "enabled": "Two-factor authentication is enabled.",
+      "notEnabled": "Two-factor authentication is not enabled.",
+      "replace": "Replace authenticator",
+      "confirmRegenerate": "Replace your recovery code? The previous code will stop working.",
+      "regenerate": "Regenerate recovery code",
+      "confirmDisable": "Disable two-factor authentication?",
+      "disable": "Disable two-factor authentication",
+      "enable": "Enable two-factor authentication"
+    },
+    "keys": {
+      "title": "Security keys",
+      "description": "Use a passkey or hardware security key to protect your account.",
+      "cloneWarning": "Check this key",
+      "delete": "Delete security key {{name}}",
+      "confirmDelete": "Delete security key {{name}}?",
+      "name": "Security key name",
+      "namePlaceholder": "Work laptop",
+      "register": "Register security key",
+      "unsupported": "Security keys require a supported browser and a secure HTTPS connection.",
+      "cancelled": "Security key registration was cancelled."
+    },
+    "linked": {
+      "title": "Linked accounts",
+      "unlink": "Unlink",
+      "empty": "No external accounts are linked.",
+      "connect": "Connect {{provider}}"
+    },
+    "openid": {
+      "title": "OpenID identities",
+      "hide": "Hide on profile",
+      "show": "Show on profile",
+      "delete": "Delete OpenID {{uri}}",
+      "uri": "OpenID URI",
+      "connect": "Connect OpenID"
+    }
+  },
+  "twoFactor": {
+    "incomplete": "Two-factor enrollment did not complete.",
+    "title": "Set up two-factor authentication",
+    "done": "Done",
+    "connect": "Connect your authenticator",
+    "description": "Scan this QR code with your authenticator app, then enter the six-digit code.",
+    "qrAlt": "Authenticator setup QR code",
+    "manual": "Enter the setup key manually",
+    "copyKey": "Copy setup key",
+    "code": "Authentication code",
+    "verify": "Verify and enable"
+  },
+  "keys": {
+    "title": "SSH and GPG keys",
+    "sections": {
+      "ssh": "SSH keys",
+      "gpg": "GPG keys",
+      "principal": "SSH principals"
+    },
+    "verified": "Verified",
+    "delete": {
+      "ssh": "Delete ssh key {{name}}",
+      "gpg": "Delete gpg key {{name}}",
+      "principal": "Delete principal key {{name}}"
+    },
+    "confirmDelete": "Delete this public key?",
+    "verify": {
+      "summary": "Verify ownership",
+      "instructions": "Sign the following token with this key and paste the armored signature.",
+      "copyToken": "Copy verification token",
+      "signature": "Signature",
+      "submit": "Verify key",
+      "signWith": "Generate the signature with:",
+      "sshAgent": "Or, if you use an SSH agent (with SSH_AUTH_SOCK set):",
+      "windows": "Windows commands",
+      "copyCommand": "Copy command",
+      "sshPlaceholder": "Begins with -----BEGIN SSH SIGNATURE-----",
+      "gpgPlaceholder": "Begins with -----BEGIN PGP SIGNATURE-----",
+      "tokenRequired": "Sign this token with the key and paste the armored signature to add it."
+    },
+    "empty": {
+      "ssh": "No SSH keys added.",
+      "gpg": "No GPG keys added.",
+      "principal": "No PRINCIPAL keys added."
+    },
+    "add": {
+      "title": "Add a public key",
+      "type": "Key type",
+      "types": {
+        "ssh": "SSH key",
+        "gpg": "GPG key",
+        "principal": "SSH principal"
+      },
+      "name": "Title",
+      "publicKey": "Public key",
+      "submit": "Add key",
+      "principal": "Principal",
+      "gpgPlaceholder": "Begins with -----BEGIN PGP PUBLIC KEY BLOCK-----"
+    },
+    "descriptions": {
+      "ssh": "SSH keys give full access to your repositories. Verified keys can also verify SSH-signed commits.",
+      "gpg": "GPG keys verify the commits you sign. Keep your private keys safe: they let anyone sign commits as you.",
+      "principal": "SSH certificate principals give full access to your repositories."
+    },
+    "signOnly": "SSH is disabled on this instance, so these keys are only used to verify commit signatures.",
+    "externallyManaged": "This SSH key is managed by your authentication source.",
+    "meta": {
+      "added": "Added on {{date}}",
+      "lastUsed": "Last used on {{date}}",
+      "noActivity": "No recent activity",
+      "validUntil": "Valid until {{date}}",
+      "validForever": "Valid forever",
+      "subkeys": "Subkeys: {{ids}}",
+      "identities": "Matched identities: {{emails}}"
+    }
+  },
+  "applications": {
+    "title": "Applications",
+    "newToken": "New token",
+    "accessToken": "Access token",
+    "tokens": {
+      "title": "Access tokens",
+      "description": "Manage tokens for Git operations and external applications.",
+      "confirmRegenerate": "Regenerate token {{name}}? The old token will stop working.",
+      "regenerate": "Regenerate",
+      "confirmRevoke": "Revoke token {{name}}?",
+      "revoke": "Revoke",
+      "empty": "No access tokens."
+    },
+    "oauth": {
+      "title": "OAuth applications",
+      "delete": "Delete application {{name}}",
+      "confirmDelete": "Delete application {{name}}?",
+      "create": "Create application"
+    },
+    "grants": {
+      "title": "Authorized applications",
+      "revoke": "Revoke access",
+      "empty": "No authorized applications.",
+      "description": "These third-party applications can access your account. Revoke access for applications you no longer use.",
+      "unnamed": "Application #{{id}}",
+      "added": "Added on {{date}}",
+      "confirmRevoke": "Revoke access for {{name}}?"
+    }
+  },
+  "newToken": {
+    "failed": "Token was not created.",
+    "title": "New access token",
+    "done": "Done",
+    "name": "Token name",
+    "permissionsHint": "Choose the access this token needs.",
+    "submit": "Generate token"
+  },
+  "oauthApp": {
+    "title": "OAuth application",
+    "clientSecret": "Client secret",
+    "details": "Application details",
+    "clientId": "Client ID",
+    "copyClientId": "Copy client ID",
+    "name": "Application name",
+    "redirectUris": "Redirect URIs",
+    "confidential": "Confidential client",
+    "save": "Save changes",
+    "confirmRegenerate": "Regenerate the client secret? The current secret will stop working.",
+    "regenerate": "Regenerate secret"
+  },
+  "blocked": {
+    "title": "Blocked users",
+    "unblock": "Unblock",
+    "empty": "No blocked users"
+  },
+  "profile": {
+    "saved": "Profile updated.",
+    "username": {
+      "label": "Username",
+      "prompt": "Changing your username also changes your account URL.",
+      "redirect": "The old username will redirect until someone claims it.",
+      "cooldown_one": "The old username becomes available to everyone after a cooldown period of {{count}} day. You can still reclaim it during the cooldown period.",
+      "cooldown_other": "The old username becomes available to everyone after a cooldown period of {{count}} days. You can still reclaim it during the cooldown period.",
+      "disabled": "Non-local users can’t change their username. Contact your site administrator for details.",
+      "confirm": "Change your username to {{name}}? The URLs of your profile and repositories will change."
+    },
+    "fullName": "Full name",
+    "pronouns": "Pronouns",
+    "pronounsUnspecified": "Unspecified",
+    "location": "Location",
+    "website": "Website",
+    "bio": "Bio",
+    "visibility": {
+      "label": "Profile visibility",
+      "public": "Public",
+      "limited": "Signed-in users",
+      "private": "Private",
+      "publicHelp": "Everyone can see your profile.",
+      "limitedHelp": "Only signed-in users can see your profile.",
+      "privateHelp": "Only members of organizations you have joined can see your profile."
+    },
+    "keepEmailPrivate": "Keep email private",
+    "keepEmailPrivateHelp": "Your email address isn’t shown on your profile or used for commits made in the web interface. Those commits use {{email}} instead.",
+    "keepActivityPrivate": "Keep activity private",
+    "keepActivityPrivateHelp": "Your public activity is only visible to you and the instance administrators.",
+    "keepPronounsPrivate": "Keep pronouns private",
+    "keepPronounsPrivateHelp": "Hides your pronouns from visitors who aren’t signed in.",
+    "save": "Save profile"
+  },
+  "repoPicker": {
+    "available": "Available repositories",
+    "searchLabel": "Search repositories",
+    "searchPlaceholder": "Search repositories…",
+    "search": "Search",
+    "add": "Add",
+    "addLabel": "Add {{name}}",
+    "remove": "Remove",
+    "removeLabel": "Remove {{name}}",
+    "selected_one": "{{count}} selected repository",
+    "selected_other": "{{count}} selected repositories",
+    "noneFound": "No repositories found.",
+    "noneSelected": "No repositories selected.",
+    "select": "Select",
+    "selectLabel": "Select {{name}}",
+    "change": "Change",
+    "private": "Private",
+    "results_one": "{{count}} repository",
+    "results_other": "{{count}} repositories",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}} of {{pages}}"
+  }
+}

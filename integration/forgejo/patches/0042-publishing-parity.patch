@@ -1,0 +1,203 @@
+--- a/routers/web/repo/release.go
++++ b/routers/web/repo/release.go
+@@ -27,12 +27,10 @@
+ 	"forgejo.org/modules/markup/markdown"
+ 	"forgejo.org/modules/optional"
+ 	"forgejo.org/modules/setting"
+-	"forgejo.org/modules/spaui"
+ 	"forgejo.org/modules/util"
+ 	"forgejo.org/modules/web"
+ 	"forgejo.org/routers/web/feed"
+ 	"forgejo.org/services/context"
+-	"forgejo.org/services/convert"
+ 	"forgejo.org/services/context/upload"
+ 	"forgejo.org/services/forms"
+ 	release_service "forgejo.org/services/release"
+@@ -225,7 +223,9 @@
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		items := make([]any, 0, len(releases))
+-		for _, rel := range releases { items = append(items, spaui.WithFields(convert.ToAPIRelease(ctx, ctx.Repo.Repository, rel.Release, false), map[string]any{"body_html": string(rel.Release.RenderedNote)})) }
++		for _, rel := range releases {
++			items = append(items, uiRelease(ctx, rel))
++		}
+ 		ctx.JSON(http.StatusOK, map[string]any{"items": items, "total": releasesCount, "can_create": writeAccess && !ctx.Repo.Repository.IsArchived})
+ 		return
+ 	}
+@@ -400,7 +400,7 @@
+ 
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+-		ctx.JSON(http.StatusOK, map[string]any{"item": spaui.WithFields(convert.ToAPIRelease(ctx, ctx.Repo.Repository, release, false), map[string]any{"body_html": string(release.RenderedNote)}), "can_write": writeAccess && !ctx.Repo.Repository.IsArchived})
++		ctx.JSON(http.StatusOK, map[string]any{"item": uiRelease(ctx, releases[0]), "can_write": writeAccess && !ctx.Repo.Repository.IsArchived})
+ 		return
+ 	}
+ 	ctx.HTML(http.StatusOK, tplReleasesList)
+@@ -491,6 +491,11 @@
+ 		ctx.Data["hide_archive_links"] = latestRelease.HideArchiveLinks
+ 	}
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"target": ctx.Data["tag_target"], "tag_name": ctx.Data["tag_name"], "title": ctx.Data["title"], "content": ctx.Data["content"], "hide_archive_links": ctx.Data["hide_archive_links"], "attachments_enabled": setting.Attachment.Enabled, "disable_archives": setting.Repository.DisableDownloadSourceArchives})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplReleaseNew)
+ }
+ 
+@@ -716,7 +721,7 @@
+ 
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+-		ctx.JSON(http.StatusOK, map[string]any{"item": convert.ToAPIRelease(ctx, ctx.Repo.Repository, rel, false), "target": rel.Target, "attachments_enabled": setting.Attachment.Enabled})
++		ctx.JSON(http.StatusOK, map[string]any{"item": uiRelease(ctx, &ReleaseInfo{Release: rel}), "target": rel.Target, "attachments_enabled": setting.Attachment.Enabled, "disable_archives": setting.Repository.DisableDownloadSourceArchives})
+ 		return
+ 	}
+ 	ctx.HTML(http.StatusOK, tplReleaseNew)
+--- a/routers/web/repo/wiki.go
++++ b/routers/web/repo/wiki.go
+@@ -492,11 +492,11 @@
+ 
+ 	if !ctx.Repo.Repository.HasWiki() {
+ 		ctx.Data["Title"] = ctx.Tr("repo.wiki")
+-	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+-		ctx.Resp.Header().Set("Cache-Control", "no-store")
+-		ctx.JSON(http.StatusOK, map[string]any{"empty": true, "pages": []any{}, "can_write": ctx.Data["CanWriteWiki"]})
+-		return
+-	}
++		if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++			ctx.Resp.Header().Set("Cache-Control", "no-store")
++			ctx.JSON(http.StatusOK, map[string]any{"empty": true, "pages": []any{}, "can_write": ctx.Data["CanWriteWiki"]})
++			return
++		}
+ 		ctx.HTML(http.StatusOK, tplWikiStart)
+ 		return
+ 	}
+@@ -512,11 +512,11 @@
+ 	}
+ 	if entry == nil {
+ 		ctx.Data["Title"] = ctx.Tr("repo.wiki")
+-	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+-		ctx.Resp.Header().Set("Cache-Control", "no-store")
+-		ctx.JSON(http.StatusOK, map[string]any{"empty": true, "pages": []any{}, "can_write": ctx.Data["CanWriteWiki"]})
+-		return
+-	}
++		if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++			ctx.Resp.Header().Set("Cache-Control", "no-store")
++			ctx.JSON(http.StatusOK, map[string]any{"empty": true, "pages": []any{}, "can_write": ctx.Data["CanWriteWiki"]})
++			return
++		}
+ 		ctx.HTML(http.StatusOK, tplWikiStart)
+ 		return
+ 	}
+@@ -540,8 +540,10 @@
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		content := string(wikiContentsByEntry(ctx, entry))
+-		if ctx.Written() { return }
+-		ctx.JSON(http.StatusOK, map[string]any{"title": ctx.Data["Title"], "content": content, "content_html": ctx.Data["content"], "pages": ctx.Data["Pages"], "can_write": ctx.Data["CanWriteWiki"]})
++		if ctx.Written() {
++			return
++		}
++		ctx.JSON(http.StatusOK, map[string]any{"title": ctx.Data["Title"], "content": content, "content_html": ctx.Data["content"], "sidebar_html": ctx.Data["sidebarContent"], "footer_html": ctx.Data["footerContent"], "toc_html": ctx.Data["sidebarTocContent"], "author": ctx.Data["Author"], "revisions": ctx.Data["CommitCount"], "pages": ctx.Data["Pages"], "can_write": ctx.Data["CanWriteWiki"]})
+ 		return
+ 	}
+ 	ctx.HTML(http.StatusOK, tplWikiView)
+@@ -585,7 +587,9 @@
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		items := make([]map[string]any, 0)
+ 		if commits, ok := ctx.Data["Commits"].([]*git_model.SignCommitWithStatuses); ok {
+-			for _, c := range commits { items = append(items, map[string]any{"sha": c.ID.String(), "message": c.Summary(), "author": c.Author.Name, "date": c.Author.When}) }
++			for _, c := range commits {
++				items = append(items, map[string]any{"sha": c.ID.String(), "message": c.Summary(), "author": c.Author.Name, "date": c.Author.When})
++			}
+ 		}
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		ctx.JSON(http.StatusOK, map[string]any{"items": items, "title": ctx.Data["Title"], "total": ctx.Data["CommitCount"], "page_size": setting.Git.CommitsRangeSize})
+@@ -847,7 +851,9 @@
+ 
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		items := make([]map[string]any, 0, len(res))
+-		for _, item := range res { items = append(items, map[string]any{"title": item.Title, "path": strings.TrimSuffix(item.Filename, ".md"), "lines": item.LineCodes, "numbers": item.LineNumbers}) }
++		for _, item := range res {
++			items = append(items, map[string]any{"title": item.Title, "path": strings.TrimSuffix(item.Filename, ".md"), "lines": item.LineCodes, "numbers": item.LineNumbers})
++		}
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		ctx.JSON(http.StatusOK, map[string]any{"items": items})
+ 		return
+--- a/routers/web/repo/actions/actions.go
++++ b/routers/web/repo/actions/actions.go
+@@ -257,13 +257,23 @@
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+ 		items := make([]any, 0, len(runs))
+ 		for _, run := range runs {
+-			items = append(items, map[string]any{"id": run.ID, "index": run.Index, "title": run.Title, "workflow": run.WorkflowID, "ref": run.Ref, "sha": run.CommitSHA, "status": run.Status.String(), "created_at": run.Created.AsTime(), "link": run.Link()})
++			items = append(items, map[string]any{"id": run.ID, "index": run.Index, "title": run.Title, "workflow": run.WorkflowID, "ref": run.Ref, "sha": run.CommitSHA, "status": run.Status.String(), "created_at": run.Created.AsTime(), "link": run.Link(), "trigger": run.TriggerEvent, "actor": run.TriggerUser.GetDisplayName(), "actor_link": run.TriggerUser.HomeLink(), "branch": run.PrettyRef(), "branch_link": run.RefLink(), "ref_deleted": run.IsRefDeleted, "duration": run.Duration().String(), "prioritized": run.Prioritize, "can_prioritize": ctx.Repo.CanWrite(unit.TypeActions) && !ctx.Repo.Repository.IsArchived && !run.Status.IsDone()})
++		}
++		warnings := make([]string, 0)
++		for _, workflow := range workflows {
++			if workflow.ErrMsg != "" {
++				warnings = append(warnings, workflow.Entry.Name()+": "+workflow.ErrMsg)
++			}
+ 		}
+ 		files := make([]string, 0, len(workflows))
+-		for _, workflow := range workflows { files = append(files, workflow.Entry.Name()) }
++		for _, workflow := range workflows {
++			files = append(files, workflow.Entry.Name())
++		}
+ 		actorOptions := make([]map[string]any, 0, len(actors))
+-		for _, actor := range actors { actorOptions = append(actorOptions, map[string]any{"id": actor.ID, "name": actor.Name, "full_name": actor.FullName}) }
+-		ctx.JSON(http.StatusOK, map[string]any{"actors": actorOptions, "items": items, "total": total, "workflows": files, "can_run": ctx.Repo.CanWrite(unit.TypeActions) && !ctx.Repo.Repository.IsArchived, "can_toggle": ctx.Data["AllowDisableOrEnableWorkflow"] == true, "disabled": ctx.Data["CurWorkflowDisabled"] == true, "dispatch": ctx.Data["CurWorkflowDispatch"], "input_keys": ctx.Data["CurWorkflowDispatchInputKeys"]})
++		for _, actor := range actors {
++			actorOptions = append(actorOptions, map[string]any{"id": actor.ID, "name": actor.Name, "full_name": actor.FullName})
++		}
++		ctx.JSON(http.StatusOK, map[string]any{"warnings": warnings, "actors": actorOptions, "items": items, "total": total, "workflows": files, "can_run": ctx.Repo.CanWrite(unit.TypeActions) && !ctx.Repo.Repository.IsArchived, "can_toggle": ctx.Data["AllowDisableOrEnableWorkflow"] == true, "disabled": ctx.Data["CurWorkflowDisabled"] == true, "dispatch": ctx.Data["CurWorkflowDispatch"], "input_keys": ctx.Data["CurWorkflowDispatchInputKeys"]})
+ 		return
+ 	}
+ 	if listInner {
+--- a/routers/web/repo/actions/view.go
++++ b/routers/web/repo/actions/view.go
+@@ -174,6 +174,9 @@
+ }
+ 
+ type ViewRunInfo struct {
++	WorkflowName         string          `json:"workflowName"`
++	WorkflowURL          string          `json:"workflowURL"`
++	WorkflowSourceURL    string          `json:"workflowSourceURL"`
+ 	Link                 string          `json:"link"`
+ 	Title                string          `json:"title"`
+ 	TitleHTML            template.HTML   `json:"titleHTML"`
+@@ -301,6 +304,15 @@
+ 			base.ShortSha(run.CommitSHA), run.TriggerUser.HomeLink(), html.EscapeString(run.TriggerUser.GetDisplayName()))
+ 	}
+ 
++	workflowSHA := run.CommitSHA
++	if run.TriggerEvent == actions.GithubEventPullRequestTarget {
++		if payload, err := run.GetPullRequestEventPayload(); err == nil && payload.PullRequest != nil && payload.PullRequest.Base != nil {
++			workflowSHA = payload.PullRequest.Base.Sha
++		}
++	}
++	resp.State.Run.WorkflowName = run.WorkflowID
++	resp.State.Run.WorkflowURL = ctx.Repo.RepoLink + "/actions?workflow=" + url.QueryEscape(run.WorkflowID)
++	resp.State.Run.WorkflowSourceURL = ctx.Repo.RepoLink + "/src/commit/" + workflowSHA + "/" + run.WorkflowPath()
+ 	resp.State.Run.Title = run.Title
+ 	resp.State.Run.TitleHTML = templates.RenderCommitMessage(ctx, run.Title, metas)
+ 	resp.State.Run.Link = run.Link()
+@@ -691,7 +703,7 @@
+ }
+ 
+ type ArtifactsViewResponse struct {
+-	RunID int64 `json:"run_id"`
++	RunID     int64                `json:"run_id"`
+ 	Artifacts []*ArtifactsViewItem `json:"artifacts"`
+ }
+ 
+@@ -726,7 +738,7 @@
+ 		return nil
+ 	}
+ 	artifactsResponse := ArtifactsViewResponse{
+-		RunID: run.ID,
++		RunID:     run.ID,
+ 		Artifacts: make([]*ArtifactsViewItem, 0, len(artifacts)),
+ 	}
+ 	for _, art := range artifacts {

@@ -1,0 +1,10 @@
+--- a/routers/web/repo/issue.go
++++ b/routers/web/repo/issue.go
+@@ -543,6 +543,7 @@
+ 
+ 	ctx.Data["CanWriteIssuesOrPulls"] = ctx.Repo.CanWriteIssuesOrPulls(isPullList)
+ 
++	if writeIssueListUI(ctx, isPullList) { return }
+ 	ctx.HTML(http.StatusOK, tplIssues)
+ }
+ 

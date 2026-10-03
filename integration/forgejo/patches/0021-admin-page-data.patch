@@ -1,0 +1,573 @@
+--- a/routers/web/admin/admin.go
++++ b/routers/web/admin/admin.go
+@@ -20,6 +20,7 @@
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/updatechecker"
+ 	"forgejo.org/modules/web"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/cron"
+ 	"forgejo.org/services/forms"
+@@ -169,12 +170,14 @@
+ 	ctx.Data["Entries"] = entries
+ 
+ 	prepareDeprecatedWarningsAlert(ctx)
++	if spaadmin.Write(ctx, tplDashboard) { return }
+ 	ctx.HTML(http.StatusOK, tplDashboard)
+ }
+ 
+ func SystemStatus(ctx *context.Context) {
+ 	updateSystemStatus()
+ 	ctx.Data["SysStatus"] = sysStatus
++	if spaadmin.Write(ctx, tplSystemStatus) { return }
+ 	ctx.HTML(http.StatusOK, tplSystemStatus)
+ }
+ 
+@@ -252,6 +255,8 @@
+ 		ctx.Data["CacheSlow"] = fmt.Sprint(elapsed)
+ 	}
+ 
++	if spaadmin.Write(ctx, tplSelfCheck) { return }
++
+ 	ctx.HTML(http.StatusOK, tplSelfCheck)
+ }
+ 
+@@ -259,6 +264,7 @@
+ 	ctx.Data["Title"] = ctx.Tr("admin.monitor.cron")
+ 	ctx.Data["PageIsAdminMonitorCron"] = true
+ 	ctx.Data["Entries"] = cron.ListTasks()
++	if spaadmin.Write(ctx, tplCron) { return }
+ 	ctx.HTML(http.StatusOK, tplCron)
+ }
+ 
+@@ -282,5 +288,6 @@
+ 	}
+ 
+ 	ctx.Data["Stats"] = stats
++	if spaadmin.Write(ctx, tplStats) { return }
+ 	ctx.HTML(http.StatusOK, tplStats)
+ }
+--- a/routers/web/admin/users.go
++++ b/routers/web/admin/users.go
+@@ -26,6 +26,7 @@
+ 	"forgejo.org/modules/web"
+ 	"forgejo.org/routers/web/explore"
+ 	user_setting "forgejo.org/routers/web/user/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/forms"
+ 	"forgejo.org/services/mailer"
+@@ -120,6 +121,7 @@
+ 	ctx.Data["Sources"] = sources
+ 
+ 	ctx.Data["CanSendEmail"] = setting.MailService != nil
++	if spaadmin.Write(ctx, tplUserNew) { return }
+ 	ctx.HTML(http.StatusOK, tplUserNew)
+ }
+ 
+@@ -143,6 +145,7 @@
+ 	ctx.Data["CanSendEmail"] = setting.MailService != nil
+ 
+ 	if ctx.HasError() {
++		if spaadmin.Write(ctx, tplUserNew) { return }
+ 		ctx.HTML(http.StatusOK, tplUserNew)
+ 		return
+ 	}
+@@ -317,6 +320,8 @@
+ 	ctx.Data["Users"] = orgs // needed to be able to use explore/user_list template
+ 	ctx.Data["OrgsTotal"] = len(orgs)
+ 
++	if spaadmin.Write(ctx, tplUserView) { return }
++
+ 	ctx.HTML(http.StatusOK, tplUserView)
+ }
+ 
+@@ -340,6 +345,8 @@
+ 		return
+ 	}
+ 
++	if spaadmin.Write(ctx, tplUserEdit) { return }
++
+ 	ctx.HTML(http.StatusOK, tplUserEdit)
+ }
+ 
+@@ -353,6 +360,7 @@
+ 
+ 	form := web.GetForm(ctx).(*forms.AdminEditUserForm)
+ 	if ctx.HasError() {
++		if spaadmin.Write(ctx, tplUserEdit) { return }
+ 		ctx.HTML(http.StatusOK, tplUserEdit)
+ 		return
+ 	}
+--- a/routers/web/admin/auths.go
++++ b/routers/web/admin/auths.go
+@@ -46,6 +46,8 @@
+ 		return
+ 	}
+ 
++	if writeAdminAuthUI(ctx, tplAuths) { return }
++
+ 	ctx.HTML(http.StatusOK, tplAuths)
+ }
+ 
+@@ -94,6 +96,8 @@
+ 
+ 	// only the first as default
+ 	ctx.Data["oauth2_provider"] = oauth2providers[0].Name()
++
++	if writeAdminAuthUI(ctx, tplAuthNew) { return }
+ 
+ 	ctx.HTML(http.StatusOK, tplAuthNew)
+ }
+@@ -246,6 +250,7 @@
+ 	ctx.Data["HasTLS"] = hasTLS
+ 
+ 	if ctx.HasError() {
++		if writeAdminAuthUI(ctx, tplAuthNew) { return }
+ 		ctx.HTML(http.StatusOK, tplAuthNew)
+ 		return
+ 	}
+@@ -307,6 +312,8 @@
+ 		}
+ 	}
+ 
++	if writeAdminAuthUI(ctx, tplAuthEdit) { return }
++
+ 	ctx.HTML(http.StatusOK, tplAuthEdit)
+ }
+ 
+@@ -329,6 +336,7 @@
+ 	ctx.Data["HasTLS"] = source.HasTLS()
+ 
+ 	if ctx.HasError() {
++		if writeAdminAuthUI(ctx, tplAuthEdit) { return }
+ 		ctx.HTML(http.StatusOK, tplAuthEdit)
+ 		return
+ 	}
+@@ -371,6 +379,7 @@
+ 		} else if oauth2.IsErrOpenIDConnectInitialize(err) {
+ 			ctx.Flash.Error(err.Error(), true)
+ 			ctx.Data["Err_DiscoveryURL"] = true
++			if writeAdminAuthUI(ctx, tplAuthEdit) { return }
+ 			ctx.HTML(http.StatusOK, tplAuthEdit)
+ 		} else {
+ 			ctx.ServerError("UpdateSource", err)
+--- a/routers/web/admin/config.go
++++ b/routers/web/admin/config.go
+@@ -20,6 +20,7 @@
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/setting/config"
+ 	"forgejo.org/modules/util"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/mailer"
+ 
+@@ -189,6 +190,8 @@
+ 	config.GetDynGetter().InvalidateCache()
+ 	prepareDeprecatedWarningsAlert(ctx)
+ 
++	if spaadmin.Write(ctx, tplConfig) { return }
++
+ 	ctx.HTML(http.StatusOK, tplConfig)
+ }
+ 
+@@ -197,6 +200,7 @@
+ 	ctx.Data["PageIsAdminConfig"] = true
+ 	ctx.Data["PageIsAdminConfigSettings"] = true
+ 	ctx.Data["DefaultOpenWithEditorAppsString"] = setting.DefaultOpenWithEditorApps().ToTextareaString()
++	if spaadmin.Write(ctx, tplConfigSettings) { return }
+ 	ctx.HTML(http.StatusOK, tplConfigSettings)
+ }
+ 
+--- a/routers/web/admin/notice.go
++++ b/routers/web/admin/notice.go
+@@ -13,6 +13,7 @@
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -38,6 +39,8 @@
+ 	ctx.Data["Total"] = total
+ 
+ 	ctx.Data["Page"] = context.NewPagination(int(total), setting.UI.Admin.NoticePagingNum, page, 5)
++
++	if spaadmin.Write(ctx, tplNotices) { return }
+ 
+ 	ctx.HTML(http.StatusOK, tplNotices)
+ }
+--- a/routers/web/admin/queue.go
++++ b/routers/web/admin/queue.go
+@@ -9,6 +9,7 @@
+ 
+ 	"forgejo.org/modules/queue"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -19,6 +20,7 @@
+ 	ctx.Data["Title"] = ctx.Tr("admin.monitor.queues")
+ 	ctx.Data["PageIsAdminMonitorQueue"] = true
+ 	ctx.Data["Queues"] = queue.GetManager().ManagedQueues()
++	if spaadmin.Write(ctx, tplQueue) { return }
+ 	ctx.HTML(http.StatusOK, tplQueue)
+ }
+ 
+@@ -33,6 +35,7 @@
+ 	ctx.Data["Title"] = ctx.Tr("admin.monitor.queue", mq.GetName())
+ 	ctx.Data["PageIsAdminMonitor"] = true
+ 	ctx.Data["Queue"] = mq
++	if spaadmin.Write(ctx, tplQueueManage) { return }
+ 	ctx.HTML(http.StatusOK, tplQueueManage)
+ }
+ 
+--- a/routers/web/admin/stacktrace.go
++++ b/routers/web/admin/stacktrace.go
+@@ -9,6 +9,7 @@
+ 
+ 	"forgejo.org/modules/process"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -35,6 +36,8 @@
+ 		ctx.Data["ProcessCount"] = processCount
+ 	}
+ 
++	if spaadmin.Write(ctx, tplStacktrace) { return }
++
+ 	ctx.HTML(http.StatusOK, tplStacktrace)
+ }
+ 
+--- a/routers/web/admin/emails.go
++++ b/routers/web/admin/emails.go
+@@ -14,6 +14,7 @@
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/optional"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/user"
+ )
+@@ -96,6 +97,8 @@
+ 	pager := context.NewPagination(int(count), opts.PageSize, opts.Page, 5)
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
++
++	if spaadmin.Write(ctx, tplEmails) { return }
+ 
+ 	ctx.HTML(http.StatusOK, tplEmails)
+ }
+--- a/routers/web/admin/packages.go
++++ b/routers/web/admin/packages.go
+@@ -13,6 +13,7 @@
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/optional"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	packages_service "forgejo.org/services/packages"
+ 	packages_cleanup_service "forgejo.org/services/packages/cleanup"
+@@ -79,6 +80,8 @@
+ 	pager.AddParamString("sort", sort)
+ 	ctx.Data["Page"] = pager
+ 
++	if spaadmin.Write(ctx, tplPackagesList) { return }
++
+ 	ctx.HTML(http.StatusOK, tplPackagesList)
+ }
+ 
+--- a/routers/web/admin/repos.go
++++ b/routers/web/admin/repos.go
+@@ -16,6 +16,7 @@
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/util"
+ 	"forgejo.org/routers/web/explore"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	repo_service "forgejo.org/services/repository"
+ )
+@@ -86,6 +87,7 @@
+ 		pager.SetDefaultParams(ctx)
+ 		pager.AddParam(ctx, "search", "search")
+ 		ctx.Data["Page"] = pager
++		if spaadmin.Write(ctx, tplUnadoptedRepos) { return }
+ 		ctx.HTML(http.StatusOK, tplUnadoptedRepos)
+ 		return
+ 	}
+@@ -101,6 +103,7 @@
+ 	pager.SetDefaultParams(ctx)
+ 	pager.AddParam(ctx, "search", "search")
+ 	ctx.Data["Page"] = pager
++	if spaadmin.Write(ctx, tplUnadoptedRepos) { return }
+ 	ctx.HTML(http.StatusOK, tplUnadoptedRepos)
+ }
+ 
+--- a/routers/web/admin/reports.go
++++ b/routers/web/admin/reports.go
+@@ -15,6 +15,7 @@
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/optional"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	issue_service "forgejo.org/services/issue"
+ 	moderation_service "forgejo.org/services/moderation"
+@@ -55,6 +56,8 @@
+ 	ctx.Data["ActionDeleteIssue"] = int(moderation_service.ContentActionDeleteIssue)
+ 	ctx.Data["ActionDeleteComment"] = int(moderation_service.ContentActionDeleteComment)
+ 
++	if spaadmin.Write(ctx, tplModerationReports) { return }
++
+ 	ctx.HTML(http.StatusOK, tplModerationReports)
+ }
+ 
+@@ -80,6 +83,7 @@
+ 	}
+ 	if len(reports) == 0 {
+ 		// something is wrong
++		if spaadmin.Write(ctx, tplModerationReportDetails) { return }
+ 		ctx.HTML(http.StatusOK, tplModerationReportDetails)
+ 		return
+ 	}
+@@ -101,6 +105,8 @@
+ 			return
+ 		}
+ 	}
++
++	if spaadmin.Write(ctx, tplModerationReportDetails) { return }
+ 
+ 	ctx.HTML(http.StatusOK, tplModerationReportDetails)
+ }
+@@ -230,6 +236,7 @@
+ 		deleteComment(ctx, contentType, contentID, reportAction)
+ 	default:
+ 		ctx.Flash.Warning(ctx.Tr("moderation.unknown_action"), true)
++		if spaadmin.Write(ctx, tplAlert) { return }
+ 		ctx.HTML(http.StatusOK, tplAlert)
+ 	}
+ }
+@@ -253,12 +260,14 @@
+ 
+ 	// TODO: translate and maybe use a more specific message (e.g. saying that the status was changed to 'Handled' or 'Ignored')?
+ 	ctx.Flash.Success(fmt.Sprintf("Status updated for report(s) with type #%d and id #%d", contentType, contentID), true)
++	if spaadmin.Write(ctx, tplAlert) { return }
+ 	ctx.HTML(http.StatusOK, tplAlert)
+ }
+ 
+ func suspendAccount(ctx *context.Context, contentType moderation.ReportedContentType, contentID int64, reportAction moderation_service.ReportAction) {
+ 	if contentID == ctx.Doer.ID {
+ 		ctx.Flash.Warning(ctx.Tr("moderation.users.cannot_suspend_self"), true)
++		if spaadmin.Write(ctx, tplAlert) { return }
+ 		ctx.HTML(http.StatusOK, tplAlert)
+ 		return
+ 	}
+@@ -271,18 +280,21 @@
+ 
+ 	if reportedUser.IsAdmin {
+ 		ctx.Flash.Warning(ctx.Tr("moderation.users.cannot_suspend_admins"), true)
++		if spaadmin.Write(ctx, tplAlert) { return }
+ 		ctx.HTML(http.StatusOK, tplAlert)
+ 		return
+ 	}
+ 
+ 	if reportedUser.IsOrganization() {
+ 		ctx.Flash.Warning(ctx.Tr("moderation.users.cannot_suspend_org"), true)
++		if spaadmin.Write(ctx, tplAlert) { return }
+ 		ctx.HTML(http.StatusOK, tplAlert)
+ 		return
+ 	}
+ 
+ 	if reportedUser.ProhibitLogin {
+ 		ctx.Flash.Info(ctx.Tr("moderation.users.already_suspended"), true)
++		if spaadmin.Write(ctx, tplAlert) { return }
+ 		ctx.HTML(http.StatusOK, tplAlert)
+ 		return
+ 	}
+@@ -300,6 +312,7 @@
+ 	}
+ 
+ 	ctx.Flash.Success(ctx.Tr("moderation.users.suspend_success"), true)
++	if spaadmin.Write(ctx, tplAlert) { return }
+ 	ctx.HTML(http.StatusOK, tplAlert)
+ }
+ 
+@@ -307,6 +320,7 @@
+ 	if contentID == ctx.Doer.ID {
+ 		ctx.Resp.Header().Add("HX-Reswap", "none") // prevent removing the report from the list
+ 		ctx.Flash.Warning(ctx.Tr("admin.users.cannot_delete_self"), true)
++		if spaadmin.Write(ctx, tplAlert) { return }
+ 		ctx.HTML(http.StatusOK, tplAlert)
+ 		return
+ 	}
+@@ -320,6 +334,7 @@
+ 	if reportedUser.IsAdmin {
+ 		ctx.Resp.Header().Add("HX-Reswap", "none") // prevent removing the report from the list
+ 		ctx.Flash.Warning(ctx.Tr("moderation.users.cannot_delete_admins"), true)
++		if spaadmin.Write(ctx, tplAlert) { return }
+ 		ctx.HTML(http.StatusOK, tplAlert)
+ 		return
+ 	}
+@@ -343,6 +358,7 @@
+ 	updateReportStatus(ctx, contentType, contentID, reportAction) // TODO: combine success messages
+ 
+ 	ctx.Flash.Success(ctx.Tr("admin.users.deletion_success"), true)
++	if spaadmin.Write(ctx, tplAlert) { return }
+ 	ctx.HTML(http.StatusOK, tplAlert)
+ }
+ 
+@@ -362,6 +378,7 @@
+ 	updateReportStatus(ctx, contentType, contentID, reportAction)
+ 
+ 	ctx.Flash.Success(ctx.Tr("repo.settings.deletion_success"), true)
++	if spaadmin.Write(ctx, tplAlert) { return }
+ 	ctx.HTML(http.StatusOK, tplAlert)
+ }
+ 
+@@ -380,6 +397,7 @@
+ 	updateReportStatus(ctx, contentType, contentID, reportAction)
+ 
+ 	ctx.Flash.Success(ctx.Tr("moderation.issue.deletion_success"), true)
++	if spaadmin.Write(ctx, tplAlert) { return }
+ 	ctx.HTML(http.StatusOK, tplAlert)
+ }
+ 
+@@ -398,5 +416,6 @@
+ 	updateReportStatus(ctx, contentType, contentID, reportAction)
+ 
+ 	ctx.Flash.Success(ctx.Tr("moderation.comment.deletion_success"), true)
+-	ctx.HTML(http.StatusOK, tplAlert)
+-}
++	if spaadmin.Write(ctx, tplAlert) { return }
++	ctx.HTML(http.StatusOK, tplAlert)
++}
+--- a/routers/web/admin/federation_hosts.go
++++ b/routers/web/admin/federation_hosts.go
+@@ -10,6 +10,7 @@
+ 	"forgejo.org/models/forgefed"
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -51,5 +52,7 @@
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
+ 
++	if spaadmin.Write(ctx, tplFederationHosts) { return }
++
+ 	ctx.HTML(http.StatusOK, tplFederationHosts)
+ }
+--- a/routers/web/admin/federation_host.go
++++ b/routers/web/admin/federation_host.go
+@@ -11,6 +11,7 @@
+ 	user_model "forgejo.org/models/user"
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -58,5 +59,7 @@
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
+ 
++	if spaadmin.Write(ctx, tplFederationHost) { return }
++
+ 	ctx.HTML(http.StatusOK, tplFederationHost)
+ }
+--- a/routers/web/admin/federation_users.go
++++ b/routers/web/admin/federation_users.go
+@@ -10,6 +10,7 @@
+ 	user_model "forgejo.org/models/user"
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -49,5 +50,7 @@
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
+ 
++	if spaadmin.Write(ctx, tplFederationUsers) { return }
++
+ 	ctx.HTML(http.StatusOK, tplFederationUsers)
+ }
+--- a/routers/web/explore/user.go
++++ b/routers/web/explore/user.go
+@@ -16,6 +16,7 @@
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/sitemap"
+ 	"forgejo.org/modules/structs"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -109,6 +110,7 @@
+ 	}
+ 	ctx.Data["Page"] = pager
+ 
++	if spaadmin.Write(ctx, tplName) { return }
+ 	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
+ 		ctx.Resp.Header().Set("Cache-Control", "no-store")
+         items := make([]any, 0, len(users))
+--- a/routers/web/explore/repo.go
++++ b/routers/web/explore/repo.go
+@@ -13,6 +13,7 @@
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/sitemap"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -160,6 +161,7 @@
+ 	}
+ 	ctx.Data["Page"] = pager
+ 
++	if spaadmin.Write(ctx, opts.TplName) { return }
+ 	ctx.HTML(http.StatusOK, opts.TplName)
+ }
+ 
+--- a/routers/web/admin/hooks.go
++++ b/routers/web/admin/hooks.go
+@@ -10,6 +10,7 @@
+ 	"forgejo.org/models/webhook"
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ 	webhook_service "forgejo.org/services/webhook"
+ )
+@@ -59,6 +60,7 @@
+ 	ctx.Data["DefaultWebhooks"] = def
+ 	ctx.Data["SystemWebhooks"] = sys
+ 
++	if spaadmin.Write(ctx, tplAdminHooks) { return }
+ 	ctx.HTML(http.StatusOK, tplAdminHooks)
+ }
+ 
+--- a/routers/web/admin/applications.go
++++ b/routers/web/admin/applications.go
+@@ -12,6 +12,7 @@
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/setting"
+ 	user_setting "forgejo.org/routers/web/user/setting"
++	"forgejo.org/routers/web/shared/spaadmin"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -43,6 +44,7 @@
+ 	}
+ 	ctx.Data["Applications"] = apps
+ 	ctx.Data["BuiltinApplications"] = auth.BuiltinApplications()
++	if spaadmin.Write(ctx, tplSettingsApplications) { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsApplications)
+ }
+ 

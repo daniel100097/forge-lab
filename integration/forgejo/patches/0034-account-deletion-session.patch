@@ -1,0 +1,18 @@
+--- a/routers/web/user/setting/account.go
++++ b/routers/web/user/setting/account.go
+@@ -19,6 +19,7 @@
+ 	"forgejo.org/modules/timeutil"
+ 	"forgejo.org/modules/validation"
+ 	"forgejo.org/modules/web"
++ web_auth "forgejo.org/routers/web/auth"
+ 	auth_method "forgejo.org/services/auth/method"
+ 	"forgejo.org/services/auth/source/db"
+ 	"forgejo.org/services/auth/source/smtp"
+@@ -326,6 +327,7 @@
+ 			ctx.ServerError("DeleteUser", err)
+ 		}
+ 	} else {
++		web_auth.HandleSignOut(ctx)
+ 		log.Trace("Account deleted: %s", ctx.Doer.Name)
+ 		ctx.Redirect(setting.AppSubURL + "/")
+ 	}

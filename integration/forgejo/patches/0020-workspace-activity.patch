@@ -1,0 +1,137 @@
+--- a/routers/web/home.go
++++ b/routers/web/home.go
+@@ -66,7 +66,7 @@
+ 			}
+ 		}
+ 
+-		if string(setting.LandingPageURL) == "/-/ui/" {
++		if string(setting.LandingPageURL) == "/-/ui/" && ctx.Req.Header.Get("X-Forgejo-UI") != "1" {
+ 			ctx.Redirect(setting.AppSubURL + "/-/ui/")
+ 			return
+ 		}
+--- a/routers/web/user/home.go
++++ b/routers/web/user/home.go
+@@ -31,6 +31,7 @@
+ 	"forgejo.org/modules/optional"
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/routers/web/feed"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	issue_service "forgejo.org/services/issue"
+ 	pull_service "forgejo.org/services/pull"
+@@ -137,6 +138,7 @@
+ 	pager.AddParam(ctx, "date", "Date")
+ 	ctx.Data["Page"] = pager
+ 
++	if spapages.Activity(ctx, "dashboard", int(count)) { return }
+ 	ctx.HTML(http.StatusOK, tplDashboard)
+ }
+ 
+@@ -338,6 +340,7 @@
+ 	pager.AddParam(ctx, "state", "State")
+ 	ctx.Data["Page"] = pager
+ 
++	if spapages.Activity(ctx, "milestones", pagerCount) { return }
+ 	ctx.HTML(http.StatusOK, tplMilestones)
+ }
+ 
+@@ -730,6 +733,7 @@
+ 	pager.AddParam(ctx, "project", "ProjectID")
+ 	ctx.Data["Page"] = pager
+ 
++	if spapages.Activity(ctx, "issues", shownIssues) { return }
+ 	ctx.HTML(http.StatusOK, tplIssues)
+ }
+ 
+--- a/routers/web/user/notification.go
++++ b/routers/web/user/notification.go
+@@ -23,6 +23,7 @@
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/structs"
+ 	"forgejo.org/modules/util"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/convert"
+ 	issue_service "forgejo.org/services/issue"
+@@ -363,6 +364,7 @@
+ 	pager.AddParam(ctx, "state", "State")
+ 	ctx.Data["Page"] = pager
+ 
++	if spapages.Activity(ctx, "subscriptions", int(count)) { return }
+ 	ctx.HTML(http.StatusOK, tplNotificationSubscriptions)
+ }
+ 
+@@ -465,6 +467,7 @@
+ 
+ 	ctx.Data["Status"] = 2
+ 	ctx.Data["Title"] = ctx.Tr("notification.watching")
++	if spapages.Activity(ctx, "watching", int(total)) { return }
+ 
+ 	ctx.HTML(http.StatusOK, tplNotificationSubscriptions)
+ }
+--- a/routers/web/explore/code.go
++++ b/routers/web/explore/code.go
+@@ -13,6 +13,7 @@
+ 	code_indexer "forgejo.org/modules/indexer/code"
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/routers/common"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -24,6 +25,7 @@
+ // Code render explore code page
+ func Code(ctx *context.Context) {
+ 	if !setting.Indexer.RepoIndexerEnabled || setting.Service.Explore.DisableCodePage {
++		if spapages.Activity(ctx, "code-disabled", 0) { return }
+ 		ctx.Redirect(setting.AppSubURL + "/explore")
+ 		return
+ 	}
+@@ -40,6 +42,7 @@
+ 	mode := common.CodeSearchIndexerMode(ctx)
+ 
+ 	if opts.Keyword == "" {
++		if spapages.Activity(ctx, "code", 0) { return }
+ 		ctx.HTML(http.StatusOK, tplExploreCode)
+ 		return
+ 	}
+@@ -126,5 +129,6 @@
+ 	pager.AddParam(ctx, "mode", "CodeSearchMode")
+ 	ctx.Data["Page"] = pager
+ 
++	if spapages.Activity(ctx, "code", total) { return }
+ 	ctx.HTML(http.StatusOK, tplExploreCode)
+ }
+--- a/routers/web/user/code.go
++++ b/routers/web/user/code.go
+@@ -14,6 +14,7 @@
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/routers/common"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -24,6 +25,7 @@
+ // CodeSearch render user/organization code search page
+ func CodeSearch(ctx *context.Context) {
+ 	if !setting.Indexer.RepoIndexerEnabled {
++		if spapages.Activity(ctx, "code-disabled", 0) { return }
+ 		ctx.Redirect(ctx.ContextUser.HomeLink())
+ 		return
+ 	}
+@@ -44,6 +46,7 @@
+ 	mode := common.CodeSearchIndexerMode(ctx)
+ 
+ 	if opts.Keyword == "" {
++		if spapages.Activity(ctx, "code", 0) { return }
+ 		ctx.HTML(http.StatusOK, tplUserCode)
+ 		return
+ 	}
+@@ -110,5 +113,6 @@
+ 	pager.AddParam(ctx, "mode", "CodeSearchMode")
+ 	ctx.Data["Page"] = pager
+ 
++	if spapages.Activity(ctx, "code", total) { return }
+ 	ctx.HTML(http.StatusOK, tplUserCode)
+ }

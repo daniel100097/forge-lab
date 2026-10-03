@@ -1,0 +1,172 @@
+--- a/routers/web/user/setting/account.go
++++ b/routers/web/user/setting/account.go
+@@ -41,6 +41,7 @@
+ 
+ 	loadAccountData(ctx)
+ 
++	if writeAccountUI(ctx, "account") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsAccount)
+ }
+ 
+@@ -58,7 +59,8 @@
+ 	if ctx.HasError() {
+ 		loadAccountData(ctx)
+ 
+-		ctx.HTML(http.StatusOK, tplSettingsAccount)
++		if writeAccountUI(ctx, "account") { return }
++	ctx.HTML(http.StatusOK, tplSettingsAccount)
+ 		return
+ 	}
+ 
+@@ -208,7 +210,8 @@
+ 	if ctx.HasError() {
+ 		loadAccountData(ctx)
+ 
+-		ctx.HTML(http.StatusOK, tplSettingsAccount)
++		if writeAccountUI(ctx, "account") { return }
++	ctx.HTML(http.StatusOK, tplSettingsAccount)
+ 		return
+ 	}
+ 
+--- a/routers/web/user/setting/keys.go
++++ b/routers/web/user/setting/keys.go
+@@ -33,6 +33,7 @@
+ 
+ 	loadKeysData(ctx)
+ 
++	if writeAccountUI(ctx, "keys") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsKeys)
+ }
+ 
+@@ -48,7 +49,8 @@
+ 	if ctx.HasError() {
+ 		loadKeysData(ctx)
+ 
+-		ctx.HTML(http.StatusOK, tplSettingsKeys)
++		if writeAccountUI(ctx, "keys") { return }
++	ctx.HTML(http.StatusOK, tplSettingsKeys)
+ 		return
+ 	}
+ 	switch form.Type {
+--- a/routers/web/user/setting/applications.go
++++ b/routers/web/user/setting/applications.go
+@@ -27,6 +27,7 @@
+ 
+ 	loadApplicationsData(ctx)
+ 
++	if writeAccountUI(ctx, "applications") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsApplications)
+ }
+ 
+--- a/routers/web/user/setting/blocked_users.go
++++ b/routers/web/user/setting/blocked_users.go
+@@ -31,6 +31,7 @@
+ 	}
+ 
+ 	ctx.Data["BlockedUsers"] = blockedUsers
++	if writeAccountUI(ctx, "blocked") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsBlockedUsers)
+ }
+ 
+--- a/routers/web/user/setting/access_token.go
++++ b/routers/web/user/setting/access_token.go
+@@ -213,6 +213,7 @@
+ 		return
+ 	}
+ 
++	if writeAccountUI(ctx, "token_new") { return }
+ 	ctx.HTML(http.StatusOK, tplAccessTokenEdit)
+ }
+ 
+@@ -235,7 +236,8 @@
+ 		if ctx.Written() {
+ 			return
+ 		}
+-		ctx.HTML(http.StatusOK, tplAccessTokenEdit)
++		if writeAccountUI(ctx, "token_new") { return }
++	ctx.HTML(http.StatusOK, tplAccessTokenEdit)
+ 		return
+ 	}
+ 
+@@ -311,6 +313,7 @@
+ 	}
+ 
+ 	ctx.Flash.Success(ctx.Tr("settings.generate_token_success"))
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" { ctx.Resp.Header().Set("Cache-Control","no-store");ctx.JSON(http.StatusOK,map[string]any{"token":t.Token});return }
+ 	ctx.Flash.Info(t.Token)
+ 
+ 	ctx.Redirect(setting.AppSubURL + "/user/settings/applications")
+@@ -338,7 +341,8 @@
+ 		}
+ 	} else {
+ 		ctx.Flash.Success(ctx.Tr("settings.regenerate_token_success"))
+-		ctx.Flash.Info(t.Token)
++		if ctx.Req.Header.Get("X-Forgejo-UI") == "1" { ctx.Resp.Header().Set("Cache-Control","no-store");ctx.JSON(http.StatusOK,map[string]any{"token":t.Token});return }
++	ctx.Flash.Info(t.Token)
+ 	}
+ 
+ 	ctx.JSONRedirect(setting.AppSubURL + "/user/settings/applications")
+--- a/routers/web/user/setting/oauth2_common.go
++++ b/routers/web/user/setting/oauth2_common.go
+@@ -34,6 +34,7 @@
+ 		}
+ 	}
+ 
++	if writeAccountUI(ctx,"oauth") { return }
+ 	ctx.HTML(http.StatusOK, oa.TplAppEdit)
+ }
+ 
+--- a/routers/web/user/setting/security/security.go
++++ b/routers/web/user/setting/security/security.go
+@@ -35,6 +35,7 @@
+ 
+ 	loadSecurityData(ctx)
+ 
++	if writeSecurityUI(ctx,false) { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsSecurity)
+ }
+ 
+--- a/routers/web/user/setting/security/2fa.go
++++ b/routers/web/user/setting/security/2fa.go
+@@ -47,6 +47,7 @@
+ 		return
+ 	}
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" { ctx.Resp.Header().Set("Cache-Control","no-store");ctx.JSON(http.StatusOK,map[string]any{"recovery_code":token});return }
+ 	ctx.Flash.Success(ctx.Tr("settings.twofa_scratch_token_regenerated", token))
+ 	ctx.Redirect(setting.AppSubURL + "/user/settings/security")
+ }
+@@ -179,6 +180,7 @@
+ 		return
+ 	}
+ 
++	if writeSecurityUI(ctx,true) { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsTwofaEnroll)
+ }
+ 
+@@ -209,7 +211,8 @@
+ 		if !twofaGenerateSecretAndQr(ctx) {
+ 			return
+ 		}
+-		ctx.HTML(http.StatusOK, tplSettingsTwofaEnroll)
++		if writeSecurityUI(ctx,true) { return }
++	ctx.HTML(http.StatusOK, tplSettingsTwofaEnroll)
+ 		return
+ 	}
+ 
+@@ -262,6 +265,7 @@
+ 		return
+ 	}
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" { ctx.Resp.Header().Set("Cache-Control","no-store");ctx.JSON(http.StatusOK,map[string]any{"recovery_code":token});return }
+ 	ctx.Flash.Success(ctx.Tr("settings.twofa_enrolled", token))
+ 	ctx.Redirect(setting.AppSubURL + "/user/settings/security")
+ }
+@@ -287,6 +291,7 @@
+ 		return
+ 	}
+ 
++	if writeSecurityUI(ctx,true) { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsTwofaEnroll)
+ }
+ 

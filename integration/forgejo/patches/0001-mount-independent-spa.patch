@@ -1,0 +1,79 @@
+--- a/routers/web/web.go
++++ b/routers/web/web.go
+@@ -39,6 +39,7 @@
+ 	"forgejo.org/routers/web/misc"
+ 	"forgejo.org/routers/web/moderation"
+ 	"forgejo.org/routers/web/org"
++	"forgejo.org/routers/web/spa"
+ 	org_setting "forgejo.org/routers/web/org/setting"
+ 	"forgejo.org/routers/web/repo"
+ 	"forgejo.org/routers/web/repo/actions"
+@@ -597,6 +598,40 @@
+ // registerRoutes register routes
+ func registerRoutes(m *web.Route) {
+ 	validation.AddBindingRules()
++
++	// The SPA is built independently; these endpoints retain native web sessions.
++	m.Get("/-/ui", func(ctx *context.Context) { ctx.Redirect(setting.AppSubURL + "/-/ui/") })
++	m.Get("/-/ui/data/bootstrap", spa.NoCache, spa.Bootstrap)
++	m.Group("/-/ui/data", func() {
++		m.Get("", func(ctx *context.Context) { ctx.JSON(http.StatusNotFound, map[string]string{"message": "Unknown UI data route"}) })
++		m.Group("/repos/{username}/{reponame}", func() {
++			m.Get("", spa.Repository)
++			m.Get("/{people:stars|watchers|forks}", spa.RepositoryPeople)
++			m.Get("/activity", spa.RepositoryActivity)
++			m.Get("/labels", spa.IssueLabels)
++			m.Get("/milestones", spa.IssueMilestones)
++			m.Get("/milestones/{id}", spa.IssueMilestone)
++			m.Get("/{kind:issues|pulls}/{index}/metadata", spa.IssueMetadata)
++			m.Get("/pull-sources", spa.PullSources)
++			m.Get("/pulls/{index}/review", spa.PullReviewData)
++			m.Get("/overview", reqRepoCodeReader, spa.Overview)
++			m.Get("/branches", reqRepoCodeReader, spa.Branches)
++			m.Get("/tags", reqRepoCodeReader, spa.Tags)
++			m.Get("/tree", reqRepoCodeReader, spa.Tree)
++			m.Get("/commits", reqRepoCodeReader, spa.Commits)
++			m.Get("/{kind:issues|pulls}", spa.Issues)
++			m.Get("/{kind:issues|pulls}/{index}", spa.Issue)
++			m.Group("/projects", func() {
++				m.Get("", spa.Projects)
++				m.Get("/{id}", spa.Project)
++				m.Get("/{id}/settings", spa.BoardConfiguration)
++			}, reqRepoProjectsReader, repo.MustEnableProjects)
++		}, context.RepoAssignment, context.UnitTypes())
++		m.Get("/*", func(ctx *context.Context) { ctx.JSON(http.StatusNotFound, map[string]string{"message": "Unknown UI data route"}) })
++	}, spa.NoCache, ignSignIn)
++	m.Get("/-/ui/assets/*", spa.Asset)
++	m.Get("/-/ui/", spa.Shell)
++	m.Get("/-/ui/*", spa.Shell)
+ 
+ 	addSettingsVariablesRoutes := func() {
+ 		m.Group("/variables", func() {
+--- a/routers/web/home.go
++++ b/routers/web/home.go
+@@ -64,6 +64,11 @@
+ 				ctx.Redirect(setting.AppSubURL + "/user/settings/security")
+ 				return
+ 			}
++		}
++
++		if string(setting.LandingPageURL) == "/-/ui/" {
++			ctx.Redirect(setting.AppSubURL + "/-/ui/")
++			return
+ 		}
+ 
+ 		user.Dashboard(ctx)
+--- a/routers/web/repo/repo.go
++++ b/routers/web/repo/repo.go
+@@ -726,6 +726,11 @@
+ 			Repository: &api.Repository{
+ 				ID:       repo.ID,
+ 				FullName: repo.FullName(),
++				Name: repo.Name,
++				Description: repo.Description,
++				DefaultBranch: repo.DefaultBranch,
++				Updated: repo.UpdatedUnix.AsTime(),
++				Archived: repo.IsArchived,
+ 				Fork:     repo.IsFork,
+ 				Private:  repo.IsPrivate,
+ 				Template: repo.IsTemplate,

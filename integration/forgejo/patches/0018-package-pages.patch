@@ -1,0 +1,147 @@
+--- a/routers/web/repo/packages.go
++++ b/routers/web/repo/packages.go
+@@ -12,6 +12,7 @@
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/optional"
+ 	"forgejo.org/modules/setting"
++	shared "forgejo.org/routers/web/shared/packages"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -71,5 +72,6 @@
+ 	pager.AddParam(ctx, "type", "PackageType")
+ 	ctx.Data["Page"] = pager
+ 
++	if shared.WriteUI(ctx, "list") { return }
+ 	ctx.HTML(http.StatusOK, tplPackagesList)
+ }
+--- a/routers/web/user/package.go
++++ b/routers/web/user/package.go
+@@ -27,6 +27,7 @@
+ 	"forgejo.org/modules/web"
+ 	packages_helper "forgejo.org/routers/api/packages/helper"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	shared "forgejo.org/routers/web/shared/packages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/forms"
+ 	packages_service "forgejo.org/services/packages"
+@@ -128,6 +129,7 @@
+ 	pager.AddParam(ctx, "type", "PackageType")
+ 	ctx.Data["Page"] = pager
+ 
++	if shared.WriteUI(ctx, "list") { return }
+ 	ctx.HTML(http.StatusOK, tplPackagesList)
+ }
+ 
+@@ -295,6 +297,7 @@
+ 		return
+ 	}
+ 
++	if shared.WriteUI(ctx, "detail") { return }
+ 	ctx.HTML(http.StatusOK, tplPackagesView)
+ }
+ 
+@@ -395,6 +398,7 @@
+ 	}
+ 	ctx.Data["Page"] = pager
+ 
++	if shared.WriteUI(ctx, "versions") { return }
+ 	ctx.HTML(http.StatusOK, tplPackageVersionList)
+ }
+ 
+@@ -421,6 +425,7 @@
+ 		return
+ 	}
+ 
++	if shared.WriteUI(ctx, "settings") { return }
+ 	ctx.HTML(http.StatusOK, tplPackagesSettings)
+ }
+ 
+--- a/routers/web/user/setting/packages.go
++++ b/routers/web/user/setting/packages.go
+@@ -28,6 +28,7 @@
+ 
+ 	shared.SetPackagesContext(ctx, ctx.Doer)
+ 
++	if shared.WriteUI(ctx, "owner-settings") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackages)
+ }
+ 
+@@ -37,6 +38,7 @@
+ 
+ 	shared.SetRuleAddContext(ctx)
+ 
++	if shared.WriteUI(ctx, "rule") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackagesRuleEdit)
+ }
+ 
+@@ -46,6 +48,7 @@
+ 
+ 	shared.SetRuleEditContext(ctx, ctx.Doer)
+ 
++	if shared.WriteUI(ctx, "rule") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackagesRuleEdit)
+ }
+ 
+@@ -79,6 +82,7 @@
+ 
+ 	shared.SetRulePreviewContext(ctx, ctx.Doer)
+ 
++	if shared.WriteUI(ctx, "preview") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackagesRulePreview)
+ }
+ 
+--- a/routers/web/org/setting_packages.go
++++ b/routers/web/org/setting_packages.go
+@@ -33,6 +33,7 @@
+ 
+ 	shared.SetPackagesContext(ctx, ctx.ContextUser)
+ 
++	if shared.WriteUI(ctx, "owner-settings") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackages)
+ }
+ 
+@@ -49,6 +50,7 @@
+ 
+ 	shared.SetRuleAddContext(ctx)
+ 
++	if shared.WriteUI(ctx, "rule") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackagesRuleEdit)
+ }
+ 
+@@ -65,6 +67,7 @@
+ 
+ 	shared.SetRuleEditContext(ctx, ctx.ContextUser)
+ 
++	if shared.WriteUI(ctx, "rule") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackagesRuleEdit)
+ }
+ 
+@@ -107,6 +110,7 @@
+ 
+ 	shared.SetRulePreviewContext(ctx, ctx.ContextUser)
+ 
++	if shared.WriteUI(ctx, "preview") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsPackagesRulePreview)
+ }
+ 
+--- a/routers/web/shared/packages/packages.go
++++ b/routers/web/shared/packages/packages.go
+@@ -107,6 +107,7 @@
+ 	ctx.Data["AvailableTypes"] = packages_model.TypeList
+ 
+ 	if ctx.HasError() {
++		if WriteUI(ctx, "rule") { return }
+ 		ctx.HTML(http.StatusOK, template)
+ 		return
+ 	}
+@@ -124,7 +125,8 @@
+ 			return
+ 		} else if has {
+ 			ctx.Data["Err_Type"] = true
+-			ctx.HTML(http.StatusOK, template)
++			if WriteUI(ctx, "rule") { return }
++		ctx.HTML(http.StatusOK, template)
+ 			return
+ 		}
+ 

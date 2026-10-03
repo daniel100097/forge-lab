@@ -1,0 +1,10 @@
+--- a/routers/web/admin/notice.go
++++ b/routers/web/admin/notice.go
+@@ -58,6 +58,7 @@
+ 		ctx.Status(http.StatusInternalServerError)
+ 	} else {
+ 		ctx.Flash.Success(ctx.Tr("admin.notices.delete_success"))
++		if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {ctx.JSONOK();return}
+ 		ctx.Status(http.StatusOK)
+ 	}
+ }

@@ -1,0 +1,58 @@
+--- a/routers/install/routes.go
++++ b/routers/install/routes.go
+@@ -13,6 +13,7 @@
+ 	"forgejo.org/modules/web"
+ 	"forgejo.org/routers/common"
+ 	"forgejo.org/routers/web/healthcheck"
++"forgejo.org/routers/web/spa"
+ 	"forgejo.org/services/forms"
+ )
+ 
+@@ -24,7 +25,11 @@
+ 
+ 	r := web.NewRoute()
+ 	r.Use(common.Sessioner(), Contexter())
+-	r.Get("/", Install) // it must be on the root, because the "install.js" use the window.location to replace the "localhost" AppURL
++	r.Get("/-/ui/assets/*",spa.Asset)
++    r.Get("/-/ui/data/bootstrap",InstallBootstrap)
++    r.Get("/-/ui",spa.Shell)
++    r.Get("/-/ui/*",spa.Shell)
++    r.Get("/", Install) // it must be on the root, because the "install.js" use the window.location to replace the "localhost" AppURL
+ 	r.Post("/", web.Bind(forms.InstallForm{}), SubmitInstall)
+ 	r.Get("/post-install", InstallDone)
+ 	r.Get("/api/healthz", healthcheck.Check)
+--- a/routers/install/install.go
++++ b/routers/install/install.go
+@@ -86,6 +86,7 @@
+ 
+ // Install render installation page
+ func Install(ctx *context.Context) {
++    if ctx.Req.Header.Get("X-Forgejo-UI") != "1" { ctx.Redirect(setting.AppSubURL+"/-/ui/install");return }
+ 	if setting.InstallLock {
+ 		InstallDone(ctx)
+ 		return
+@@ -154,7 +155,7 @@
+ 	form.PasswordAlgorithm = hash.ConfigHashAlgorithm(setting.PasswordHashAlgo)
+ 
+ 	middleware.AssignForm(form, ctx.Data)
+-	ctx.HTML(http.StatusOK, tplInstall)
++	if writeInstallUI(ctx) { return };ctx.HTML(http.StatusOK, tplInstall)
+ }
+ 
+ func checkDatabase(ctx *context.Context, form *forms.InstallForm) bool {
+@@ -242,7 +243,7 @@
+ 	if ctx.HasError() {
+ 		ctx.Data["Err_SMTP"] = ctx.Data["Err_SMTPUser"] != nil
+ 		ctx.Data["Err_Admin"] = ctx.Data["Err_AdminName"] != nil || ctx.Data["Err_AdminPasswd"] != nil || ctx.Data["Err_AdminEmail"] != nil
+-		ctx.HTML(http.StatusOK, tplInstall)
++		if writeInstallUI(ctx) { return };ctx.HTML(http.StatusOK, tplInstall)
+ 		return
+ 	}
+ 
+@@ -611,5 +612,5 @@
+ // InstallDone shows the "post-install" page, makes it easier to develop the page.
+ // The name is not called as "PostInstall" to avoid misinterpretation as a handler for "POST /install"
+ func InstallDone(ctx *context.Context) { //nolint
+-	ctx.HTML(http.StatusOK, tplPostInstall)
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {ctx.JSON(http.StatusOK,map[string]any{"installed":true});return};ctx.Redirect(setting.AppSubURL+"/-/ui/install?complete=1")
+ }

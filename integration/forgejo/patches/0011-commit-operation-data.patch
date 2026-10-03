@@ -1,0 +1,67 @@
+--- a/routers/web/repo/editor.go
++++ b/routers/web/repo/editor.go
+@@ -520,11 +520,13 @@
+ 			"default_commit_mail": ctx.Data["DefaultCommitMail"],
+ 			"upload_accepts": ctx.Data["UploadAccepts"], "upload_max_files": ctx.Data["UploadMaxFiles"],
+ 			"upload_max_size_mb": ctx.Data["UploadMaxSize"],
++			"commit_summary": ctx.Data["commit_summary"], "commit_message": ctx.Data["commit_message"],
++			"sha": ctx.Data["SHA"], "signing": uiCommitSigning(ctx),
+ 		})
+ 		return true
+ 	}
+ 	if setting.InstallLock && string(setting.LandingPageURL) == "/-/ui/" {
+-		ctx.Redirect(setting.AppSubURL + "/-/ui/projects/" + url.PathEscape(ctx.Repo.Repository.OwnerName) + "/" + url.PathEscape(ctx.Repo.Repository.Name) + "/" + operation + "?" + url.Values{"ref": {ctx.Repo.BranchName}, "path": {ctx.Repo.TreePath}}.Encode())
++		ctx.Redirect(setting.AppSubURL + "/-/ui/projects/" + url.PathEscape(ctx.Repo.Repository.OwnerName) + "/" + url.PathEscape(ctx.Repo.Repository.Name) + "/" + operation + "?" + url.Values{"ref": {ctx.Repo.BranchName}, "path": {ctx.Repo.TreePath}, "sha": {ctx.Params(":sha")}}.Encode())
+ 		return true
+ 	}
+ 	return false
+--- a/routers/web/repo/patch.go
++++ b/routers/web/repo/patch.go
+@@ -40,6 +40,9 @@
+ 	ctx.Data["LineWrapExtensions"] = strings.Join(setting.Repository.Editor.LineWrapExtensions, ",")
+ 	ctx.Data["BranchLink"] = ctx.Repo.RepoLink + "/src/" + ctx.Repo.BranchNameSubURL()
+ 
++	if renderSPAFileOperation(ctx, "patch", canCommit) {
++		return
++	}
+ 	ctx.HTML(200, tplPatchFile)
+ }
+ 
+--- a/routers/web/repo/cherry_pick.go
++++ b/routers/web/repo/cherry_pick.go
+@@ -44,7 +44,10 @@
+ 		ctx.Data["CherryPickType"] = "cherry-pick"
+ 		splits := strings.SplitN(cherryPickCommit.Message(), "\n", 2)
+ 		ctx.Data["commit_summary"] = splits[0]
+-		ctx.Data["commit_message"] = splits[1]
++		ctx.Data["commit_message"] = ""
++		if len(splits) > 1 {
++			ctx.Data["commit_message"] = splits[1]
++		}
+ 	}
+ 
+ 	canCommit := renderCommitRights(ctx)
+@@ -60,6 +63,13 @@
+ 	ctx.Data["LineWrapExtensions"] = strings.Join(setting.Repository.Editor.LineWrapExtensions, ",")
+ 	ctx.Data["BranchLink"] = ctx.Repo.RepoLink + "/src/" + ctx.Repo.BranchNameSubURL()
+ 
++	operation := "cherry-pick"
++	if ctx.FormString("cherry-pick-type") == "revert" {
++		operation = "revert"
++	}
++	if renderSPAFileOperation(ctx, operation, canCommit) {
++		return
++	}
+ 	ctx.HTML(200, tplCherryPick)
+ }
+ 
+--- a/routers/web/repo/commit.go
++++ b/routers/web/repo/commit.go
+@@ -433,6 +433,7 @@
+ 	ctx.Data["OpenGraphURL"] = fmt.Sprintf("%s/commit/%s", ctx.Repo.Repository.HTMLURL(), commitID)
+ 	_, ctx.Data["OpenGraphDescription"], _ = strings.Cut(commit.Message(), "\n")
+ 
++	if writeCommitUI(ctx, commit, verification, statuses, parents) { return }
+ 	ctx.HTML(http.StatusOK, tplCommitPage)
+ }
+ 

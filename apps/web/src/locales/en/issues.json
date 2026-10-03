@@ -1,0 +1,670 @@
+{
+  "boardParity": {
+    "state": {
+      "open": "Open",
+      "closed": "Closed",
+      "merged": "Merged"
+    },
+    "tasks": "{{done}} / {{total}} tasks",
+    "assignedTo": "Assigned to {{name}}",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "invalidMove": "This card or column is no longer available. Refresh the board and try again."
+  },
+  "nativeManagement": {
+    "selectedLabels_one": "{{count}} selected label",
+    "selectedLabels_other": "{{count}} selected labels",
+    "excludeLabel": "Exclude {{name}}",
+    "unexcludeLabel": "Stop excluding {{name}}",
+    "showArchivedLabels": "Show archived labels",
+    "searchLabels": "Search labels",
+    "labelSort": "Sort labels",
+    "alphabetically": "Name (A–Z)",
+    "reverseAlphabetically": "Name (Z–A)",
+    "leastIssues": "Fewest issues",
+    "nameSort": "Name",
+    "openCount": "{{count}} open",
+    "closedCount": "{{count}} closed",
+    "newIssue": "New issue",
+    "itemStatus": "Issue and merge request status",
+    "filterLabels": "Filter by label",
+    "allLabels": "All labels",
+    "noLabels": "Without labels",
+    "filterAssignee": "Filter by assignee",
+    "allAssignees": "All assignees",
+    "unassigned": "Unassigned",
+    "filterAuthor": "Filter by author",
+    "allAuthors": "All authors",
+    "itemSort": {
+      "label": "Sort issues and merge requests",
+      "latest": "Newest",
+      "oldest": "Oldest",
+      "recentupdate": "Recently updated",
+      "leastupdate": "Least recently updated",
+      "mostcomment": "Most comments",
+      "leastcomment": "Fewest comments",
+      "nearduedate": "Nearest due date",
+      "farduedate": "Furthest due date",
+      "priority": "Highest priority"
+    }
+  },
+  "advancedDiff": {
+    "loadError": "The file versions could not be loaded.",
+    "tooLarge": "This file is too large to preview. Use the raw file instead.",
+    "csvLegend": "Changed cells show the previous value crossed out and the new value in green.",
+    "row": "Row",
+    "column": "Column {{number}}",
+    "moreRows": "Show more rows ({{count}} remaining)",
+    "before": "Before: {{name}}",
+    "after": "After: {{name}}",
+    "modes": {
+      "side": "Side-by-side",
+      "swipe": "Swipe",
+      "overlay": "Overlay"
+    },
+    "swipePosition": "Swipe position",
+    "opacity": "Overlay opacity",
+    "dimensions": "{{side}} · {{width}} × {{height}} px · {{bytes}} bytes"
+  },
+  "contentMenu": {
+    "label": "Content actions",
+    "copyLink": "Copy link",
+    "copyError": "The link could not be copied.",
+    "quote": "Quote reply",
+    "reference": "Reference in new issue",
+    "report": "Report content"
+  },
+  "list": {
+    "details": {
+      "success": "Checks passed",
+      "failure": "Checks failed",
+      "pending": "Checks pending",
+      "targetBranch": "Target branch",
+      "approvals_one": "{{count}} approval",
+      "approvals_other": "{{count}} approvals",
+      "changesRequested_one": "{{count}} request for changes",
+      "changesRequested_other": "{{count}} requests for changes",
+      "overdue": "Overdue",
+      "due": "Due date",
+      "tasks": "{{done}} of {{total}} tasks"
+    },
+    "title": {
+      "issues": "Issues · {{project}}",
+      "pulls": "Merge requests · {{project}}"
+    },
+    "heading": {
+      "issues": "Issues",
+      "pulls": "Merge requests"
+    },
+    "stateTabs": {
+      "issues": "Issue state",
+      "pulls": "Merge request state"
+    },
+    "states": {
+      "open": "Open",
+      "merged": "Merged",
+      "closed": "Closed",
+      "all": "All"
+    },
+    "new": {
+      "issues": "New issue",
+      "pulls": "New merge request"
+    },
+    "search": {
+      "issues": "Search issues",
+      "pulls": "Search merge requests"
+    },
+    "searchPlaceholder": "Search or filter results…",
+    "clearSearch": "Clear search",
+    "searchButton": "Search",
+    "sort": {
+      "label": "Sort work items",
+      "menuTitle": "Sort by",
+      "recentupdate": "Last updated",
+      "latest": "Newest created",
+      "oldest": "Oldest created",
+      "leastupdate": "Least recently updated",
+      "mostcomment": "Most commented",
+      "leastcomment": "Least commented",
+      "nearduedate": "Due date: earliest",
+      "farduedate": "Due date: latest",
+      "relevance": "Relevance"
+    },
+    "filters": {
+      "title": "Filters",
+      "summary": "Labels, assignee, author, milestone and board",
+      "label": "Label",
+      "includeLabel": "Include label",
+      "addLabelFilter": "Add label filter",
+      "noLabels": "No labels",
+      "excludeLabel": "Exclude label",
+      "excludeALabel": "Exclude a label",
+      "assignee": "Assignee",
+      "anyAssignee": "Any assignee",
+      "unassigned": "Unassigned",
+      "author": "Author",
+      "anyAuthor": "Any author",
+      "authorFallback": "Author #{{id}}",
+      "selectedAuthor": "Selected author",
+      "milestone": "Milestone",
+      "anyMilestone": "Any milestone",
+      "noMilestone": "No milestone",
+      "board": "Board",
+      "anyBoard": "Any board",
+      "noBoard": "No board",
+      "involvement": "My involvement",
+      "allWorkItems": "All work items",
+      "assignedToMe": "Assigned to me",
+      "createdByMe": "Created by me",
+      "mentioningMe": "Mentioning me",
+      "reviewRequested": "Review requested from me",
+      "reviewedByMe": "Reviewed by me",
+      "showArchived": "Show archived labels",
+      "labelChip": "Label: {{name}}",
+      "excludeChip": "Exclude: {{name}}",
+      "removeLabelFilter": "Remove label filter",
+      "clear": "Clear filters"
+    },
+    "pinned": {
+      "label": "Pinned work items",
+      "title": {
+        "issues": "Pinned issues",
+        "pulls": "Pinned merge requests"
+      },
+      "moveUp": "Move pinned {{title}} up",
+      "moveDown": "Move pinned {{title}} down",
+      "unpin": "Unpin {{title}}"
+    },
+    "bulk": {
+      "selectAllLabel": "Select all items on this page",
+      "selected": "{{number}} selected",
+      "selectAll": "Select all",
+      "close": "Close selected",
+      "reopen": "Reopen selected",
+      "labels": "Bulk labels",
+      "labelsOption": "Labels",
+      "removeAllLabels": "Remove all labels",
+      "addLabel": "Add {{name}}",
+      "removeLabel": "Remove {{name}}",
+      "milestone": "Bulk milestone",
+      "milestoneOption": "Milestone",
+      "removeMilestone": "Remove milestone",
+      "assignees": "Bulk assignees",
+      "assigneesOption": "Assignees",
+      "clearAssignees": "Clear assignees",
+      "toggleAssignee": "Toggle @{{name}}",
+      "board": "Bulk board",
+      "boardOption": "Board",
+      "removeFromBoard": "Remove from board",
+      "delete": "Delete selected",
+      "deleteLabel": "Delete selected work items",
+      "deleteTitle": {
+        "issues_one": "Delete {{count}} selected issue?",
+        "issues_other": "Delete {{count}} selected issues?",
+        "pulls_one": "Delete {{count}} selected merge request?",
+        "pulls_other": "Delete {{count}} selected merge requests?"
+      },
+      "deleteText": "Their comments and attached files will also be removed. This cannot be undone.",
+      "cancel": "Cancel"
+    },
+    "row": {
+      "select": "Select {{title}}",
+      "opened": "{{reference}} · opened {{date}} by {{user}}",
+      "assignedTo": "Assigned to {{user}}",
+      "comments_one": "{{count}} comment",
+      "comments_other": "{{count}} comments",
+      "actions": "Actions for {{title}}",
+      "quickActions": "Quick actions",
+      "unpin": "Unpin",
+      "pinToTop": "Pin to top",
+      "updated": "updated {{date}}"
+    },
+    "empty": {
+      "issues": {
+        "open": "No open issues",
+        "merged": "No merged issues",
+        "closed": "No closed issues",
+        "all": "No matching issues"
+      },
+      "pulls": {
+        "open": "No open merge requests",
+        "merged": "No merged merge requests",
+        "closed": "No closed merge requests",
+        "all": "No matching merge requests"
+      },
+      "hint": {
+        "issues": "Try different filters or create a new issue.",
+        "pulls": "Try different filters or create a new merge request."
+      }
+    }
+  },
+  "confirm": {
+    "delete": "Delete",
+    "working": "Working…",
+    "cancel": "Cancel"
+  },
+  "labels": {
+    "title": "Labels",
+    "description": "Organize issues and merge requests with labels.",
+    "new": "New label",
+    "search": "Search labels",
+    "count_one": "{{count}} label",
+    "count_other": "{{count}} labels",
+    "organization": "Organization label",
+    "scoped": "Scoped",
+    "archived": "Archived",
+    "editLabel": "Edit label {{name}}",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteTitle": "Delete label “{{name}}”?",
+    "deleteText": "This removes the label from issues and merge requests in this project.",
+    "empty": "No labels yet",
+    "emptyText": "Create a label or import a label set to get started.",
+    "import": {
+      "title": "Import a label set",
+      "description": "Add the labels from a built-in template to this project.",
+      "template": "Label template",
+      "choose": "Choose a template",
+      "submit": "Import labels"
+    },
+    "editor": {
+      "edit": "Edit label",
+      "new": "New label",
+      "title": "Title",
+      "description": "Description",
+      "color": "Background color",
+      "pickColor": "Pick label color",
+      "preview": "Label preview",
+      "exclusive": "Scoped label (only one label in this scope at a time)",
+      "save": "Save changes",
+      "create": "Create label",
+      "cancel": "Cancel"
+    }
+  },
+  "milestones": {
+    "title": "Milestones",
+    "milestone": "Milestone",
+    "new": "New milestone",
+    "editTitle": "Edit milestone",
+    "statusTabs": "Milestone status",
+    "active": "Active",
+    "closed": "Closed",
+    "all": "All",
+    "search": "Search milestones",
+    "searchPlaceholder": "Search milestones…",
+    "searchButton": "Search",
+    "sort": {
+      "label": "Sort milestones",
+      "closestduedate": "Due date",
+      "furthestduedate": "Due date descending",
+      "mostcomplete": "Most complete",
+      "leastcomplete": "Least complete",
+      "mostissues": "Most issues"
+    },
+    "due": "Due {{date}}",
+    "noDueDate": "No due date",
+    "edit": "Edit",
+    "empty": "No milestones found",
+    "emptyText": "Use milestones to group issues and merge requests around a shared target.",
+    "completion": "{{title}} completion",
+    "progress": "{{progress}}% complete · {{completed}}/{{total}}",
+    "writeRequired": "Milestone editing requires write access",
+    "form": {
+      "title": "Title",
+      "description": "Description",
+      "dueDate": "Due date",
+      "save": "Save changes",
+      "create": "Create milestone",
+      "cancel": "Cancel"
+    },
+    "reopen": "Reopen milestone",
+    "close": "Close milestone",
+    "deleteTitle": "Delete milestone?",
+    "deleteText": "Issues and merge requests are kept and unassigned from this milestone.",
+    "noDescription": "No description provided.",
+    "items": "Issues and merge requests",
+    "itemState": {
+      "open": "open",
+      "closed": "closed"
+    },
+    "noItems": "No work assigned",
+    "noItemsText": "Assign this milestone from an issue or merge request."
+  },
+  "metadata": {
+    "edit": "Edit",
+    "close": "Close",
+    "none": "None",
+    "closedOption": "{{title}} (closed)",
+    "lastUpdated": "Last updated",
+    "assignees": {
+      "title": "Assignees",
+      "popover": "assignees",
+      "edit": "Edit assignees",
+      "search": "Search assignees",
+      "searchPlaceholder": "Search users",
+      "removeAll": "Remove all assignees",
+      "none": "Unassigned"
+    },
+    "labels": {
+      "title": "Labels",
+      "popover": "labels",
+      "edit": "Edit labels",
+      "search": "Search issue labels",
+      "searchPlaceholder": "Search labels",
+      "manage": "Manage project labels"
+    },
+    "milestone": {
+      "title": "Milestone",
+      "select": "Issue milestone",
+      "view": "View milestone"
+    },
+    "dueDate": {
+      "title": "Due date",
+      "popover": "due date",
+      "edit": "Edit due date",
+      "save": "Save date",
+      "remove": "Remove date"
+    },
+    "time": {
+      "title": "Time tracking",
+      "popover": "time tracking",
+      "edit": "Edit time tracking",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "add": "Add time",
+      "duration": "{{hours}}h {{minutes}}m",
+      "delete": "Delete {{duration}} tracked by {{user}}",
+      "spent": "{{duration}} spent",
+      "stop": "Stop timer",
+      "start": "Start timer",
+      "cancel": "Cancel timer"
+    },
+    "dependencies": {
+      "title": "Linked work",
+      "popover": "dependencies",
+      "edit": "Edit dependencies",
+      "blockedBy": "Blocked by",
+      "blocks": "Blocks",
+      "input": "Dependency issue",
+      "placeholder": "#12 or owner/project#12",
+      "add": "Add dependency",
+      "remove": "Remove dependency {{title}}",
+      "invalid": "Enter an issue number or owner/project#number."
+    }
+  },
+  "editIssue": {
+    "edit": "Edit",
+    "label": "Edit issue",
+    "title": "Title",
+    "description": "Description",
+    "removeAttachment": "Remove attachment",
+    "save": "Save changes",
+    "cancel": "Cancel",
+    "descriptionPlaceholder": "Write a description…"
+  },
+  "boardSettings": {
+    "title": "Board settings",
+    "writeRequired": "Board settings require write access",
+    "return": "Return to board",
+    "boardTitle": "Board title",
+    "description": "Description",
+    "cardLayout": "Card layout",
+    "textOnly": "Text only",
+    "imagesAndText": "Images and text",
+    "saved": "Board saved.",
+    "save": "Save changes",
+    "lists": "Lists",
+    "addList": "Add list",
+    "listTitle": "List title",
+    "listColor": "List color",
+    "status": "Board status",
+    "reopen": "Reopen board",
+    "close": "Close board",
+    "deleteTitle": "Delete this board?",
+    "deleteText": "This deletes the board and its lists. Issues are kept in the project.",
+    "column": {
+      "default": "Default",
+      "moveLeft": "Move {{title}} left",
+      "moveRight": "Move {{title}} right",
+      "actions": "Actions for {{title}}",
+      "edit": "Edit list",
+      "setDefault": "Set as default list",
+      "deleteTitle": "Delete list “{{title}}”?",
+      "deleteText": "Issues in this list will remain on the board.",
+      "save": "Save list"
+    }
+  },
+  "lifecycle": {
+    "moreActions": "More actions",
+    "subscribe": "Subscribe",
+    "unsubscribe": "Unsubscribe",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "lock": "Lock discussion",
+    "unlock": "Unlock discussion",
+    "lockTitle": "Lock this discussion?",
+    "lockText": "Only collaborators will be able to comment.",
+    "lockReason": "Lock reason",
+    "noReason": "No reason given",
+    "delete": {
+      "issues": "Delete issue",
+      "pulls": "Delete merge request"
+    },
+    "deleteTitle": {
+      "issues": "Delete issue #{{number}}?",
+      "pulls": "Delete merge request #{{number}}?"
+    },
+    "deleteText": "The discussion, comments and attachments will be deleted.",
+    "locked": "This discussion is locked. Only collaborators can comment.",
+    "reactions": {
+      "title": "Add reaction",
+      "reactWith": "React with {{type}}",
+      "add": "Add {{type}} reaction ({{total}})",
+      "remove": "Remove {{type}} reaction ({{total}})"
+    }
+  },
+  "sidebar": {
+    "copyReference": "Copy issue reference",
+    "participants_one": "{{count}} participant",
+    "participants_other": "{{count}} participants",
+    "board": "Board",
+    "boardSelect": "Issue board",
+    "none": "None",
+    "closedOption": "{{title}} (closed)",
+    "reference": "Reference",
+    "referenceInput": "Issue reference",
+    "referencePlaceholder": "Branch, tag or commit",
+    "saveReference": "Save reference"
+  },
+  "timeline": {
+    "duration": "{{hours}}h {{minutes}}m {{seconds}}s",
+    "events": {
+      "reopen": "<user>{{user}}</user> reopened this discussion <time>{{time}}</time>",
+      "close": "<user>{{user}}</user> closed this discussion <time>{{time}}</time>",
+      "issueRef": "<user>{{user}}</user> mentioned this issue <time>{{time}}</time>",
+      "pullRef": "<user>{{user}}</user> mentioned this merge request <time>{{time}}</time>",
+      "commentRef": "<user>{{user}}</user> mentioned this in a comment <time>{{time}}</time>",
+      "commitRef": "<user>{{user}}</user> referenced this in a commit <time>{{time}}</time>",
+      "label": "<user>{{user}}</user> updated labels <time>{{time}}</time>",
+      "milestone": "<user>{{user}}</user> updated the milestone <time>{{time}}</time>",
+      "assignees": "<user>{{user}}</user> updated assignees <time>{{time}}</time>",
+      "changeTitle": "<user>{{user}}</user> changed the title <time>{{time}}</time>",
+      "deleteBranch": "<user>{{user}}</user> deleted the source branch <time>{{time}}</time>",
+      "startTracking": "<user>{{user}}</user> started tracking time <time>{{time}}</time>",
+      "stopTracking": "<user>{{user}}</user> stopped tracking time <time>{{time}}</time>",
+      "addTime": "<user>{{user}}</user> added tracked time <time>{{time}}</time>",
+      "cancelTracking": "<user>{{user}}</user> cancelled the timer <time>{{time}}</time>",
+      "addedDeadline": "<user>{{user}}</user> set the due date <time>{{time}}</time>",
+      "modifiedDeadline": "<user>{{user}}</user> changed the due date <time>{{time}}</time>",
+      "removedDeadline": "<user>{{user}}</user> removed the due date <time>{{time}}</time>",
+      "addDependency": "<user>{{user}}</user> added a dependency <time>{{time}}</time>",
+      "removeDependency": "<user>{{user}}</user> removed a dependency <time>{{time}}</time>",
+      "review": "<user>{{user}}</user> submitted a review <time>{{time}}</time>",
+      "lock": "<user>{{user}}</user> locked this discussion <time>{{time}}</time>",
+      "unlock": "<user>{{user}}</user> unlocked this discussion <time>{{time}}</time>",
+      "changeTargetBranch": "<user>{{user}}</user> changed the target branch <time>{{time}}</time>",
+      "deleteTime": "<user>{{user}}</user> deleted tracked time <time>{{time}}</time>",
+      "reviewRequest": "<user>{{user}}</user> updated a review request <time>{{time}}</time>",
+      "mergePull": "<user>{{user}}</user> merged this merge request <time>{{time}}</time>",
+      "pullPush": "<user>{{user}}</user> updated the source branch <time>{{time}}</time>",
+      "project": "<user>{{user}}</user> changed the board <time>{{time}}</time>",
+      "projectColumn": "<user>{{user}}</user> moved this item on the board <time>{{time}}</time>",
+      "scheduledMerge": "<user>{{user}}</user> scheduled automatic merge <time>{{time}}</time>",
+      "cancelledMerge": "<user>{{user}}</user> cancelled automatic merge <time>{{time}}</time>",
+      "dismissReview": "<user>{{user}}</user> dismissed a review <time>{{time}}</time>",
+      "changeIssueRef": "<user>{{user}}</user> changed the reference <time>{{time}}</time>",
+      "pin": "<user>{{user}}</user> pinned this discussion <time>{{time}}</time>",
+      "unpin": "<user>{{user}}</user> unpinned this discussion <time>{{time}}</time>",
+      "other": "<user>{{user}}</user> {{event}} <time>{{time}}</time>"
+    },
+    "none": "None",
+    "noBoard": "No board",
+    "removed": "Removed {{name}}",
+    "pushed": "Pushed <commits/>",
+    "forcePushed": "Force-pushed <commits/>",
+    "comment": {
+      "review": "submitted a review",
+      "approved": "Approved",
+      "changesRequested": "Changes requested",
+      "commented": "Commented",
+      "dismissedReview": "dismissed a review",
+      "edit": "Edit comment",
+      "delete": "Delete comment",
+      "deleteTitle": "Delete this comment?",
+      "deleteText": "This comment will be removed.",
+      "removeAttachment": "Remove attachment",
+      "save": "Save comment",
+      "cancel": "Cancel",
+      "editPlaceholder": "Write a description…"
+    }
+  },
+  "history": {
+    "commentLabel": "Comment edit history",
+    "descriptionLabel": "Description edit history",
+    "trigger": "History",
+    "title": "Edit history",
+    "close": "Close history",
+    "introComment": "Previous versions of this comment.",
+    "introDescription": "Previous versions of this description.",
+    "revision": "Revision",
+    "created": "{{user}} · created {{date}}",
+    "edited": "{{user}} · edited {{date}}",
+    "deleted": "{{revision}} (deleted)",
+    "previous": "Previous version",
+    "noPrevious": "No previous content",
+    "selected": "Selected version",
+    "removed": "Content removed",
+    "deleteRevision": "Delete revision",
+    "deleteTitle": "Delete this revision?",
+    "deleteText": "This revision will be removed from edit history.",
+    "empty": "No edits recorded."
+  },
+  "detail": {
+    "kind": {
+      "issues": "Issue",
+      "pulls": "Merge request"
+    },
+    "state": {
+      "open": "open",
+      "merged": "merged",
+      "closed": "closed"
+    },
+    "code": {
+      "label": "Merge request code actions",
+      "trigger": "Code",
+      "sourceBranch": "Open source branch",
+      "targetBranch": "Open target branch",
+      "downloadDiff": "Download diff"
+    },
+    "requestedToMerge": "<user>{{user}}</user> requested to merge",
+    "into": "into",
+    "opened": {
+      "issues": "Issue {{reference}} · opened {{date}} by <user>{{user}}</user>",
+      "pulls": "Merge request {{reference}} · opened {{date}} by <user>{{user}}</user>"
+    },
+    "all": {
+      "issues": "All issues",
+      "pulls": "All merge requests"
+    },
+    "tabs": {
+      "label": "Merge request views",
+      "overview": "Overview",
+      "commits": "Commits",
+      "changes": "Changes"
+    },
+    "description": "Description",
+    "noDescription": "No description provided.",
+    "merge": {
+      "merged": "Merged",
+      "closed": "Merge request closed",
+      "draft": "Draft merge request",
+      "ready": "Ready to merge",
+      "blocked": "Merge blocked",
+      "conflict": "Cannot merge automatically",
+      "mergedText": "Changes have been merged into {{branch}}.",
+      "draftText": "This merge request is a draft. Mark it as ready when it is ready for review.",
+      "checksText": "Branch protection, approvals, and required checks are enforced when you merge.",
+      "markingReady": "Marking as ready…",
+      "markReady": "Mark as ready",
+      "merging": "Merging…",
+      "merge": "Merge",
+      "method": "Merge method",
+      "styles": {
+        "merge": "Merge commit",
+        "squash": "Squash and merge",
+        "rebase": "Rebase",
+        "rebaseMerge": "Rebase and merge",
+        "fastForwardOnly": "Fast-forward only"
+      },
+      "incomplete": "The merge did not complete. Refresh and check the current merge status.",
+      "draftChanged": "The draft status has changed. Refresh this merge request."
+    },
+    "activity": "Activity",
+    "comments_one": "{{count}} comment",
+    "comments_other": "{{count}} comments",
+    "addComment": "Add a comment",
+    "commentLabel": "Comment",
+    "comment": "Comment",
+    "closeIssue": "Close issue",
+    "reopenIssue": "Reopen issue",
+    "commentsUnavailable": "Comments are unavailable for this account or project.",
+    "commentPlaceholder": "Write a comment…"
+  },
+  "create": {
+    "title": "New issue",
+    "signIn": "Sign in to create an issue.",
+    "failed": "The issue could not be created.",
+    "chooseIntro": "Choose a template to get started.",
+    "useTemplate": "Use template",
+    "openLink": "Open",
+    "blank": "Create a blank issue",
+    "chooseTemplate": "Choose template",
+    "titleLabel": "Title",
+    "titlePlaceholder": "A short, clear title",
+    "metadata": "Labels, assignees, milestone, and board",
+    "labels": "Labels",
+    "assignees": "Assignees",
+    "milestone": "Milestone",
+    "noMilestone": "No milestone",
+    "board": "Board",
+    "noBoard": "No board",
+    "reference": "Reference",
+    "creating": "Creating issue…",
+    "submit": "Create issue",
+    "cancel": "Cancel",
+    "description": "Description",
+    "descriptionPlaceholder": "Write a description…"
+  },
+  "templateFields": {
+    "selectOption": "Select an option"
+  },
+  "attachments": {
+    "attach": "Attach files",
+    "remove": "Remove {{name}}"
+  },
+  "files": {
+    "filter": "Filter files",
+    "toggleTree": "Toggle file tree",
+    "noMatches": "No matching files"
+  }
+}

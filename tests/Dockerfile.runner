@@ -1,0 +1,6 @@
+# A disposable host-mode runner used only by pipeline browser verification.
+FROM code.forgejo.org/forgejo/runner:13.2.0
+USER root
+RUN apk add --no-cache nodejs npm bash curl
+USER 1000:1000
+WORKDIR /data

@@ -1,0 +1,55 @@
+--- a/routers/web/repo/search.go
++++ b/routers/web/repo/search.go
+@@ -87,6 +87,7 @@
+ 		} else {
+ 			ctx.Data["CodeSearchMode"] = mode.ToGitGrep().String()
+ 		}
++		if writeSearchUI(ctx, 0, nil) { return }
+ 		ctx.HTML(http.StatusOK, tplSearch)
+ 		return
+ 	}
+@@ -169,5 +170,6 @@
+ 	pager.AddParam(ctx, "path", "CodeSearchPath")
+ 	ctx.Data["Page"] = pager
+ 
++	if writeSearchUI(ctx, total, searchResults) { return }
+ 	ctx.HTML(http.StatusOK, tplSearch)
+ }
+--- a/routers/web/repo/pull.go
++++ b/routers/web/repo/pull.go
+@@ -232,6 +232,7 @@
+ 		return
+ 	}
+ 
++	if writeForkUI(ctx) { return }
+ 	ctx.HTML(http.StatusOK, tplFork)
+ }
+ 
+--- a/routers/web/repo/blame.go
++++ b/routers/web/repo/blame.go
+@@ -78,6 +78,7 @@
+ 	// larger than what is configured as the maximum.
+ 	if blob.Size() >= setting.UI.MaxDisplayFileSize {
+ 		ctx.Data["IsFileTooLarge"] = true
++		if writeBlameUI(ctx, nil) { return }
+ 		ctx.HTML(http.StatusOK, tplRepoHome)
+ 		return
+ 	}
+@@ -88,6 +89,7 @@
+ 		return
+ 	}
+ 
++	if writeBlameUI(ctx, result) { return }
+ 	ctx.Data["NumLinesSet"] = true
+ 	numLines := 0
+ 	for _, p := range result.Parts {
+--- a/routers/web/repo/commit.go
++++ b/routers/web/repo/commit.go
+@@ -168,6 +168,7 @@
+ 		return
+ 	}
+ 
++	if writeGraphUI(ctx, graph, graphCommitsCount, setting.UI.GraphMaxCommitNum) { return }
+ 	ctx.Data["Graph"] = graph
+ 
+ 	gitRefs, err := ctx.Repo.GitRepo.GetRefs()

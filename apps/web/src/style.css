@@ -1,0 +1,714 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@font-face {
+  font-family: "GitLab Sans";
+  src: url("@gitlab/fonts/gitlab-sans/GitLabSans.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GitLab Sans";
+  src: url("@gitlab/fonts/gitlab-sans/GitLabSans-Italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "GitLab Mono";
+  src: url("@gitlab/fonts/gitlab-mono/GitLabMono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans:
+    "GitLab Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "GitLab Mono", "SFMono-Regular", Consolas, monospace;
+  --color-canvas: #ececef;
+  --color-ink: #3a383f;
+  --color-muted: #626168;
+  --color-line: #dcdcde;
+  --color-primary: #1f75cb;
+  --animate-configuration-reveal: configuration-reveal 150ms ease-out;
+
+  @keyframes configuration-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Semantic colors switch with the theme; values live in theme.css. */
+@theme inline {
+  --color-surface: var(--ui-surface);
+  --color-surface-subtle: var(--ui-surface-subtle);
+  --color-hover: var(--ui-hover);
+  --color-selected: var(--ui-selected);
+  --color-input: var(--ui-input-border);
+  --color-control: var(--ui-button-border);
+  --color-code: var(--ui-code-surface);
+  --color-code-inline: var(--ui-code-inline);
+  --color-heading: var(--ui-heading);
+  --color-success: var(--ui-success);
+  --color-success-bg: var(--ui-success-bg);
+  --color-danger: var(--ui-danger);
+  --color-danger-bg: var(--ui-danger-bg);
+  --color-info-bg: var(--ui-info-bg);
+  --color-merged: var(--ui-purple);
+  --color-merged-bg: var(--ui-purple-bg);
+  --shadow-popover: var(--ui-shadow);
+}
+
+@layer base {
+  :root {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-canvas);
+    font-synthesis: none;
+    --border: #dcdcde;
+    --muted: #626168;
+    --purple: #1f75cb;
+  }
+  body {
+    @apply m-0 text-sm leading-normal;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button:focus-visible,
+  a:focus-visible,
+  select:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #1f75cb;
+    outline-offset: 2px;
+  }
+  h1,
+  h2,
+  h3,
+  p {
+    @apply m-0;
+  }
+  h1 {
+    @apply text-2xl font-semibold leading-8 text-heading;
+  }
+  h2 {
+    @apply text-xl font-semibold leading-7;
+  }
+  h3 {
+    @apply text-base font-semibold;
+  }
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+  }
+  a svg,
+  button svg {
+    @apply shrink-0;
+  }
+  [data-theme="dark"] input::placeholder,
+  [data-theme="dark"] textarea::placeholder {
+    color: var(--color-muted);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .select-trigger {
+    @apply inline-flex min-h-8 max-w-full shrink-0 items-center justify-between gap-2 rounded-lg border border-control bg-surface px-3 py-1 text-left text-sm font-normal leading-5 text-ink transition-colors duration-100 ease-[ease] hover:bg-[#f2f1f5] dark:hover:bg-hover;
+  }
+  .select-trigger[data-popup-open] {
+    @apply border-[#89888d] bg-[#ececef] dark:border-control dark:bg-hover dark:text-ink;
+  }
+  .select-trigger .select-value {
+    @apply min-w-0 truncate;
+  }
+  .select-chevron {
+    @apply ml-auto flex shrink-0 items-center text-muted;
+  }
+  .workspace-form .select-trigger {
+    @apply min-h-8 w-full border-input;
+  }
+  .dropdown-positioner {
+    @apply z-60 outline-none;
+  }
+  .dropdown-popup {
+    @apply overflow-hidden rounded-lg border border-control bg-surface text-sm text-ink shadow-popover outline-none;
+    width: max(224px, var(--anchor-width));
+    max-width: min(384px, calc(100vw - 24px));
+    max-height: var(--available-height);
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: var(--transform-origin);
+    transition:
+      opacity 120ms ease-out,
+      transform 120ms ease-out;
+    @apply max-md:max-w-[calc(100vw-24px)];
+  }
+  /* Menus transition from their anchor; Base UI retains the popup during exit. */
+  .dropdown-popup[data-starting-style],
+  .dropdown-popup[data-ending-style] {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  .dropdown-popup[data-ending-style] {
+    transition-duration: 90ms;
+  }
+  .searchable-popup {
+    width: max(300px, var(--anchor-width));
+  }
+  .dropdown-heading {
+    @apply border-b border-line px-4 py-3 text-sm font-semibold;
+  }
+  .dropdown-list {
+    @apply overflow-y-auto p-1;
+    max-height: min(320px, calc(var(--available-height) - 100px));
+    overscroll-behavior: contain;
+  }
+  .dropdown-option {
+    @apply flex min-h-8 cursor-pointer items-center gap-2 rounded px-2 py-1.5 outline-none;
+  }
+  .dropdown-option[data-highlighted],
+  .menu-item[data-highlighted] {
+    @apply bg-hover text-[#18171d] dark:text-ink;
+  }
+  .dropdown-option[data-selected] {
+    @apply font-semibold;
+  }
+  .dropdown-option[data-disabled],
+  .menu-item[data-disabled] {
+    @apply cursor-not-allowed opacity-50;
+  }
+  .option-indicator {
+    @apply flex size-4 shrink-0 items-center justify-center;
+  }
+  .option-copy {
+    @apply min-w-0 flex-1 break-words;
+    overflow-wrap: anywhere;
+  }
+  .option-copy small {
+    @apply mt-0.5 block text-xs font-normal leading-5 text-muted;
+  }
+  .dropdown-search {
+    @apply mx-2 mt-2 mb-1 flex h-8 items-center gap-2 rounded border border-input px-2 text-muted focus-within:ring-2 focus-within:ring-primary;
+  }
+  .dropdown-search input {
+    @apply min-w-0 flex-1 border-0 bg-transparent text-sm text-ink outline-none;
+  }
+  .dropdown-empty {
+    @apply p-4 text-sm text-muted empty:hidden;
+  }
+  .action-menu {
+    @apply w-64 p-1;
+  }
+  .menu-item {
+    @apply flex min-h-8 cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm outline-none;
+  }
+  .menu-item svg {
+    @apply shrink-0 text-muted;
+  }
+  .menu-item[data-danger],
+  .menu-item[data-danger] svg {
+    @apply text-danger;
+  }
+  .menu-group-label {
+    @apply px-3 pt-2 pb-1 text-xs font-semibold text-muted;
+  }
+  .menu-separator {
+    @apply -mx-1 my-1 border-t border-line;
+  }
+  .icon-button {
+    @apply relative inline-flex size-8 shrink-0 items-center justify-center rounded border-0 bg-transparent text-muted transition-colors duration-100 ease-[ease] hover:bg-black/5 hover:text-ink dark:hover:bg-hover;
+  }
+  .button {
+    @apply inline-flex min-h-8 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg border transition-colors duration-100 ease-[ease] border-(--ui-button-default-border) bg-(--ui-button-default-bg) px-3 py-1 text-sm font-normal leading-5 text-(--ui-button-default-fg) hover:border-(--ui-button-default-border-hover) hover:bg-(--ui-button-default-bg-hover) active:border-(--ui-button-default-border-active) active:bg-(--ui-button-default-bg-active);
+  }
+  .button.primary {
+    @apply border-transparent bg-(--ui-button-confirm-bg) text-(--ui-button-confirm-fg) hover:border-transparent hover:bg-(--ui-button-confirm-bg-hover) active:border-transparent active:bg-(--ui-button-confirm-bg-active);
+  }
+  .button.danger {
+    @apply border-danger bg-surface text-danger hover:border-danger hover:bg-danger-bg active:border-danger active:bg-danger-bg;
+  }
+  .tabs,
+  .pill-tabs {
+    @apply flex items-stretch gap-0 overflow-x-auto border-b border-line whitespace-nowrap;
+  }
+  .tabs button,
+  .tabs a,
+  .pill-tabs button {
+    @apply flex min-h-12 items-center gap-1.5 border-0 border-b-2 border-transparent bg-transparent px-4 py-3 text-sm text-ink transition-colors duration-100 ease-[ease] hover:bg-[#f5f5f7] dark:hover:bg-hover;
+  }
+  .pill-tabs button {
+    @apply max-md:px-3;
+  }
+  .tabs .active,
+  .pill-tabs .active {
+    @apply border-b-[#28272d] font-semibold dark:border-b-ink;
+  }
+  .counter {
+    @apply inline-flex min-w-5 items-center justify-center rounded-full bg-[#dcdcde] px-1.5 text-xs font-normal leading-5 text-[#4b4b50] dark:bg-hover dark:text-ink;
+  }
+  .filter-input {
+    @apply flex min-h-8 w-90 max-w-full items-center gap-2 rounded-lg border border-input bg-surface px-2 py-1 text-muted;
+  }
+  .filter-input:focus-within {
+    @apply ring-2 ring-primary;
+  }
+  .filter-input input {
+    @apply min-w-0 w-full border-0 bg-transparent text-sm text-ink outline-none;
+  }
+  .filter-input input::placeholder {
+    @apply text-muted;
+  }
+  .segmented {
+    @apply flex overflow-hidden rounded border border-control;
+  }
+  .segmented button {
+    @apply flex size-8 items-center justify-center bg-surface text-muted;
+  }
+  .segmented button + button {
+    @apply border-l border-control;
+  }
+  .segmented button[aria-pressed="true"] {
+    @apply bg-hover text-ink;
+  }
+  .project-avatar {
+    @apply grid size-10 shrink-0 place-items-center rounded-lg border border-black/10 text-base font-semibold;
+  }
+  .color-0 {
+    @apply bg-[#e1e7fc] text-[#354a9a] dark:bg-[#333c64] dark:text-[#c1cef8];
+  }
+  .color-1 {
+    @apply bg-[#c7e9dd] text-[#256d53] dark:bg-[#214637] dark:text-[#98d9bc];
+  }
+  .color-2 {
+    @apply bg-[#fdf1d7] text-[#8f5d0b] dark:bg-[#534024] dark:text-[#e9c77b];
+  }
+  .color-3 {
+    @apply bg-[#d9e9ff] text-[#245b9b] dark:bg-[#24405e] dark:text-[#a3cbf5];
+  }
+  .color-4 {
+    @apply bg-[#fbe2e2] text-[#9e4141] dark:bg-[#573236] dark:text-[#efb1b1];
+  }
+  .badge {
+    @apply rounded-full border border-line px-2 text-xs;
+  }
+  .label {
+    @apply inline-flex items-center gap-1 rounded-full bg-hover px-2 text-xs leading-5 text-ink;
+  }
+  .label > i {
+    @apply size-1.5 rounded-full;
+  }
+  .workspace-form {
+    @apply flex flex-col gap-4;
+  }
+  .workspace-form label {
+    @apply flex flex-col gap-1 text-sm font-semibold;
+  }
+  .workspace-form input:not([type="checkbox"]),
+  .workspace-form textarea,
+  .workspace-form select {
+    @apply min-h-8 w-full rounded border border-input bg-surface px-3 py-1 text-sm font-normal text-ink;
+  }
+  .workspace-form textarea {
+    @apply resize-y py-2 leading-6;
+  }
+  .workspace-form input[type="file"] {
+    @apply p-0;
+    line-height: 30px;
+  }
+  .workspace-form input[type="file"]::file-selector-button {
+    @apply mr-3 cursor-pointer border-0 border-r border-line px-3 text-sm font-medium;
+    color: var(--color-ink);
+    background: var(--ui-surface-subtle, #fbfafd);
+    line-height: 30px;
+  }
+  .workspace-form input[type="file"]::file-selector-button:hover {
+    background: var(--ui-hover, #ececef);
+  }
+  .workspace-form input::placeholder,
+  .workspace-form textarea::placeholder {
+    @apply text-muted;
+  }
+  .workspace-form label small {
+    @apply text-xs font-normal text-muted;
+  }
+  .workspace-form .check-field {
+    @apply flex flex-row items-center gap-2 text-sm font-normal;
+  }
+  .check-field input {
+    @apply m-0 size-4 accent-primary;
+  }
+  .form-error,
+  .form-success {
+    @apply rounded border border-red-300 bg-red-50 px-4 py-3 text-sm leading-6 text-red-800;
+  }
+  .form-error {
+    @apply dark:border-[#a34a44] dark:bg-danger-bg dark:text-danger;
+  }
+  .form-success {
+    @apply border-green-300 bg-green-50 text-green-800 dark:border-[#397854] dark:bg-success-bg dark:text-success;
+  }
+}
+
+@layer components {
+  .markdown {
+    @apply text-sm leading-6 break-words text-ink;
+    overflow-wrap: anywhere;
+  }
+  .markdown > :first-child {
+    @apply mt-0;
+  }
+  .markdown > :last-child {
+    @apply mb-0;
+  }
+  .markdown h1 {
+    @apply mt-6 mb-4 border-b border-line pb-3 text-2xl font-semibold;
+  }
+  .markdown h2 {
+    @apply mt-6 mb-3 border-b border-line pb-2 text-xl font-semibold;
+  }
+  .markdown h3 {
+    @apply mt-5 mb-2 text-lg font-semibold;
+  }
+  .markdown h4 {
+    @apply mt-4 mb-2 font-semibold;
+  }
+  .markdown p {
+    @apply my-3;
+  }
+  .markdown ul {
+    @apply my-3 list-disc pl-6;
+  }
+  .markdown ol {
+    @apply my-3 list-decimal pl-6;
+  }
+  .markdown li {
+    @apply my-1;
+  }
+  .markdown a {
+    @apply text-primary hover:underline;
+  }
+  .markdown code {
+    @apply rounded bg-code-inline px-1 py-0.5 text-[13px];
+  }
+  .markdown pre {
+    @apply my-4 overflow-auto rounded border border-line bg-code p-4;
+  }
+  .markdown pre code {
+    @apply bg-transparent p-0;
+  }
+  .markdown blockquote {
+    @apply my-4 border-l-4 border-line pl-4 text-muted;
+  }
+  .markdown table {
+    @apply my-4 block max-w-full overflow-auto border-collapse text-sm;
+  }
+  .markdown th,
+  .markdown td {
+    @apply border border-line px-3 py-2;
+  }
+  .markdown th {
+    @apply bg-code text-left;
+  }
+  .markdown img {
+    @apply max-w-full rounded;
+  }
+  .markdown hr {
+    @apply my-5 border-line;
+  }
+  .markdown .contains-task-list {
+    @apply list-none pl-1;
+  }
+  .markdown input[type="checkbox"] {
+    @apply mr-2;
+  }
+
+  /* Forgejo-rendered markup (class "markup", see RenderedMarkup.tsx). */
+  .markup {
+    --markup-note: var(--color-primary);
+    --markup-tip: var(--ui-success);
+    --markup-important: var(--ui-purple);
+    --markup-warning: #9e5400;
+    --markup-caution: var(--ui-danger);
+  }
+  :root[data-theme="dark"] .markup {
+    --markup-warning: #e9be74;
+  }
+  .markup h1,
+  .markup h2,
+  .markup h3,
+  .markup h4,
+  .markup h5,
+  .markup h6 {
+    @apply relative;
+  }
+  .markup h5,
+  .markup h6 {
+    @apply mt-4 mb-2 text-sm font-semibold;
+  }
+  .markup h6 {
+    @apply text-muted;
+  }
+  .markup .anchor {
+    @apply absolute top-0 -left-5 w-5 pr-1 text-center text-muted no-underline opacity-0;
+  }
+  .markup h1:hover .anchor,
+  .markup h2:hover .anchor,
+  .markup h3:hover .anchor,
+  .markup h4:hover .anchor,
+  .markup h5:hover .anchor,
+  .markup h6:hover .anchor,
+  .markup .anchor:focus-visible {
+    @apply no-underline opacity-100;
+  }
+  .markup ul > .task-list-item {
+    @apply list-none;
+  }
+  .markup ul:has(> .task-list-item) {
+    @apply pl-6;
+  }
+  .markup .task-list-item input[type="checkbox"] {
+    @apply mr-2 -ml-5 align-[-2px] accent-primary;
+  }
+  .markup .task-list-item input[type="checkbox"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+  .markup .task-list-item input[aria-busy="true"] {
+    @apply pointer-events-none opacity-60;
+  }
+  .markup ol > .task-list-item input[type="checkbox"] {
+    @apply ml-0;
+  }
+  .markup ul ul,
+  .markup ul ol,
+  .markup ol ol,
+  .markup ol ul {
+    @apply my-0;
+  }
+  .markup del {
+    @apply text-muted;
+  }
+  .markup kbd {
+    @apply rounded border border-b-2 border-line bg-surface-subtle px-1.5 py-px font-mono text-xs;
+  }
+  .markup details {
+    @apply my-3;
+  }
+  .markup summary {
+    @apply cursor-pointer font-semibold;
+  }
+  .markup sup > a {
+    @apply px-0.5;
+  }
+  .markup .footnotes,
+  .markup div:has(> hr + ol > li[id^="fn:"]) {
+    @apply text-[13px] text-muted;
+  }
+  .markup .emoji {
+    @apply inline-block h-[1.2em] max-w-none align-[-0.2em] text-[1.1em] leading-none;
+  }
+  .markup img.emoji {
+    @apply w-[1.2em];
+  }
+  .markup a.mention,
+  .markup a.ref-issue,
+  .markup a.ref-external-issue {
+    @apply font-semibold;
+  }
+  .markup a.commit,
+  .markup code.commit,
+  .markup a > code {
+    @apply font-mono;
+  }
+  .markup img {
+    @apply inline-block;
+  }
+  .markup pre.code-block {
+    @apply leading-5;
+  }
+  .markup pre.code-block.is-loading {
+    @apply text-muted;
+  }
+  .markup .markup-math-block {
+    @apply my-4 overflow-x-auto overflow-y-hidden;
+  }
+  .markup .markup-mermaid {
+    @apply my-4 flex justify-center overflow-x-auto rounded border border-line bg-surface p-4;
+  }
+  .markup .markup-mermaid svg {
+    @apply h-auto max-w-full;
+  }
+  .markup blockquote.attention-header {
+    @apply border-l-4 text-ink;
+  }
+  .markup .attention-title {
+    @apply mb-1 flex items-center gap-2;
+  }
+  .markup .attention-icon {
+    @apply shrink-0 fill-current;
+  }
+  .markup .attention-note {
+    border-color: var(--markup-note);
+    color: var(--markup-note);
+  }
+  .markup .attention-tip {
+    border-color: var(--markup-tip);
+    color: var(--markup-tip);
+  }
+  .markup .attention-important {
+    border-color: var(--markup-important);
+    color: var(--markup-important);
+  }
+  .markup .attention-warning {
+    border-color: var(--markup-warning);
+    color: var(--markup-warning);
+  }
+  .markup .attention-caution {
+    border-color: var(--markup-caution);
+    color: var(--markup-caution);
+  }
+  .markup blockquote.attention-header > :not(.attention-title) {
+    @apply text-ink;
+  }
+  .markup .ambiguous-code-point {
+    @apply border border-[#d8a31a];
+  }
+  .markup .escaped-code-point[data-escaped]::before {
+    @apply visible inline-block rounded bg-code-inline px-0.5 font-mono text-[11px];
+    content: attr(data-escaped);
+  }
+  .markup .escaped-code-point .char {
+    @apply hidden;
+  }
+  /* Chroma token classes (Forgejo code blocks) in the SPA's highlight palette. */
+  .markup .chroma .k,
+  .markup .chroma .kc,
+  .markup .chroma .kd,
+  .markup .chroma .kn,
+  .markup .chroma .kp,
+  .markup .chroma .kr,
+  .markup .chroma .o,
+  .markup .chroma .ow {
+    color: var(--th-keyword);
+  }
+  .markup .chroma .s,
+  .markup .chroma .s1,
+  .markup .chroma .s2,
+  .markup .chroma .sb,
+  .markup .chroma .sc,
+  .markup .chroma .sd,
+  .markup .chroma .sh,
+  .markup .chroma .sx,
+  .markup .chroma .dl,
+  .markup .chroma .sa,
+  .markup .chroma .si,
+  .markup .chroma .gi {
+    color: var(--th-string);
+  }
+  .markup .chroma .se,
+  .markup .chroma .ss,
+  .markup .chroma .sr {
+    color: var(--th-property);
+  }
+  .markup .chroma .c,
+  .markup .chroma .c1,
+  .markup .chroma .ch,
+  .markup .chroma .cm,
+  .markup .chroma .cs {
+    color: var(--th-comment);
+    font-style: italic;
+  }
+  .markup .chroma .cp,
+  .markup .chroma .cpf,
+  .markup .chroma .nd,
+  .markup .chroma .gh,
+  .markup .chroma .gu {
+    color: var(--th-meta);
+  }
+  .markup .chroma .m,
+  .markup .chroma .mb,
+  .markup .chroma .mf,
+  .markup .chroma .mh,
+  .markup .chroma .mi,
+  .markup .chroma .mo,
+  .markup .chroma .il,
+  .markup .chroma .l,
+  .markup .chroma .ld {
+    color: var(--th-number);
+  }
+  .markup .chroma .nf,
+  .markup .chroma .fm,
+  .markup .chroma .nb,
+  .markup .chroma .bp {
+    color: var(--th-function);
+  }
+  .markup .chroma .kt,
+  .markup .chroma .nc,
+  .markup .chroma .nn,
+  .markup .chroma .ne {
+    color: var(--th-type);
+  }
+  .markup .chroma .na,
+  .markup .chroma .py,
+  .markup .chroma .nl {
+    color: var(--th-property);
+  }
+  .markup .chroma .nt,
+  .markup .chroma .gd,
+  .markup .chroma .gr,
+  .markup .chroma .gt {
+    color: var(--th-tag);
+  }
+  .markup .chroma .nv,
+  .markup .chroma .vc,
+  .markup .chroma .vg,
+  .markup .chroma .vi,
+  .markup .chroma .vm,
+  .markup .chroma .no,
+  .markup .chroma .ni {
+    color: var(--th-variable);
+  }
+  .markup .chroma .ge {
+    font-style: italic;
+  }
+  .markup .chroma .gs {
+    font-weight: 600;
+  }
+  .markup .chroma .gl {
+    text-decoration: underline;
+  }
+}

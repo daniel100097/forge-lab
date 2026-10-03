@@ -1,0 +1,86 @@
+--- a/routers/web/org/projects.go
++++ b/routers/web/org/projects.go
+@@ -21,6 +21,7 @@
+ 	"forgejo.org/modules/templates"
+ 	"forgejo.org/modules/web"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/forms"
+ )
+@@ -136,6 +137,7 @@
+ 	ctx.Data["NumOpenIssuesInProject"] = numOpenIssues
+ 	ctx.Data["NumClosedIssuesInProject"] = numClosedIssues
+ 
++	if spapages.Extras(ctx, "boards", int(total)) { return }
+ 	ctx.HTML(http.StatusOK, tplProjects)
+ }
+ 
+@@ -163,6 +165,7 @@
+ 		return
+ 	}
+ 
++	if spapages.Extras(ctx, "board-form", 0) { return }
+ 	ctx.HTML(http.StatusOK, tplProjectsNew)
+ }
+ 
+@@ -276,6 +279,7 @@
+ 	ctx.Data["card_type"] = p.CardType
+ 	ctx.Data["CancelLink"] = project_model.ProjectLinkForOrg(ctx.ContextUser, p.ID)
+ 
++	if spapages.Extras(ctx, "board-form", 0) { return }
+ 	ctx.HTML(http.StatusOK, tplProjectsNew)
+ }
+ 
+@@ -404,6 +408,7 @@
+ 		return
+ 	}
+ 
++	if spapages.Extras(ctx, "board", 0) { return }
+ 	ctx.HTML(http.StatusOK, tplProjectsView)
+ }
+ 
+--- a/routers/web/moderation/report.go
++++ b/routers/web/moderation/report.go
+@@ -11,6 +11,7 @@
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/web"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/forms"
+ 	moderation_service "forgejo.org/services/moderation"
+@@ -69,6 +70,7 @@
+ 	ctx.Data["ContentID"] = contentID
+ 	ctx.Data["ContentType"] = contentType
+ 	ctx.Data["AbuseCategories"] = moderation.GetAbuseCategoriesList()
++	if spapages.Extras(ctx, "report", 0) { return }
+ 	ctx.HTML(http.StatusOK, tplSubmitAbuseReport)
+ }
+ 
+--- a/routers/web/repo/migrate.go
++++ b/routers/web/repo/migrate.go
+@@ -22,6 +22,7 @@
+ 	"forgejo.org/modules/structs"
+ 	"forgejo.org/modules/util"
+ 	"forgejo.org/modules/web"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/forms"
+ 	"forgejo.org/services/migrations"
+@@ -48,6 +49,7 @@
+ 		ctx.Data["Org"] = ctx.FormString("org")
+ 		ctx.Data["Mirror"] = ctx.FormString("mirror")
+ 
++		if spapages.Extras(ctx, "migration", 0) { return }
+ 		ctx.HTML(http.StatusOK, tplMigrate)
+ 		return
+ 	}
+@@ -68,6 +70,7 @@
+ 	}
+ 	ctx.Data["ContextUser"] = ctxUser
+ 
++	if spapages.Extras(ctx, "migration", 0) { return }
+ 	ctx.HTML(http.StatusOK, base.TplName("repo/migrate/"+serviceType.Name()))
+ }
+ 

@@ -1,0 +1,18 @@
+--- a/routers/web/repo/compare.go
++++ b/routers/web/repo/compare.go
+@@ -777,6 +777,7 @@
+ 				return
+ 			}
+ 			ctx.Data["PullRequest"] = pr
++			if writeCompareUI(ctx, ci, pr) { return }
+ 			ctx.HTML(http.StatusOK, tplCompareDiff)
+ 			return
+ 		}
+@@ -844,6 +845,7 @@
+ 		ctx.Data["AllowMaintainerEdit"] = false
+ 	}
+ 
++	if writeCompareUI(ctx, ci, nil) { return }
+ 	ctx.HTML(http.StatusOK, tplCompare)
+ }
+ 

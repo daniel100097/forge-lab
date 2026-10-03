@@ -1,0 +1,4 @@
+/* Instance creation date varies; keep its geometry while hiding only its text. */
+[aria-label="Project information"] time {
+  visibility: hidden !important;
+}

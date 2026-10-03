@@ -1,0 +1,41 @@
+--- a/routers/web/repo/editor.go
++++ b/routers/web/repo/editor.go
+@@ -7,6 +7,7 @@
+ 	"fmt"
+ 	"io"
+ 	"net/http"
++	"net/url"
+ 	"path"
+ 	"strings"
+ 
+@@ -227,6 +228,30 @@
+ 	ctx.Data["LineWrapExtensions"] = strings.Join(setting.Repository.Editor.LineWrapExtensions, ",")
+ 	ctx.Data["EditorconfigJson"] = GetEditorConfigJSON(ctx, treePath)
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		mails := make([]map[string]any, 0)
++		if entries, ok := ctx.Data["CommitMails"].([]*user_model.ActivatedEmailAddress); ok {
++			for _, mail := range entries {
++				mails = append(mails, map[string]any{"id": mail.ID, "email": mail.Email})
++			}
++		}
++		ctx.JSON(http.StatusOK, map[string]any{
++			"content": ctx.Data["FileContent"], "path": ctx.Repo.TreePath,
++			"branch": ctx.Repo.BranchName, "last_commit": ctx.Repo.CommitID,
++			"can_commit": canCommit, "can_create_pull_request": ctx.Data["CanCreatePullRequest"],
++			"new_branch_name": ctx.Data["new_branch_name"], "commit_mails": mails,
++			"default_commit_mail": ctx.Data["DefaultCommitMail"],
++			"signing": uiCommitSigning(ctx), "editorconfig": ctx.Data["EditorconfigJson"],
++			"preview_extensions": ctx.Data["PreviewableExtensions"], "line_wrap_extensions": ctx.Data["LineWrapExtensions"],
++		})
++		return
++	}
++	if !isNewFile && setting.InstallLock && string(setting.LandingPageURL) == "/-/ui/" {
++		// Resolve branch names containing slashes before entering the SPA.
++		ctx.Redirect(setting.AppSubURL + "/-/ui/projects/" + url.PathEscape(ctx.Repo.Repository.OwnerName) + "/" + url.PathEscape(ctx.Repo.Repository.Name) + "/edit?" + url.Values{"ref": {ctx.Repo.BranchName}, "path": {ctx.Repo.TreePath}}.Encode())
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplEditFile)
+ }
+ 

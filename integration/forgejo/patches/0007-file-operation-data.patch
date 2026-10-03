@@ -1,0 +1,73 @@
+--- a/routers/web/repo/editor.go
++++ b/routers/web/repo/editor.go
+@@ -245,9 +245,13 @@
+ 		})
+ 		return
+ 	}
+-	if !isNewFile && setting.InstallLock && string(setting.LandingPageURL) == "/-/ui/" {
++	if setting.InstallLock && string(setting.LandingPageURL) == "/-/ui/" {
+ 		// Resolve branch names containing slashes before entering the SPA.
+-		ctx.Redirect(setting.AppSubURL + "/-/ui/projects/" + url.PathEscape(ctx.Repo.Repository.OwnerName) + "/" + url.PathEscape(ctx.Repo.Repository.Name) + "/edit?" + url.Values{"ref": {ctx.Repo.BranchName}, "path": {ctx.Repo.TreePath}}.Encode())
++		operation := "edit"
++		if isNewFile {
++			operation = "new"
++		}
++		ctx.Redirect(setting.AppSubURL + "/-/ui/projects/" + url.PathEscape(ctx.Repo.Repository.OwnerName) + "/" + url.PathEscape(ctx.Repo.Repository.Name) + "/" + operation + "?" + url.Values{"ref": {ctx.Repo.BranchName}, "path": {ctx.Repo.TreePath}, "filename": {ctx.FormString("filename")}}.Encode())
+ 		return
+ 	}
+ 	ctx.HTML(http.StatusOK, tplEditFile)
+@@ -498,6 +502,34 @@
+ 	ctx.HTML(http.StatusOK, tplEditDiffPreview)
+ }
+ 
++// renderSPAFileOperation returns only the native editor's permission and form data.
++func renderSPAFileOperation(ctx *context.Context, operation string, canCommit bool) bool {
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		mails := make([]map[string]any, 0)
++		if entries, ok := ctx.Data["CommitMails"].([]*user_model.ActivatedEmailAddress); ok {
++			for _, mail := range entries {
++				mails = append(mails, map[string]any{"id": mail.ID, "email": mail.Email})
++			}
++		}
++		ctx.JSON(http.StatusOK, map[string]any{
++			"path": ctx.Repo.TreePath, "branch": ctx.Repo.BranchName,
++			"last_commit": ctx.Repo.CommitID, "can_commit": canCommit,
++			"can_create_pull_request": ctx.Data["CanCreatePullRequest"],
++			"new_branch_name": ctx.Data["new_branch_name"], "commit_mails": mails,
++			"default_commit_mail": ctx.Data["DefaultCommitMail"],
++			"upload_accepts": ctx.Data["UploadAccepts"], "upload_max_files": ctx.Data["UploadMaxFiles"],
++			"upload_max_size_mb": ctx.Data["UploadMaxSize"],
++		})
++		return true
++	}
++	if setting.InstallLock && string(setting.LandingPageURL) == "/-/ui/" {
++		ctx.Redirect(setting.AppSubURL + "/-/ui/projects/" + url.PathEscape(ctx.Repo.Repository.OwnerName) + "/" + url.PathEscape(ctx.Repo.Repository.Name) + "/" + operation + "?" + url.Values{"ref": {ctx.Repo.BranchName}, "path": {ctx.Repo.TreePath}}.Encode())
++		return true
++	}
++	return false
++}
++
+ // DeleteFile render delete file page
+ func DeleteFile(ctx *context.Context) {
+ 	ctx.Data["PageIsDelete"] = true
+@@ -522,6 +554,9 @@
+ 	}
+ 	ctx.Data["new_branch_name"] = GetUniquePatchBranchName(ctx)
+ 
++	if renderSPAFileOperation(ctx, "delete", canCommit) {
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplDeleteFile)
+ }
+ 
+@@ -694,6 +729,9 @@
+ 	}
+ 	ctx.Data["new_branch_name"] = GetUniquePatchBranchName(ctx)
+ 
++	if renderSPAFileOperation(ctx, "upload", canCommit) {
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplUploadFile)
+ }
+ 

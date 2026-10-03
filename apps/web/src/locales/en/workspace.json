@@ -1,0 +1,752 @@
+{
+  "shared": {
+    "search": "Search",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "remove": "Remove",
+    "delete": "Delete",
+    "description": "Description",
+    "website": "Website",
+    "location": "Location",
+    "email": "Email",
+    "visibility": "Visibility",
+    "all": "All",
+    "open": "Open",
+    "closed": "Closed",
+    "updated": "Updated {{date}}",
+    "private": "Private",
+    "public": "Public",
+    "archived": "Archived",
+    "saveChanges": "Save changes",
+    "username": "Username",
+    "usernameOrEmail": "Username or email",
+    "projects": "Projects",
+    "allProjects": "All projects",
+    "members": "Members",
+    "team": "Team",
+    "allTeams": "All teams",
+    "issues": "Issues",
+    "mergeRequests": "Merge requests",
+    "milestones": "Milestones",
+    "notifications": "Notifications",
+    "organizations": "Organizations",
+    "issueBoards": "Issue boards"
+  },
+  "activity": {
+    "title": "Activity",
+    "orgTitle": "{{org}} activity",
+    "viewOrganization": "View organization",
+    "date": "Date",
+    "allDates": "All dates",
+    "empty": "No activity to show",
+    "contributions_one": "{{count, number}} contribution in the last year",
+    "contributions_other": "{{count, number}} contributions in the last year",
+    "dayContributions_one": "{{date}}: {{count}} contribution",
+    "dayContributions_other": "{{date}}: {{count}} contributions",
+    "events": {
+      "createdProject": {
+        "actor": "<actor/> created project <repo/>",
+        "self": "Created project <repo/>"
+      },
+      "renamedProject": {
+        "actor": "<actor/> renamed project <repo/>",
+        "self": "Renamed project <repo/>"
+      },
+      "starred": {
+        "actor": "<actor/> starred <repo/>",
+        "self": "Starred <repo/>"
+      },
+      "startedWatching": {
+        "actor": "<actor/> started watching <repo/>",
+        "self": "Started watching <repo/>"
+      },
+      "pushedCommits": {
+        "actor": "<actor/> pushed commits to <repo/> · <ref/>",
+        "self": "Pushed commits to <repo/> · <ref/>"
+      },
+      "openedIssue": {
+        "actor": "<actor/> opened issue in <repo/> <issue/>",
+        "self": "Opened issue in <repo/> <issue/>"
+      },
+      "openedMergeRequest": {
+        "actor": "<actor/> opened merge request in <repo/> <issue/>",
+        "self": "Opened merge request in <repo/> <issue/>"
+      },
+      "transferred": {
+        "actor": "<actor/> transferred <repo/>",
+        "self": "Transferred <repo/>"
+      },
+      "createdTag": {
+        "actor": "<actor/> created tag in <repo/> · <ref/>",
+        "self": "Created tag in <repo/> · <ref/>"
+      },
+      "commented": {
+        "actor": "<actor/> commented on <repo/> <issue/>",
+        "self": "Commented on <repo/> <issue/>"
+      },
+      "mergedMergeRequest": {
+        "actor": "<actor/> merged a merge request in <repo/> <issue/>",
+        "self": "Merged a merge request in <repo/> <issue/>"
+      },
+      "closedIssue": {
+        "actor": "<actor/> closed issue in <repo/> <issue/>",
+        "self": "Closed issue in <repo/> <issue/>"
+      },
+      "reopenedIssue": {
+        "actor": "<actor/> reopened issue in <repo/> <issue/>",
+        "self": "Reopened issue in <repo/> <issue/>"
+      },
+      "closedMergeRequest": {
+        "actor": "<actor/> closed merge request in <repo/> <issue/>",
+        "self": "Closed merge request in <repo/> <issue/>"
+      },
+      "reopenedMergeRequest": {
+        "actor": "<actor/> reopened merge request in <repo/> <issue/>",
+        "self": "Reopened merge request in <repo/> <issue/>"
+      },
+      "deletedTag": {
+        "actor": "<actor/> deleted tag in <repo/> · <ref/>",
+        "self": "Deleted tag in <repo/> · <ref/>"
+      },
+      "deletedBranch": {
+        "actor": "<actor/> deleted branch in <repo/> · <ref/>",
+        "self": "Deleted branch in <repo/> · <ref/>"
+      },
+      "syncedMirror": {
+        "actor": "<actor/> synchronized mirror in <repo/> · <ref/>",
+        "self": "Synchronized mirror in <repo/> · <ref/>"
+      },
+      "createdMirrorBranch": {
+        "actor": "<actor/> created mirror branch in <repo/> · <ref/>",
+        "self": "Created mirror branch in <repo/> · <ref/>"
+      },
+      "deletedMirrorBranch": {
+        "actor": "<actor/> deleted mirror branch in <repo/> · <ref/>",
+        "self": "Deleted mirror branch in <repo/> · <ref/>"
+      },
+      "approvedMergeRequest": {
+        "actor": "<actor/> approved merge request in <repo/> <issue/>",
+        "self": "Approved merge request in <repo/> <issue/>"
+      },
+      "requestedChanges": {
+        "actor": "<actor/> requested changes in <repo/> <issue/>",
+        "self": "Requested changes in <repo/> <issue/>"
+      },
+      "commentedMergeRequest": {
+        "actor": "<actor/> commented on merge request in <repo/> <issue/>",
+        "self": "Commented on merge request in <repo/> <issue/>"
+      },
+      "publishedRelease": {
+        "actor": "<actor/> published release in <repo/> · <ref/>",
+        "self": "Published release in <repo/> · <ref/>"
+      },
+      "dismissedReview": {
+        "actor": "<actor/> dismissed a review in <repo/> <issue/>",
+        "self": "Dismissed a review in <repo/> <issue/>"
+      },
+      "markedReady": {
+        "actor": "<actor/> marked merge request ready for review in <repo/> <issue/>",
+        "self": "Marked merge request ready for review in <repo/> <issue/>"
+      },
+      "enabledAutoMerge": {
+        "actor": "<actor/> enabled automatic merge in <repo/> <issue/>",
+        "self": "Enabled automatic merge in <repo/> <issue/>"
+      },
+      "updated": {
+        "actor": "<actor/> updated <repo/>",
+        "self": "Updated <repo/>"
+      }
+    }
+  },
+  "work": {
+    "subscriptions": "Subscriptions",
+    "stateTabs": "Work item state",
+    "filter": {
+      "label": "Filter work",
+      "yourProjects": "Your projects",
+      "assigned": "Assigned to you",
+      "createdBy": "Created by you",
+      "mentioned": "Mentions",
+      "reviewRequested": "Review requested",
+      "reviewedBy": "Reviewed by you"
+    },
+    "subscriptionType": "Subscription type",
+    "issuesAndMergeRequests": "Issues and merge requests",
+    "search": "Search work items",
+    "searchPlaceholder": "Search work items…",
+    "sort": {
+      "label": "Sort work items",
+      "recentupdate": "Recently updated",
+      "latest": "Newest",
+      "oldest": "Oldest",
+      "leastupdate": "Least recently updated",
+      "mostcomment": "Most comments",
+      "leastcomment": "Fewest comments",
+      "nearduedate": "Nearest due date",
+      "farduedate": "Farthest due date"
+    },
+    "meta": "{{project}} · #{{number}} · {{user}} · Updated {{date}}",
+    "state": {
+      "open": "open",
+      "closed": "closed"
+    },
+    "empty": "No matching work items",
+    "board": "Issue board",
+    "allBoards": "All boards",
+    "labels": "Label IDs (comma-separated)"
+  },
+  "notifications": {
+    "sections": "Notification sections",
+    "inbox": "Inbox",
+    "watching": "Watching",
+    "markAllRead": "Mark all as read",
+    "stateTabs": "Notification state",
+    "unread": "Unread",
+    "read": "Read",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "markRead": "Mark read",
+    "markUnread": "Mark unread",
+    "emptyTitle": "You're all caught up",
+    "emptyUnread": "No unread notifications.",
+    "emptyRead": "No read notifications.",
+    "emptyOther": "No {{state}} notifications."
+  },
+  "watching": {
+    "title": "Watched projects",
+    "search": "Search watched projects",
+    "searchPlaceholder": "Search watched projects…",
+    "unwatch": "Unwatch",
+    "empty": "No watched projects"
+  },
+  "milestones": {
+    "stateTabs": "Milestone state",
+    "search": "Search milestones",
+    "searchPlaceholder": "Search milestones…",
+    "project": "Project",
+    "progress": "{{title}} progress",
+    "closedIssues_one": "{{closed}} of {{count}} issue closed",
+    "closedIssues_other": "{{closed}} of {{count}} issues closed",
+    "empty": "No matching milestones",
+    "selectedProjects": "Select repositories",
+    "sort": "Sort milestones",
+    "sorts": {
+      "soonestduedate": "Soonest due date",
+      "furthestduedate": "Farthest due date",
+      "leastcomplete": "Least complete",
+      "mostcomplete": "Most complete",
+      "mostissues": "Most issues",
+      "leastissues": "Fewest issues"
+    }
+  },
+  "codeSearch": {
+    "title": "Search code",
+    "ownerTitle": "Search {{owner}} code",
+    "placeholder": "Search code…",
+    "mode": "Search mode",
+    "modes": {
+      "exact": "Exact match",
+      "union": "Any word",
+      "regexp": "Regular expression",
+      "fuzzy": "Fuzzy match"
+    },
+    "language": "Language",
+    "allLanguages": "All languages",
+    "disabled": "Code search is not enabled",
+    "disabledHint": "Your administrator can enable the repository indexer to search across projects.",
+    "unavailable": "The code index is temporarily unavailable",
+    "empty": "No matching code",
+    "prompt": "Search across projects"
+  },
+  "users": {
+    "title": "Explore users",
+    "search": "Search users",
+    "searchPlaceholder": "Search users…",
+    "empty": "No users to show"
+  },
+  "profile": {
+    "tabs": {
+      "overview": "Overview",
+      "activity": "Activity",
+      "repositories": "Projects",
+      "stars": "Starred projects",
+      "watching": "Watching",
+      "followers": "Followers",
+      "following": "Following",
+      "feed": "ActivityPub feed"
+    },
+    "edit": "Edit profile",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "actions": "Profile actions",
+    "more": "More",
+    "reportAbuse": "Report abuse",
+    "confirmBlock": "Block {{name}}?",
+    "confirmUnblock": "Unblock {{name}}?",
+    "blockUser": "Block user",
+    "unblockUser": "Unblock user",
+    "about": "About",
+    "info": "Info",
+    "joined": "Joined {{date}}",
+    "followers_one": "{{count}} follower",
+    "followers_other": "{{count}} followers",
+    "following_one": "{{count}} following",
+    "following_other": "{{count}} following",
+    "sections": "Profile sections",
+    "searchProjects": "Search projects",
+    "searchProjectsPlaceholder": "Search projects…",
+    "viewAll": "View all",
+    "noProjects": "No projects to show",
+    "keys": "SSH public keys",
+    "gpg": "GPG public keys",
+    "adminDetails": "User details",
+    "rss": "RSS feed",
+    "atom": "Atom feed",
+    "packages": "Packages",
+    "openIDs": "OpenID identities",
+    "badges": "Badges",
+    "feedEmpty": "No federated activity yet.",
+    "originalSource": "Original source",
+    "signedIn": "Signed-in users"
+  },
+  "organization": {
+    "documentTitle": {
+      "projects": "Projects · {{org}}",
+      "members": "members · {{org}}",
+      "teams": "teams · {{org}}",
+      "settings": "settings · {{org}}"
+    },
+    "name": "Organization name",
+    "allowTeamAccessChange": "Allow project administrators to change team access",
+    "visibility": {
+      "label": "Organization visibility",
+      "public": "Public",
+      "publicDescription": "Visible to everyone",
+      "limited": "Limited",
+      "limitedDescription": "Visible to signed-in users",
+      "private": "Private",
+      "privateDescription": "Visible to members"
+    },
+    "new": {
+      "title": "New organization",
+      "description": "Organize shared projects and manage access through teams.",
+      "creating": "Creating…",
+      "create": "Create organization"
+    },
+    "sections": "Organization sections",
+    "newProject": "New project",
+    "searchProjects": "Search organization projects",
+    "searchProjectsPlaceholder": "Search organization projects…",
+    "members": {
+      "leave": "Leave organization",
+      "confirmLeave": "Leave {{org}}?",
+      "addToTeams": "Add to teams",
+      "invite": "Invite member",
+      "add": "Add member",
+      "owner": "Owner",
+      "member": "Member",
+      "actions": "Actions for {{name}}",
+      "manage": "Manage",
+      "makePrivate": "Make membership private",
+      "makePublic": "Make membership public",
+      "confirmRemove": "Remove {{name}} from {{org}}?",
+      "remove": "Remove member",
+      "twoFactor": "Two-factor authentication",
+      "twoFactorEnabled": "Enabled",
+      "twoFactorDisabled": "Not enabled"
+    },
+    "teams": {
+      "title": "Teams",
+      "new": "New team",
+      "newTitle": "New team · {{org}}",
+      "members_one": "{{count}} member",
+      "members_other": "{{count}} members",
+      "projects_one": "{{count}} project",
+      "projects_other": "{{count}} projects",
+      "permission": {
+        "none": "none",
+        "read": "read",
+        "write": "write",
+        "admin": "admin",
+        "owner": "owner"
+      },
+      "notFound": "Team not found",
+      "edit": "Edit team",
+      "confirmLeave": "Leave {{team}}?",
+      "leave": "Leave team",
+      "join": "Join team",
+      "sections": "Team sections",
+      "invite": "Invite to team",
+      "add": "Add to team",
+      "confirmRemove": "Remove {{name}} from {{team}}?",
+      "pendingInvitations": "Pending invitations",
+      "invited": "Invited {{date}}",
+      "cancelInvitation": "Cancel invitation",
+      "allProjectsAccess": "This team has access to all organization projects.",
+      "projectName": "Project name",
+      "projectPlaceholder": "{{org}}/project-name",
+      "addProject": "Add project",
+      "editTitle": "Edit {{team}}",
+      "name": "Team name",
+      "projectAccess": "Project access",
+      "selectedProjects": "Selected projects",
+      "role": "Team role",
+      "customAccess": "Custom access",
+      "customAccessDescription": "Set access for each project feature",
+      "administrator": "Administrator",
+      "administratorDescription": "Manage all project features and settings",
+      "canCreateProjects": "Allow members to create organization projects",
+      "permissions": "Project permissions",
+      "unitAccess": "Access",
+      "noAccess": "No access",
+      "read": "Read",
+      "write": "Write",
+      "create": "Create team",
+      "save": "Save team",
+      "confirmDelete": "Delete team {{team}}? Its members lose the access granted by this team.",
+      "delete": "Delete team",
+      "addAll": "Add all repositories",
+      "removeAll": "Remove all repositories",
+      "confirmAll": "Apply this action to all repositories in this organization?",
+      "unitsTitle": "Unit permissions",
+      "unit": "Unit",
+      "readAccess": "Read",
+      "writeAccess": "Write",
+      "adminAccess": "Administrator"
+    },
+    "settings": {
+      "title": "Settings",
+      "navigation": "Organization settings",
+      "nav": {
+        "general": "General",
+        "avatar": "Avatar",
+        "labels": "Labels",
+        "applications": "Applications",
+        "hooks": "Webhooks",
+        "runners": "Runners",
+        "secrets": "Secrets",
+        "variables": "Variables",
+        "storage": "Storage usage",
+        "blocked": "Blocked users",
+        "delete": "Delete organization",
+        "packages": "Packages"
+      },
+      "general": "General settings",
+      "generalDescription": "Update this organization’s profile and visibility.",
+      "displayName": "Display name",
+      "saved": "Organization settings saved.",
+      "maxRepositories": "Maximum repositories (−1 for unlimited)"
+    },
+    "avatar": {
+      "title": "Organization avatar",
+      "description": "Choose an image to represent your organization.",
+      "current": "Current organization avatar",
+      "image": "Avatar image",
+      "saved": "Avatar updated.",
+      "upload": "Upload avatar",
+      "remove": "Remove avatar"
+    },
+    "delete": {
+      "description": "This permanently removes {{org}} and its teams. Transfer or delete its projects and packages first.",
+      "confirm": "Type {{org}} to confirm"
+    },
+    "blocked": {
+      "block": "Block user",
+      "unblock": "Unblock",
+      "empty": "No blocked users"
+    },
+    "labels": {
+      "title": "Organization labels",
+      "new": "New label",
+      "description": "These labels are shared by all organization projects.",
+      "name": "Label name",
+      "color": "Color",
+      "exclusive": "Exclusive label",
+      "save": "Save label",
+      "confirmDelete": "Delete label {{name}}?",
+      "confirmDeleteText": "This removes the label from issues and merge requests across the organization.",
+      "empty": "No organization labels",
+      "useTemplate": "Use a label template",
+      "template": "Label template",
+      "addTemplate": "Add template labels"
+    },
+    "applications": {
+      "title": "OAuth applications",
+      "confirmDelete": "Delete application {{name}}?",
+      "confirmDeleteText": "Applications using this client will stop authenticating.",
+      "add": "Add an application",
+      "name": "Application name",
+      "redirectUris": "Redirect URIs",
+      "confidential": "Confidential client",
+      "create": "Create application"
+    }
+  },
+  "invitation": {
+    "title": "Team invitation",
+    "join": "Join {{name}}",
+    "text": "{{inviter}} invited you to the {{team}} team.",
+    "accept": "Accept invitation"
+  },
+  "organizations": {
+    "search": "Search organizations",
+    "searchPlaceholder": "Search organizations…",
+    "viewProjects": "View projects",
+    "empty": "No organizations found",
+    "emptyText": "Organizations let teams share projects and manage access together."
+  },
+  "storage": {
+    "title": "Storage usage",
+    "byType": "Storage by type",
+    "byTypeDescription": "Current space used across this namespace.",
+    "groupDescription": "Storage limits assigned by your administrator.",
+    "unlimited": "Unlimited",
+    "used": "{{name}} storage used",
+    "disabled": "Storage quotas are not enabled",
+    "disabledHint": "An administrator can enable storage tracking and quotas for this instance.",
+    "subjects": {
+      "all": "Total storage",
+      "reposAll": "Repositories",
+      "reposPublic": "Public repositories",
+      "reposPrivate": "Private repositories",
+      "gitAll": "Git data",
+      "assetsAll": "Assets",
+      "attachmentsAll": "Attachments",
+      "attachmentsIssues": "Issue attachments",
+      "attachmentsReleases": "Release attachments",
+      "artifacts": "Job artifacts",
+      "packages": "Packages",
+      "wiki": "Wikis"
+    }
+  },
+  "boards": {
+    "parity": {
+      "stateTabs": "Board status",
+      "open": "Open",
+      "closed": "Closed",
+      "search": "Search boards",
+      "searchButton": "Search",
+      "sortLabel": "Sort boards",
+      "sort": {
+        "newest": "Newest",
+        "oldest": "Oldest",
+        "recentupdate": "Recently updated",
+        "leastupdate": "Least recently updated"
+      },
+      "openCount": "{{count}} open",
+      "closedCount": "{{count}} closed",
+      "cardStyle": "Card style",
+      "textOnly": "Text only",
+      "imagesAndText": "Images and text"
+    },
+    "documentTitle": "Boards · {{owner}}",
+    "newTitle": "New issue board",
+    "editTitle": "Edit issue board",
+    "new": "New board",
+    "stateTabs": "Board state",
+    "search": "Search boards",
+    "searchPlaceholder": "Search boards…",
+    "empty": "No matching boards",
+    "name": "Board name",
+    "layout": "Starting layout",
+    "cardStyle": "Card style",
+    "textOnly": "Text only",
+    "imagesAndText": "Images and text",
+    "save": "Save board",
+    "create": "Create board",
+    "invalidReference": "Enter an issue reference such as {{owner}}/project#12.",
+    "issueNotFound": "Issue not found.",
+    "notFound": "Board not found",
+    "all": "All boards",
+    "filter": "Filter board",
+    "filterPlaceholder": "Filter by title or label…",
+    "actions": "Board actions",
+    "edit": "Edit board",
+    "editTrigger": "Edit board",
+    "newColumn": "New column",
+    "reopen": "Reopen board",
+    "close": "Close board",
+    "addExisting": "Add an existing issue or merge request",
+    "reference": "Issue reference",
+    "referencePlaceholder": "{{owner}}/project#12",
+    "addToBoard": "Add to board",
+    "editColumn": "Edit column",
+    "columnTitle": "Column title",
+    "columnColor": "Column color",
+    "saveColumn": "Save column",
+    "columnActions": "Actions for column {{title}}",
+    "setDefault": "Set as default",
+    "moveLeft": "Move left",
+    "moveRight": "Move right",
+    "confirmDeleteColumn": "Delete {{title}}? Its issues return to the default column.",
+    "deleteColumn": "Delete column",
+    "moveIssue": "Move {{title}} to column",
+    "removeFromBoard": "Remove from board",
+    "emptyColumn": "No issues here yet",
+    "confirmDelete": "Delete board {{title}}?",
+    "confirmDeleteText": "The board and its columns will be deleted. Issues remain in their projects."
+  },
+  "releases": {
+    "documentTitle": "Releases · {{name}}",
+    "title": "Releases",
+    "latest": "Latest release",
+    "new": "New release",
+    "search": "Search releases",
+    "searchPlaceholder": "Search releases…",
+    "draft": "Draft",
+    "prerelease": "Pre-release",
+    "noNotes": "No release notes.",
+    "assets": "Assets",
+    "sourceZip": "Source code (zip)",
+    "sourceTarGz": "Source code (tar.gz)",
+    "noMatches": "No matching releases",
+    "empty": "No releases yet",
+    "emptyHint": "Package a version of your project with a tag and release notes.",
+    "notCreated": "The release was not created.",
+    "tagName": "Tag name",
+    "target": "Target branch or commit",
+    "releaseTitle": "Release title",
+    "releaseTitlePlaceholder": "Version 1.0",
+    "notes": "Release notes",
+    "isPrerelease": "This is a pre-release",
+    "saveDraft": "Save as a draft",
+    "create": "Create release",
+    "tags": "Tags",
+    "feed": "Release feed",
+    "downloads_one": "{{count}} download",
+    "downloads_other": "{{count}} downloads"
+  },
+  "wiki": {
+    "unavailable": "This wiki page is unavailable for your session.",
+    "notSaved": "The page was not saved.",
+    "documentTitle": "Wiki · {{name}}",
+    "title": "Wiki",
+    "newTitle": "New wiki page",
+    "editTitle": "Edit wiki page",
+    "confirmDelete": "Delete wiki page {{title}}?",
+    "newPage": "New page",
+    "viewingRevision": "Viewing revision <revision/>. <anchor>View current page</anchor>",
+    "emptyTitle": "Document your project",
+    "emptyText": "Create a wiki page for guides, project knowledge, and team documentation.",
+    "pages": "Pages",
+    "pageTitle": "Page title",
+    "pageContent": "Page content",
+    "commitMessage": "Commit message",
+    "commitMessagePlaceholder": "Describe your changes",
+    "save": "Save page",
+    "edited_one": "{{name}} edited this page {{date}} · {{count}} revision",
+    "edited_other": "{{name}} edited this page {{date}} · {{count}} revisions",
+    "clone": "Clone wiki",
+    "contents": "Table of contents",
+    "filterPages": "Filter pages"
+  },
+  "pipelines": {
+    "documentTitle": "Pipelines · {{name}}",
+    "title": "Pipelines",
+    "latest": "Latest pipeline",
+    "run": "Run pipeline",
+    "enableWorkflow": "Enable workflow",
+    "disableWorkflow": "Disable workflow",
+    "repository": "Repository",
+    "all": "All pipelines",
+    "workflow": "Workflow",
+    "allWorkflows": "All workflows",
+    "statusFilter": "Pipeline status",
+    "allStatuses": "All statuses",
+    "statusOption": {
+      "success": "Success",
+      "failure": "Failure",
+      "cancelled": "Cancelled",
+      "skipped": "Skipped",
+      "waiting": "Waiting",
+      "running": "Running",
+      "blocked": "Blocked"
+    },
+    "status": {
+      "success": "success",
+      "failure": "failure",
+      "cancelled": "cancelled",
+      "skipped": "skipped",
+      "waiting": "waiting",
+      "running": "running",
+      "blocked": "blocked",
+      "unknown": "unknown"
+    },
+    "triggeredBy": "Triggered by",
+    "allUsers": "All users",
+    "noMatches": "No matching pipelines",
+    "empty": "No pipelines yet",
+    "noMatchesHint": "Choose different filters to find a pipeline.",
+    "emptyHint": "Add a workflow in <path/> and connect a Forgejo runner to run your builds."
+  },
+  "pipeline": {
+    "title": "Pipeline #{{run}}",
+    "reviewApproval": "Review workflow approval",
+    "removePriority": "Remove priority",
+    "prioritize": "Prioritize pipeline",
+    "cancel": "Cancel pipeline",
+    "confirmDelete": "Delete pipeline #{{run}}?",
+    "retry": "Retry",
+    "jobs": "Jobs",
+    "attempt": "Job attempt",
+    "attemptOption": "Attempt {{number}} · {{status}}",
+    "downloadLog": "Download log",
+    "retryJob": "Retry job",
+    "noLog": "No log output yet.",
+    "waitingTitle": "Waiting for a runner",
+    "waitingText": "Job steps will appear when a runner starts this job.",
+    "prioritized": "Prioritized",
+    "workflowRuns": "All runs of this workflow",
+    "timestamps": "Show timestamps",
+    "seconds": "Show seconds",
+    "fullScreen": "Full-screen logs",
+    "exitFullScreen": "Exit full screen"
+  },
+  "projectSettings": {
+    "documentTitle": "General settings · {{name}}",
+    "adminRequired": "Project settings require administrator access",
+    "title": "General settings",
+    "details": "Project details",
+    "detailsDescription": "Update the description and website shown on your project.",
+    "name": "Project name",
+    "visibilityPrivate": "Visibility: Private",
+    "visibilityPublic": "Visibility: Public",
+    "saved": "Project details saved."
+  },
+  "context": {
+    "label": "Dashboard context",
+    "personal": "Your work"
+  },
+  "repoFilters": {
+    "projectType": "Project type",
+    "types": {
+      "all": "All types",
+      "source": "Sources",
+      "fork": "Forks",
+      "mirror": "Mirrors",
+      "collaborative": "Collaborative"
+    },
+    "sort": "Sort",
+    "archived": "Archived",
+    "fork": "Fork",
+    "mirror": "Mirror",
+    "template": "Template",
+    "private": "Private",
+    "language": "Language",
+    "yes": "Yes",
+    "no": "No",
+    "sorts": {
+      "recentupdate": "Recently updated",
+      "leastupdate": "Least recently updated",
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "alphabetically": "Name, A–Z",
+      "reversealphabetically": "Name, Z–A",
+      "moststars": "Most stars",
+      "feweststars": "Fewest stars",
+      "mostforks": "Most forks",
+      "fewestforks": "Fewest forks",
+      "size": "Smallest",
+      "reversesize": "Largest"
+    }
+  }
+}

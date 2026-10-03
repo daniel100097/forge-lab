@@ -1,0 +1,186 @@
+--- a/routers/web/repo/release.go
++++ b/routers/web/repo/release.go
+@@ -31,6 +31,7 @@
+ 	"forgejo.org/modules/web"
+ 	"forgejo.org/routers/web/feed"
+ 	"forgejo.org/services/context"
++	"forgejo.org/services/convert"
+ 	"forgejo.org/services/context/upload"
+ 	"forgejo.org/services/forms"
+ 	release_service "forgejo.org/services/release"
+@@ -220,6 +221,13 @@
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		items := make([]any, 0, len(releases))
++		for _, rel := range releases { items = append(items, convert.ToAPIRelease(ctx, ctx.Repo.Repository, rel.Release, false)) }
++		ctx.JSON(http.StatusOK, map[string]any{"items": items, "total": releasesCount, "can_create": writeAccess && !ctx.Repo.Repository.IsArchived})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplReleasesList)
+ }
+ 
+--- a/routers/web/user/setting/profile.go
++++ b/routers/web/user/setting/profile.go
+@@ -64,6 +64,17 @@
+ func Profile(ctx *context.Context) {
+ 	profileContext(ctx)
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		u := ctx.Doer
++		ctx.JSON(http.StatusOK, map[string]any{
++			"name": u.Name, "full_name": u.FullName, "website": u.Website, "location": u.Location,
++			"pronouns": u.Pronouns, "biography": u.Description, "visibility": u.Visibility,
++			"keep_email_private": u.KeepEmailPrivate, "keep_activity_private": u.KeepActivityPrivate,
++			"keep_pronouns_private": u.KeepPronounsPrivate,
++		})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplSettingsProfile)
+ }
+ 
+--- a/routers/web/repo/setting/setting.go
++++ b/routers/web/repo/setting/setting.go
+@@ -300,6 +300,13 @@
+ 
+ // Settings show a repository's settings page
+ func Settings(ctx *context.Context) {
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		r := ctx.Repo.Repository
++		ctx.JSON(http.StatusOK, map[string]any{"repo_name": r.Name, "description": r.Description, "website": r.Website, "private": r.IsPrivate, "template": r.IsTemplate})
++		return
++	}
++
+ 	ctx.HTML(http.StatusOK, tplSettingsOptions)
+ }
+ 
+--- a/routers/web/user/notification.go
++++ b/routers/web/user/notification.go
+@@ -24,6 +24,7 @@
+ 	"forgejo.org/modules/structs"
+ 	"forgejo.org/modules/util"
+ 	"forgejo.org/services/context"
++	"forgejo.org/services/convert"
+ 	issue_service "forgejo.org/services/issue"
+ 	pull_service "forgejo.org/services/pull"
+ )
+@@ -170,6 +171,12 @@
+ 	ctx.Data["Keyword"] = keyword
+ 	ctx.Data["Status"] = status
+ 	ctx.Data["Notifications"] = notifications
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"items": convert.ToNotifications(ctx, notifications), "total": total})
++		return
++	}
++
+ 
+ 	pager.SetDefaultParams(ctx)
+ 	ctx.Data["Page"] = pager
+--- a/routers/web/repo/wiki.go
++++ b/routers/web/repo/wiki.go
+@@ -489,6 +489,11 @@
+ 
+ 	if !ctx.Repo.Repository.HasWiki() {
+ 		ctx.Data["Title"] = ctx.Tr("repo.wiki")
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"empty": true, "pages": []any{}, "can_write": ctx.Data["CanWriteWiki"]})
++		return
++	}
+ 		ctx.HTML(http.StatusOK, tplWikiStart)
+ 		return
+ 	}
+@@ -504,6 +509,11 @@
+ 	}
+ 	if entry == nil {
+ 		ctx.Data["Title"] = ctx.Tr("repo.wiki")
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, map[string]any{"empty": true, "pages": []any{}, "can_write": ctx.Data["CanWriteWiki"]})
++		return
++	}
+ 		ctx.HTML(http.StatusOK, tplWikiStart)
+ 		return
+ 	}
+@@ -524,6 +534,13 @@
+ 	ctx.Data["OpenGraphTitle"] = ctx.Data["Title"]
+ 	ctx.Data["OpenGraphURL"] = fmt.Sprintf("%s%s", setting.AppURL, ctx.Data["Link"])
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		content := string(wikiContentsByEntry(ctx, entry))
++		if ctx.Written() { return }
++		ctx.JSON(http.StatusOK, map[string]any{"title": ctx.Data["Title"], "content": content, "pages": ctx.Data["Pages"], "can_write": ctx.Data["CanWriteWiki"]})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplWikiView)
+ }
+ 
+--- a/routers/web/repo/actions/actions.go
++++ b/routers/web/repo/actions/actions.go
+@@ -253,6 +253,17 @@
+ 	ctx.Data["Page"] = pager
+ 	ctx.Data["HasWorkflowsOrRuns"] = len(workflows) > 0 || len(runs) > 0
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		items := make([]any, 0, len(runs))
++		for _, run := range runs {
++			items = append(items, map[string]any{"id": run.ID, "index": run.Index, "title": run.Title, "workflow": run.WorkflowID, "ref": run.Ref, "sha": run.CommitSHA, "status": run.Status.String(), "created_at": run.Created.AsTime(), "link": run.Link()})
++		}
++		files := make([]string, 0, len(workflows))
++		for _, workflow := range workflows { files = append(files, workflow.Entry.Name()) }
++		ctx.JSON(http.StatusOK, map[string]any{"items": items, "total": total, "workflows": files})
++		return
++	}
+ 	if listInner {
+ 		ctx.HTML(http.StatusOK, tplListActionsInner)
+ 	} else {
+--- a/routers/web/repo/actions/view.go
++++ b/routers/web/repo/actions/view.go
+@@ -93,6 +93,11 @@
+ 		return
+ 	}
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++		ctx.JSON(http.StatusOK, viewResponse)
++		return
++	}
+ 	var buf1, buf2 strings.Builder
+ 	if err := json.NewEncoder(&buf1).Encode(viewResponse); err != nil {
+ 		ctx.ServerError("EncodingError", err)
+--- a/services/context/context.go
++++ b/services/context/context.go
+@@ -246,6 +246,10 @@
+ }
+ 
+ func (ctx *Context) JSONRedirect(redirect string) {
++ if ctx.Req.Header.Get("X-Forgejo-UI") == "1" && ctx.Flash.ErrorMsg != "" {
++  ctx.JSON(http.StatusUnprocessableEntity, map[string]string{"errorMessage": ctx.Flash.ErrorMsg})
++  return
++ }
+ 	ctx.JSON(http.StatusOK, map[string]any{"redirect": redirect})
+ }
+ 
+--- a/routers/web/explore/user.go
++++ b/routers/web/explore/user.go
+@@ -109,6 +109,13 @@
+ 	}
+ 	ctx.Data["Page"] = pager
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" {
++		ctx.Resp.Header().Set("Cache-Control", "no-store")
++        items := make([]any, 0, len(users))
++        for _, u := range users { items = append(items, map[string]any{"id": u.ID, "name": u.Name, "full_name": u.FullName, "description": u.Description}) }
++        ctx.JSON(http.StatusOK, map[string]any{"items": items, "total": count, "page_size": opts.PageSize})
++		return
++	}
+ 	ctx.HTML(http.StatusOK, tplName)
+ }
+ 

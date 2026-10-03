@@ -1,0 +1,65 @@
+--- a/routers/install/install.go
++++ b/routers/install/install.go
+@@ -208,6 +208,9 @@ func checkDatabase(ctx *context.Context, form *forms.InstallForm) bool {
+ 		confirmed := form.ReinstallConfirmFirst && form.ReinstallConfirmSecond && form.ReinstallConfirmThird
+ 		if !confirmed {
+ 			ctx.Data["Err_DbInstalledBefore"] = true
++			if writeInstallReinstallUI(ctx, ctx.Tr("install.reinstall_error")) {
++				return false
++			}
+ 			ctx.RenderWithErr(ctx.Tr("install.reinstall_error"), tplInstall, form)
+ 			return false
+ 		}
+--- a/routers/web/auth/oauth.go
++++ b/routers/web/auth/oauth.go
+@@ -934,6 +934,9 @@ func handleAuthorizeError(ctx *context.Context, authErr AuthorizeError, redirect
+ 	if redirectURI == "" {
+ 		log.Warn("Authorization failed: %v", authErr.ErrorDescription)
+ 		ctx.Data["Error"] = authErr
++		if writeAuthUI(ctx, string(tplGrantError)) {
++			return
++		}
+ 		ctx.HTML(http.StatusBadRequest, tplGrantError)
+ 		return
+ 	}
+--- a/routers/web/user/setting/keys.go
++++ b/routers/web/user/setting/keys.go
+@@ -111,6 +111,9 @@ func KeysPost(ctx *context.Context) {
+ 				keyID := err.(asymkey_model.ErrGPGInvalidTokenSignature).ID
+ 				ctx.Data["KeyID"] = keyID
+ 				ctx.Data["PaddedKeyID"] = asymkey_model.PaddedKeyID(keyID)
++				if writeKeySignatureUI(ctx, ctx.Tr("settings.gpg_invalid_token_signature")) {
++					return
++				}
+ 				ctx.RenderWithErr(ctx.Tr("settings.gpg_invalid_token_signature"), tplSettingsKeys, &form)
+ 			case asymkey_model.IsErrGPGNoEmailFound(err):
+ 				loadKeysData(ctx)
+@@ -120,6 +123,9 @@ func KeysPost(ctx *context.Context) {
+ 				keyID := err.(asymkey_model.ErrGPGNoEmailFound).ID
+ 				ctx.Data["KeyID"] = keyID
+ 				ctx.Data["PaddedKeyID"] = asymkey_model.PaddedKeyID(keyID)
++				if writeKeySignatureUI(ctx, ctx.Tr("settings.gpg_no_key_email_found")) {
++					return
++				}
+ 				ctx.RenderWithErr(ctx.Tr("settings.gpg_no_key_email_found"), tplSettingsKeys, &form)
+ 			default:
+ 				ctx.ServerError("AddPublicKey", err)
+--- a/routers/web/user/setting/profile.go
++++ b/routers/web/user/setting/profile.go
+@@ -73,6 +73,7 @@ func Profile(ctx *context.Context) {
+ 			"pronouns": u.Pronouns, "biography": u.Description, "visibility": u.Visibility,
+ 			"keep_email_private": u.KeepEmailPrivate, "keep_activity_private": u.KeepActivityPrivate,
+ 			"keep_pronouns_private": u.KeepPronounsPrivate, "rename_disabled":ctx.Data["UserRenameDisabled"], "visibility_options":ctx.Data["AllowedUserVisibilityModes"],
++			"settings": profileSettingsUI(ctx),
+ 		})
+ 		return
+ 	}
+@@ -357,7 +358,7 @@ func Appearance(ctx *context.Context) {
+     groups:=map[string]bool{}
+     for _,key:=range []string{"reference","label","milestone","assignee","title","branch","time_tracking","deadline","dependency","lock","review_request","pull_request_push","project","issue_ref"} { groups[key]=forms.IsUserHiddenCommentTypeGroupChecked(key,hiddenCommentTypes) }
+     ctx.Resp.Header().Set("Cache-Control","no-store")
+-    ctx.JSON(http.StatusOK,map[string]any{"language":ctx.Doer.Language,"languages":spaui.Rows(ctx.Data["AllLangs"],"Lang","Name"),"hints":ctx.Doer.EnableRepoUnitHints,"comments":groups})
++    ctx.JSON(http.StatusOK,map[string]any{"language":ctx.Doer.Language,"languages":spaui.Rows(ctx.Data["AllLangs"],"Lang","Name"),"hints":ctx.Doer.EnableRepoUnitHints,"comments":groups,"theme":ctx.Doer.Theme,"default_theme":setting.UI.DefaultTheme,"themes":appearanceThemesUI(ctx)})
+     return
+    }
+    ctx.HTML(http.StatusOK, tplSettingsAppearance)

@@ -1,0 +1,74 @@
+/* Shared surface and state tokens keep the SPA's theme consistent, including
+   portaled menus and independently mounted editor screens. */
+:root {
+  --ui-surface: #ffffff;
+  --ui-surface-subtle: #fbfafd;
+  --ui-hover: #ececef;
+  --ui-selected: #dcdcde;
+  --ui-input-border: #89888d;
+  --ui-button-border: #bfbfc3;
+  /* GitLab Pajamas button tokens (@gitlab/ui gl-button-{default,confirm}-primary-*). */
+  --ui-button-default-bg: #fff;
+  --ui-button-default-bg-hover: #ecebea;
+  --ui-button-default-bg-active: #dcdbd9;
+  --ui-button-default-fg: #3a383d;
+  --ui-button-default-border: #c1bfbe;
+  --ui-button-default-border-hover: #8a8888;
+  --ui-button-default-border-active: #646163;
+  --ui-button-confirm-bg: #3a383d;
+  --ui-button-confirm-bg-hover: #18171d;
+  --ui-button-confirm-bg-active: #050408;
+  --ui-button-confirm-fg: #fff;
+  --ui-code-surface: #fafafa;
+  --ui-code-inline: #f0f0f2;
+  --ui-heading: #18171d;
+  --ui-success: #108548;
+  --ui-success-bg: #e4f5e8;
+  --ui-danger: #c91c00;
+  --ui-danger-bg: #fbe9e7;
+  --ui-info-bg: #e9f3fc;
+  --ui-purple: #5943b6;
+  --ui-purple-bg: #e1d8f9;
+  --ui-shadow: 0 4px 12px #18171d29;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --color-canvas: #050506;
+  --color-ink: #ececef;
+  --color-muted: #b0afb5;
+  --color-line: #48464e;
+  --color-primary: #63a6e9;
+  --border: var(--color-line);
+  --muted: var(--color-muted);
+  --purple: var(--color-primary);
+  --ui-surface: #28272d;
+  --ui-surface-subtle: #2f2e36;
+  --ui-hover: #3a383f;
+  --ui-selected: #48464e;
+  --ui-input-border: #737278;
+  --ui-button-border: #626168;
+  --ui-button-default-bg: rgba(137, 136, 141, 0.4);
+  --ui-button-default-bg-hover: rgba(137, 136, 141, 0.64);
+  --ui-button-default-bg-active: rgba(137, 136, 141, 0.32);
+  --ui-button-default-fg: #ecebea;
+  --ui-button-default-border: transparent;
+  --ui-button-default-border-hover: transparent;
+  --ui-button-default-border-active: transparent;
+  --ui-button-confirm-bg: #ecebea;
+  --ui-button-confirm-bg-hover: #f7f7f5;
+  --ui-button-confirm-bg-active: #dcdbd9;
+  --ui-button-confirm-fg: #18171d;
+  --ui-code-surface: #232228;
+  --ui-code-inline: #3a383f;
+  --ui-heading: #fbfafd;
+  --ui-success: #75c99b;
+  --ui-success-bg: #183b2c;
+  --ui-danger: #ff9b8f;
+  --ui-danger-bg: #4b2525;
+  --ui-info-bg: #1d354d;
+  --ui-purple: #cbbbf2;
+  --ui-purple-bg: #40335e;
+  --ui-shadow: 0 4px 16px #0006;
+  color-scheme: dark;
+}

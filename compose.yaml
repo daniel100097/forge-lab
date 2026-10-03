@@ -1,0 +1,19 @@
+services:
+  forgejo:
+    build: .
+    image: forgejo-ui:16.0.5-local
+    environment:
+      USER_UID: "1000"
+      USER_GID: "1000"
+      FORGEJO__server__HTTP_ADDR: "0.0.0.0"
+      FORGEJO__server__SSH_PORT: "2222"
+      FORGEJO__server__LANDING_PAGE: /-/ui/
+      FORGEJO__server__ROOT_URL: ${FORGEJO_ROOT_URL:-http://localhost:3000/}
+    ports:
+      - "0.0.0.0:3000:3000"
+      - "0.0.0.0:2222:22"
+    volumes:
+      - forgejo-data:/data
+    restart: unless-stopped
+volumes:
+  forgejo-data:

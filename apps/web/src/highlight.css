@@ -1,0 +1,85 @@
+@reference './style.css';
+@layer components {
+  :root {
+    --th-keyword: #7b1fa2;
+    --th-string: #176b42;
+    --th-comment: #626168;
+    --th-number: #94591a;
+    --th-function: #175ba8;
+    --th-type: #006b70;
+    --th-operator: #45434a;
+    --th-property: #9f3e16;
+    --th-meta: #775291;
+    --th-tag: #9b2440;
+    --th-variable: #333238;
+  }
+  :root[data-theme="dark"] {
+    --th-keyword: #d79bff;
+    --th-string: #a3d69c;
+    --th-comment: #9e9ca7;
+    --th-number: #e6b37e;
+    --th-function: #9dc7fa;
+    --th-type: #91d2d8;
+    --th-operator: #dedce5;
+    --th-property: #efb49e;
+    --th-meta: #c7acd9;
+    --th-tag: #f4a5b9;
+    --th-variable: #dedce5;
+  }
+  .th-keyword {
+    color: var(--th-keyword);
+  }
+  .th-string,
+  .th-code-inline {
+    color: var(--th-string);
+  }
+  .th-comment {
+    color: var(--th-comment);
+    font-style: italic;
+  }
+  .th-number,
+  .th-literal {
+    color: var(--th-number);
+  }
+  .th-function,
+  .th-command,
+  .th-link {
+    color: var(--th-function);
+  }
+  .th-type,
+  .th-selector {
+    color: var(--th-type);
+  }
+  .th-operator {
+    color: var(--th-operator);
+  }
+  .th-property,
+  .th-attr {
+    color: var(--th-property);
+  }
+  .th-meta {
+    color: var(--th-meta);
+  }
+  .th-tag,
+  .th-deleted {
+    color: var(--th-tag);
+  }
+  .th-variable {
+    color: var(--th-variable);
+  }
+  .th-heading {
+    color: var(--th-function);
+    font-weight: 600;
+  }
+  .th-inserted {
+    color: var(--th-string);
+  }
+  .source-line > .source-line-number {
+    @apply sticky left-0 select-none border-r border-line px-4 text-right text-muted no-underline;
+    min-width: 58px;
+    background: var(--ui-code-surface);
+  }
+  .source-line:target {
+    background: var(--ui-selected);
+  }
+}

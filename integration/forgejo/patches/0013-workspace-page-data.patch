@@ -1,0 +1,264 @@
+--- a/routers/web/user/profile.go
++++ b/routers/web/user/profile.go
+@@ -29,6 +29,7 @@
+ 	"forgejo.org/routers/web/feed"
+ 	"forgejo.org/routers/web/org"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	user_service "forgejo.org/services/user"
+ )
+@@ -79,6 +80,13 @@
+ 	prepareUserProfileTabData(ctx, showPrivate, profileDbRepo, profileGitRepo, profileReadmeBlob)
+ 	// call PrepareContextForProfileBigAvatar later to avoid re-querying the NumFollowers & NumFollowing
+ 	shared_user.PrepareContextForProfileBigAvatar(ctx)
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" && profileReadmeBlob != nil {
++		if reader, _, err := profileReadmeBlob.NewTruncatedReader(setting.UI.MaxDisplayFileSize); err == nil {
++			defer reader.Close()
++			if content, err := io.ReadAll(reader); err == nil { ctx.Data["SPAProfileReadme"] = string(content) }
++		}
++	}
++	if spapages.Workspace(ctx, "profile") { return }
+ 	ctx.HTML(http.StatusOK, tplProfile)
+ }
+ 
+--- a/routers/web/org/home.go
++++ b/routers/web/org/home.go
+@@ -23,6 +23,7 @@
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/util"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -171,6 +172,13 @@
+ 	defer profileClose()
+ 	prepareOrgProfileReadme(ctx, profileGitRepo, profileDbRepo, profileReadmeBlob)
+ 
++	if ctx.Req.Header.Get("X-Forgejo-UI") == "1" && profileReadmeBlob != nil {
++		if reader, _, err := profileReadmeBlob.NewTruncatedReader(setting.UI.MaxDisplayFileSize); err == nil {
++			defer reader.Close()
++			if content, err := io.ReadAll(reader); err == nil { ctx.Data["SPAProfileReadme"] = string(content) }
++		}
++	}
++	if spapages.Workspace(ctx, "org") { return }
+ 	ctx.HTML(http.StatusOK, tplOrgHome)
+ }
+ 
+--- a/routers/web/org/org.go
++++ b/routers/web/org/org.go
+@@ -15,6 +15,7 @@
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/setting"
+ 	"forgejo.org/modules/web"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/forms"
+ )
+@@ -35,6 +36,7 @@
+ 	ctx.Data["visibility"] = setting.Service.DefaultOrgVisibilityMode
+ 	ctx.Data["repo_admin_change_team_access"] = true
+ 
++	if spapages.Workspace(ctx, "org-new") { return }
+ 	ctx.HTML(http.StatusOK, tplCreateOrg)
+ }
+ 
+--- a/routers/web/org/members.go
++++ b/routers/web/org/members.go
+@@ -15,6 +15,7 @@
+ 	"forgejo.org/modules/log"
+ 	"forgejo.org/modules/setting"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	org_service "forgejo.org/services/org"
+ )
+@@ -80,6 +81,8 @@
+ 	ctx.Data["MembersTwoFaStatus"] = members.GetTwoFaStatus(ctx)
+ 	ctx.Data["AddMembersByInvitations"] = setting.Service.AddMembersByInvitations
+ 
++	ctx.Data["Total"] = total
++	if spapages.Workspace(ctx, "org-members") { return }
+ 	ctx.HTML(http.StatusOK, tplMembers)
+ }
+ 
+--- a/routers/web/org/teams.go
++++ b/routers/web/org/teams.go
+@@ -25,6 +25,7 @@
+ 	"forgejo.org/modules/validation"
+ 	"forgejo.org/modules/web"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/convert"
+ 	"forgejo.org/services/forms"
+@@ -65,6 +66,7 @@
+ 		return
+ 	}
+ 
++	if spapages.Workspace(ctx, "teams") { return }
+ 	ctx.HTML(http.StatusOK, tplTeams)
+ }
+ 
+@@ -276,6 +278,7 @@
+ 		ctx.ServerError("LoadHeaderCount", err)
+ 		return
+ 	}
++	if spapages.Workspace(ctx, "team-form") { return }
+ 	ctx.HTML(http.StatusOK, tplTeamNew)
+ }
+ 
+@@ -406,6 +409,7 @@
+ 	ctx.Data["Invites"] = invites
+ 	ctx.Data["IsEmailInviteEnabled"] = setting.MailService != nil
+ 
++	if spapages.Workspace(ctx, "team-members") { return }
+ 	ctx.HTML(http.StatusOK, tplTeamMembers)
+ }
+ 
+@@ -433,6 +437,7 @@
+ 	}
+ 	ctx.Data["Page"] = pager
+ 	ctx.Data["Units"] = unit_model.Units
++	if spapages.Workspace(ctx, "team-repositories") { return }
+ 	ctx.HTML(http.StatusOK, tplTeamRepositories)
+ }
+ 
+@@ -492,6 +497,7 @@
+ 	}
+ 	ctx.Data["Team"] = ctx.Org.Team
+ 	ctx.Data["Units"] = unit_model.Units
++	if spapages.Workspace(ctx, "team-form") { return }
+ 	ctx.HTML(http.StatusOK, tplTeamNew)
+ }
+ 
+@@ -602,6 +608,7 @@
+ 	ctx.Data["Team"] = team
+ 	ctx.Data["Inviter"] = inviter
+ 
++	if spapages.Workspace(ctx, "org-invite") { return }
+ 	ctx.HTML(http.StatusOK, tplTeamInvite)
+ }
+ 
+--- a/routers/web/org/setting.go
++++ b/routers/web/org/setting.go
+@@ -22,6 +22,8 @@
+ 	"forgejo.org/modules/web"
+ 	shared_user "forgejo.org/routers/web/shared/user"
+ 	user_setting "forgejo.org/routers/web/user/setting"
++	repo_setting "forgejo.org/routers/web/repo/setting"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/forms"
+ 	org_service "forgejo.org/services/org"
+@@ -60,6 +62,7 @@
+ 		return
+ 	}
+ 
++	if spapages.Workspace(ctx, "org-settings") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsOptions)
+ }
+ 
+@@ -219,6 +222,7 @@
+ 		return
+ 	}
+ 
++	if spapages.Workspace(ctx, "org-delete") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsDelete)
+ }
+ 
+@@ -245,6 +249,7 @@
+ 	}
+ 
+ 	ctx.Data["Webhooks"] = ws
++	if repo_setting.WriteWebhooksUI(ctx, "list") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsHooks)
+ }
+ 
+@@ -272,5 +277,6 @@
+ 		return
+ 	}
+ 
++	if spapages.Workspace(ctx, "org-labels") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsLabels)
+ }
+--- a/routers/web/org/setting_oauth2.go
++++ b/routers/web/org/setting_oauth2.go
+@@ -13,6 +13,7 @@
+ 	"forgejo.org/modules/setting"
+ 	shared_user "forgejo.org/routers/web/shared/user"
+ 	user_setting "forgejo.org/routers/web/user/setting"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -51,6 +52,7 @@
+ 		return
+ 	}
+ 
++	if spapages.Workspace(ctx, "org-applications") { return }
+ 	ctx.HTML(http.StatusOK, tplSettingsApplications)
+ }
+ 
+--- a/routers/web/org/setting/blocked_users.go
++++ b/routers/web/org/setting/blocked_users.go
+@@ -11,6 +11,7 @@
+ 	"forgejo.org/models/db"
+ 	user_model "forgejo.org/models/user"
+ 	shared_user "forgejo.org/routers/web/shared/user"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	user_service "forgejo.org/services/user"
+ )
+@@ -36,6 +37,7 @@
+ 
+ 	ctx.Data["BlockedUsers"] = blockedUsers
+ 
++	if spapages.Workspace(ctx, "org-blocked") { return }
+ 	ctx.HTML(http.StatusOK, tplBlockedUsers)
+ }
+ 
+--- a/routers/web/shared/storage_overview.go
++++ b/routers/web/shared/storage_overview.go
+@@ -10,6 +10,7 @@
+ 	quota_model "forgejo.org/models/quota"
+ 	"forgejo.org/modules/base"
+ 	"forgejo.org/modules/setting"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ )
+ 
+@@ -17,6 +18,7 @@
+ // quota limits of the instance.
+ func StorageOverview(ctx *context.Context, userID int64, tpl base.TplName) {
+ 	if !setting.Quota.Enabled {
++		if spapages.Storage(ctx) { return }
+ 		ctx.NotFound("MustEnableQuota", nil)
+ 		return
+ 	}
+@@ -87,5 +89,6 @@
+ 	}
+ 	ctx.Data["QuotaGroups"] = quotaGroups
+ 
++	if spapages.Storage(ctx) { return }
+ 	ctx.HTML(http.StatusOK, tpl)
+ }
+--- a/routers/web/repo/repo.go
++++ b/routers/web/repo/repo.go
+@@ -32,6 +32,7 @@
+ 	api "forgejo.org/modules/structs"
+ 	"forgejo.org/modules/util"
+ 	"forgejo.org/modules/web"
++	"forgejo.org/routers/web/shared/spapages"
+ 	"forgejo.org/services/context"
+ 	"forgejo.org/services/convert"
+ 	"forgejo.org/services/forms"
+@@ -185,6 +186,7 @@
+ 	ctx.Data["SupportedObjectFormats"] = git.SupportedObjectFormats
+ 	ctx.Data["DefaultObjectFormat"] = git.Sha1ObjectFormat
+ 
++	if spapages.Workspace(ctx, "repo-new") { return }
+ 	ctx.HTML(http.StatusOK, tplCreate)
+ }
+ 
