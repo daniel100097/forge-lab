@@ -560,12 +560,12 @@ test("documentation links ignore external destinations and code examples", () =>
 
 test("workflows use ubuntu-latest; image builds use the lock helper and always clean up", async () => {
   const compatibility = parse(
-    await readFile(".forgejo/workflows/compatibility.yaml", "utf8"),
+    await readFile(".github/workflows/compatibility.yaml", "utf8"),
   );
   assert.equal(compatibility.jobs.patches["runs-on"], "ubuntu-latest");
   for (const file of ["ci", "release"]) {
     const workflow = parse(
-      await readFile(`.forgejo/workflows/${file}.yaml`, "utf8"),
+      await readFile(`.github/workflows/${file}.yaml`, "utf8"),
     );
     const job = Object.values(workflow.jobs)[0];
     assert.equal(job["runs-on"], "ubuntu-latest");
@@ -595,10 +595,10 @@ test("workflows use ubuntu-latest; image builds use the lock helper and always c
 });
 
 test("workflows build and publish candidates before tests, then promote tested registry tags", async () => {
-  const ci = parse(await readFile(".forgejo/workflows/ci.yaml", "utf8"));
-  assert.match(ci.jobs.verify.if, /head.repo.full_name == forgejo.repository/);
+  const ci = parse(await readFile(".github/workflows/ci.yaml", "utf8"));
+  assert.match(ci.jobs.verify.if, /head.repo.full_name == github.repository/);
   const release = parse(
-    await readFile(".forgejo/workflows/release.yaml", "utf8"),
+    await readFile(".github/workflows/release.yaml", "utf8"),
   );
   assert.deepEqual(release.on.push.tags, ["v*"]);
   for (const [job, suffix] of [
@@ -606,17 +606,8 @@ test("workflows build and publish candidates before tests, then promote tested r
     [release.jobs.release, ""],
   ]) {
     assert.equal(job.env.RELEASE_IMAGE, "${{ vars.RELEASE_IMAGE }}");
-    assert.equal(job["enable-openid-connect"], true);
-    assert.equal(
-      job.env.REGISTRY_OIDC_AUDIENCE,
-      "${{ vars.REGISTRY_OIDC_AUDIENCE }}",
-    );
-    assert.equal(job.env.FORGEJO_SERVER_URL, "${{ forgejo.server_url }}");
-    assert.equal(
-      job.env.REGISTRY_OIDC_ISSUER,
-      "${{ vars.REGISTRY_OIDC_ISSUER }}",
-    );
-    assert.equal(job.env.FORGEJO_REPOSITORY, "${{ forgejo.repository }}");
+    assert.equal(job.env.FORGEJO_SERVER_URL, "https://ghcr.io");
+    assert.equal(job.env.FORGEJO_REPOSITORY, "${{ github.repository }}");
     const steps = job.steps;
     const indexOf = (command) =>
       steps.findIndex((step) => step.run?.split("\n").includes(command));
@@ -651,16 +642,13 @@ test("workflows build and publish candidates before tests, then promote tested r
     for (const index of [candidate, publish]) {
       assert.equal(
         steps[index].env.REGISTRY_PASSWORD,
-        "${{ secrets.REGISTRY_PASSWORD }}",
+        "${{ secrets.GITHUB_TOKEN }}",
       );
-      assert.equal(
-        steps[index].env.REGISTRY_USER,
-        "${{ secrets.REGISTRY_USER || forgejo.repository_owner }}",
-      );
+      assert.equal(steps[index].env.REGISTRY_USER, "${{ github.actor }}");
       if (suffix)
         assert.equal(
           steps[index].if,
-          "forgejo.ref == 'refs/heads/main' && forgejo.event_name != 'pull_request'",
+          "github.ref == 'refs/heads/main' && github.event_name != 'pull_request'",
         );
       else assert.equal(steps[index].if, undefined);
     }
